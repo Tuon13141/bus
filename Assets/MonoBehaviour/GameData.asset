@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abaa8f7fd2d3abad96be8a22c824a221, type: 3}
+  m_Name: GameData
+  m_EditorClassIdentifier:
+  playOnCost:
+    value: 900
+  undoCost:
+    value: 360
+  extraSpaceCost:
+    value: 1080
+  shuffleCost:
+    value: 180
+  starReward: 1
+  levelCompleteReward:
+    value: 45
+  disableColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+  inSufficientPriceColor: {r: 1, g: 0, b: 0, a: 1}
+  dailyRewardCoins:
+    value: 50
+  dailyRewardUnlockLevel: 3
+  dailyRewardBoostersAmount: 1
+  goldBackground:
+  - {fileID: 21300000, guid: 76a3a7c5d0f16b544966500c864c0808, type: 2}
+  - {fileID: 21300000, guid: 618e08456f7e68442bd24820d7a5bc45, type: 2}
+  silverBackground:
+  - {fileID: 21300000, guid: 237550e5f5c227b4a88f6ee8c36dd068, type: 2}
+  - {fileID: 21300000, guid: 51c8d6a32e5553948b9099bd97d64c5d, type: 2}
+  bronzeBackground:
+  - {fileID: 21300000, guid: 6980cb3997ca29247899f423bbc53ce2, type: 2}
+  - {fileID: 21300000, guid: 7f24d53fda9ab7147bfca1fa419bfd8a, type: 2}
+  playerBackground:
+  - {fileID: 21300000, guid: d4a1f7ffcae8d52449d2e35be4160b60, type: 2}
+  - {fileID: 21300000, guid: 3aff7394eff0c02478d7e4301c0c0e23, type: 2}
+  dragonTextColors:
+  - {r: 0.43312097, g: 1, b: 0, a: 1}
+  - {r: 0, g: 0.6403942, b: 1, a: 1}
+  - {r: 1, g: 0.039215684, b: 0, a: 1}
+  - {r: 1, g: 0.7918781, b: 0, a: 1}
+  - {r: 0.2206746, g: 0.27561158, b: 0.8207547, a: 1}
+  - {r: 0.4811321, g: 0.23040268, b: 0.10666607, a: 1}
+  - {r: 1, g: 0.39047617, b: 0, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0.28235295, g: 0.32156864, b: 0.25882354, a: 1}
+  - {r: 0.92029, g: 0, b: 1, a: 1}

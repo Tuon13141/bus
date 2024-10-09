@@ -1,0 +1,259 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46e249f8e265899a2d599e2a08c861cd, type: 3}
+  m_Name: CarCollection
+  m_EditorClassIdentifier:
+  serializationData:
+    SerializedFormat: 0
+    SerializedBytes:
+    ReferencedUnityObjects: []
+    SerializedBytesString:
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  garages:
+  - garageBg: {fileID: 21300000, guid: d819fbf0ebf1e524881dffa1c259b6dc, type: 2}
+    carsData:
+    - carImage: {fileID: 21300000, guid: dc5a8b64cc766a442886220abdf708ee, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: b895d40c8696fa946b4a0ae7183af559, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 243f8f04037275a4dbc7d7f969969048, type: 2}
+    - carImage: {fileID: 21300000, guid: 0ddc4074769a1ac4eb83d2f5978a6f6d, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: ccf3f9e8910d8ab4392c91f8357ea3df, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 5593aab12441d404991eba2f9d28d446, type: 2}
+    - carImage: {fileID: 21300000, guid: a45bcd9c491e2c24580e3c8c7cf29561, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 2d414a450f60a7245a4574feae2dd64e, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 2a4fb1bb49e1cb84086bb7b9ad9c53c3, type: 2}
+    - carImage: {fileID: 21300000, guid: 806279d4bd9eb9f4a8565f453adcef76, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 387e4c56997d1a24e82cd4ce92da35d2, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 744e19e6211d6d24ca667b8aebcef3b0, type: 2}
+    - carImage: {fileID: 21300000, guid: 508b4e02a7efbe84d8e3969f329bc7cc, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 79e11c4529fe3dd4e8b6d30de9dae64d, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: fcea4a0de08b3a24b8b8776b00871b85, type: 2}
+    - carImage: {fileID: 21300000, guid: e90c8789194412547a966774615719c4, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 17f58c6b8e7b26c4aa297f3842185351, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 9dd153d3141c774438fe84eef3159c34, type: 2}
+    - carImage: {fileID: 21300000, guid: ff0f949bdc1149842b8c54d64c9f0584, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 3f085dc45f53f7044bcd9cef84eb7549, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: c1cafe44debb40246b418e346917278f, type: 2}
+    - carImage: {fileID: 21300000, guid: baf65f713d460e5478a656a23b9eca14, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: bfb9b9dfa445a4d4d86e983155804f2d, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: e0466b0455b0ee942b4d400f5c78c3d0, type: 2}
+  - garageBg: {fileID: 21300000, guid: 1d07841c87618a94f999126fb06d633d, type: 2}
+    carsData:
+    - carImage: {fileID: 21300000, guid: 3fda4b062a5bfc04c89480a68b58a04a, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 23dce7997bfafed40a986dcc9c9b223b, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 076be121cbfef834ab98fb6b4430c1a3, type: 2}
+    - carImage: {fileID: 21300000, guid: c016d66981441e148a32821d55378400, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 0b8c0584e8ddc8f4fb90b47f4dcf8bff, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 514b9a7865db4ce45b87754eded02149, type: 2}
+    - carImage: {fileID: 21300000, guid: b553eb16c2baafd4a8a28950169de5f6, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 37ff2be29d76fc84eb7813ed038e6b53, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 83dc6a15224f14a43b7fc3c9779f1958, type: 2}
+    - carImage: {fileID: 21300000, guid: e30a7506b92d1c54faabf04e80681e87, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 231c3a0d49c77f548822b75215831122, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 1bf378b40d1109241af2580d7a8aa98a, type: 2}
+    - carImage: {fileID: 21300000, guid: 57448bd8f4ace1b4095c87c67f3f6824, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 4689a2989b6da7944ba1b55167c25c9a, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: d07c1fe9105b45944b1579cb176c54a2, type: 2}
+    - carImage: {fileID: 21300000, guid: 72b38702264cfa34fbc6b5fb1d627ad9, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: d9579beb10fca8e41903ec6709f163a0, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: d70b7c2b508e2944da5227cb446c8de2, type: 2}
+    - carImage: {fileID: 21300000, guid: eb32e4c69db4b344dadfe748175d844b, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 5bd5ce9ecc9cd2740a75d475d670d2d8, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 5adfe28814453a645ab0b1cfa802a78d, type: 2}
+    - carImage: {fileID: 21300000, guid: f9153ae406256364fa4b9e5431b750a7, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 7f2096a639f12c54ebff7cb1ac044073, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: d6fec95bd1ac8ec41834f6d19a36cd4d, type: 2}
+  - garageBg: {fileID: 21300000, guid: c7ff1813f0a4c484f889fe92f02dc7ec, type: 2}
+    carsData:
+    - carImage: {fileID: 21300000, guid: 8787e2a237b1e4747a020890df07afd9, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: fdc7603a50653af42b7d3373de7eda2e, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 2d24585471def11499e7494545029ecf, type: 2}
+    - carImage: {fileID: 21300000, guid: 972b577c51e6ea249a37efb33b373ad7, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: d4cd1e360a9a42c438c23a3dbfc7977a, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: a7a022789c2b5144fa0584e1d7cda65f, type: 2}
+    - carImage: {fileID: 21300000, guid: 94ddd249eb343234c950d6cdc8507e35, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 3af83b635cf2bff4d80da18652b2f745, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 7cdf5080111f957408a1463b70734850, type: 2}
+    - carImage: {fileID: 21300000, guid: f52280bccedf2bd4eafaf2d8d38205e1, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 8f39ebff9f0fb914498dd2f4e6f409d3, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 8dad73b3b14217542b7f6169d01f4b1a, type: 2}
+    - carImage: {fileID: 21300000, guid: c9e1c917c026ddf4b9add693defe9edd, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 47fa851b54ed7c34bac3d42ce9b2bb15, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: bb7442cb5e6e73f40b7fcf1aba9c04f7, type: 2}
+    - carImage: {fileID: 21300000, guid: af983d5fb549ef34195331c29ba49806, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: d7034175eedb20f48ad78013d567a34d, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: c190d43a96fbac8489c065268569dee5, type: 2}
+    - carImage: {fileID: 21300000, guid: f36a70a12a49b7f4ab692cf3c88517c7, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 485c916314846894ebc607027b888506, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 12a0278413fa1c744aeeb1bc8172aa7a, type: 2}
+    - carImage: {fileID: 21300000, guid: 5ac76b1778d877f499d5a8f14238cbb6, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: cbde0bc0a5ed3694d9cd8dbe8fa05f98, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 6c7ed5ced70df424cb6ad52f07d5f757, type: 2}
+  - garageBg: {fileID: 21300000, guid: fce8b02e54e31ee47887fc9885085fdb, type: 2}
+    carsData:
+    - carImage: {fileID: 21300000, guid: 04c7e70e0e41e7540a8dcd9f9d194d8e, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 77a8b8b28e8421f46a57bde76ca827f1, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 799a03d0bbd44b2489dbcf45d2e50485, type: 2}
+    - carImage: {fileID: 21300000, guid: f2c27e33d4cc13f489a5b05c60424ec2, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 962743106ff64284d8f91ad52c89b1ae, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 148f19fe324f44543848fd9e4881dcb8, type: 2}
+    - carImage: {fileID: 21300000, guid: 56429c0ecfb907b4aaaf3ff9be664488, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: d96de2787dcfa2242b59760acf88a3ac, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 68fd66252df098b418f490c954b7a5c2, type: 2}
+    - carImage: {fileID: 21300000, guid: a2ac5459a3eb5e34aadd7d0f2fa76e71, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: b2ecf57ee5f23d24abed0789f2085f9e, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 12d1bedcc9a769c4f86274260e0a3b11, type: 2}
+    - carImage: {fileID: 21300000, guid: 2f36b20e2fe3cc14f81d9e5a3ad289d4, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: e7f4d950f824c824f97b78853e4bcd70, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: d5d4199d6b13a864e8343a51c58ff5df, type: 2}
+    - carImage: {fileID: 21300000, guid: b57615adcda3d174e884c04839bc6631, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 35477571447da5749a74ec82ab6fce7a, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 992019dd4d1bdd94d999dad89ad5d274, type: 2}
+    - carImage: {fileID: 21300000, guid: 56fe3cf0d0fc2a1499c776a3766c3df4, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 2217df18498e87e4e912decbb389e5f7, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 770eaff590192ed4b9d3cc3e9183e482, type: 2}
+    - carImage: {fileID: 21300000, guid: bce9f60e82c367048aa633b5bf56a5ab, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 1a88e21dc6115fb4c8cf1c3b651ececf, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 81264825b83b865468223a36949a7787, type: 2}
+  - garageBg: {fileID: 21300000, guid: 756e448465aca254d9c125c7e7255c2b, type: 2}
+    carsData:
+    - carImage: {fileID: 21300000, guid: 2cf7c5e7d968c77499666d6276db5ee0, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: ca025763c08a8bd4bac19c75c9a07480, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 3708f74dd63531b46bd96e48e13187af, type: 2}
+    - carImage: {fileID: 21300000, guid: 69e8ab410c8cd91449dea7681f463383, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 258604403ca94074c8bb94f715a25a83, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 1b2bf0032e5256b44aa95555563f0f26, type: 2}
+    - carImage: {fileID: 21300000, guid: 0ebfbd1863ca19a4581d03722886c30d, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 9f74db01e64b833499a3c5c38026f09e, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 1a8307a2992b0fb4598bb2219634ae26, type: 2}
+    - carImage: {fileID: 21300000, guid: 67b5e699407edab4ba754266a737dcf9, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 5bc061c46a2598a428ffe926bb66f8c1, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: f044a2b1fbe32144a8bec84c453a2683, type: 2}
+    - carImage: {fileID: 21300000, guid: 9eb3f00719ebfd640bceea7dac91983c, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: f794cf85f6df7cd43bcc68c4cdf83efd, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 8f110f193bededf44b745b58c5172ac1, type: 2}
+    - carImage: {fileID: 21300000, guid: 73af789223dbd0e42a39bafbaa162e6d, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 99e1b69aee2f8614d8abe1f5698cc020, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: ca7782e515a7af84b9720a03ef100b6d, type: 2}
+    - carImage: {fileID: 21300000, guid: de60b5adba7b2894481044e65d1d4d2d, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 52a4a1dd76728a4468dfcf5d29b8fdae, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: ead68892c5492f048918e34ff47860b9, type: 2}
+    - carImage: {fileID: 21300000, guid: e344d6f276e0dba498ecfa0d6d0da215, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 1d19ccb1579b7fb47b0dae6be64fcf6c, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: e9480701a54407e48b4688547d9f02bd, type: 2}
+  - garageBg: {fileID: 21300000, guid: 201e2e4dccd5e8245b188a39a525038e, type: 2}
+    carsData:
+    - carImage: {fileID: 21300000, guid: 2986c27febfbb4f439cce6c30c66316c, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: ce56aa1437f993a4ea77b900bb616f31, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 043e0f27fe2498b4790baf23b55f5210, type: 2}
+    - carImage: {fileID: 21300000, guid: 60c7e2419eaea9a49abf0eb26c449671, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: f2def59ff697019498f002cec5a1ac10, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 194819d420a732445b9a11b18997675a, type: 2}
+    - carImage: {fileID: 21300000, guid: 2aec09898288cba44b91ffeb5d8f3073, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 45f5d89300d250c4fbc37cc80c592791, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: ecb53255c318c6e4a9a7794430897d9b, type: 2}
+    - carImage: {fileID: 21300000, guid: 3f5ec09699a6f6f429516dadc287596a, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 368c0f6b05a7f4d4790e4758bf7a0e43, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: e70be755a116c4d408c2f951851f979b, type: 2}
+    - carImage: {fileID: 21300000, guid: 35307db33ccffb841a48f7e06f95b272, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 463b6a6ec9042314599ea8e7a0bed409, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: c29fa6509ad0a124fad7311c7bd87945, type: 2}
+    - carImage: {fileID: 21300000, guid: 856e24d323f33ff4f8f097c38ad60311, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: a715fc6636882ad45b1aa9550461a7e2, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 5c396e12fb204084fa6d676e42db6383, type: 2}
+    - carImage: {fileID: 21300000, guid: 8545926be31945b44b5d57f68a098ab1, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 425ad32ec91808a49b1dc991033fce5a, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 04234b1689477f343a016a88672df963, type: 2}
+    - carImage: {fileID: 21300000, guid: 51cc3e5f20da7f74694513fe7798c078, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: d7c04bee68313764ebeb849440376101, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: bd83894291234894488654358bdab4aa, type: 2}
+  - garageBg: {fileID: 21300000, guid: b2868e2e07d103e4d9c9e872873f0af0, type: 2}
+    carsData:
+    - carImage: {fileID: 21300000, guid: 87960b46bea72bd4db11601a2d49bdd4, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 898915910373eca41bbd7fcd26d60282, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: df88dfafbae2e6c4badcad516690fe0a, type: 2}
+    - carImage: {fileID: 21300000, guid: d8e5b4cb253528f43a2c385044824c29, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: e6b0012435a4baa4e9caa8f57131f986, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 62755bb5492b77c43bb052a2ff630d4b, type: 2}
+    - carImage: {fileID: 21300000, guid: 0f87aebb1eca69541b9748b0ae1714ec, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 1bfd5189ee8172d4697fdfc4a198267e, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: cd6b76eb4da85db4fbea7d15d95932a9, type: 2}
+    - carImage: {fileID: 21300000, guid: 1a6ecffa91b09be4dba01ce2fc79d78e, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: ad9d0158e213d824caa5605aaecf69d1, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 3e33de16f513d84478d336ed5d111604, type: 2}
+    - carImage: {fileID: 21300000, guid: 926abb7ea4ea51c4d91934dd253ab3f2, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 9e536447178eb404ca809b934b1cf12e, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 04e24724ecce143419b7323ef9a32378, type: 2}
+    - carImage: {fileID: 21300000, guid: e0c9b721ed38a4e44843441fe082f5c1, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 796de2ee207fa9f46825080fa4ea58eb, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: ba7ec997db310854696cfb27a8bc557e, type: 2}
+    - carImage: {fileID: 21300000, guid: 4605738c0191c604f9a9c55d8265a306, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 4257f5a28d9ed4b4c8ad4109274d8911, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 2b3185ada33b31c42a85ff0721a0f7fc, type: 2}
+    - carImage: {fileID: 21300000, guid: 3e8de3272a4dfd44092ff68fee250e13, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 36bc3f0a99242554f860b19e34ed0bc3, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 14ea9d23d970a41489cc23ae77895f15, type: 2}
+  - garageBg: {fileID: 21300000, guid: 89baaa8af52666b478e0bed54c5579e3, type: 2}
+    carsData:
+    - carImage: {fileID: 21300000, guid: 113240c4c48142841a79943bf066000f, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: f78914c31f420b848b57d364b21f3942, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: effb88cd691a71845a4578f6adba85b8, type: 2}
+    - carImage: {fileID: 21300000, guid: 999806c41ebac914fa004fe69cbe03f2, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: cf95edaf9d124414f88bcba9148f9b1c, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: fe97a8f43c95b9d4e8b2326dbff4d89c, type: 2}
+    - carImage: {fileID: 21300000, guid: b20dbd53539c19843a5254907da70369, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 09aacc0042635234d992422561b4ca20, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 19702e130b514c746afaac3d4827f003, type: 2}
+    - carImage: {fileID: 21300000, guid: e7098111cf88d934e947e04563568889, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 6f132eec75080184ea0588914c49e851, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 7e3cd5f6f6d132040aae76f5021e63c7, type: 2}
+    - carImage: {fileID: 21300000, guid: 5231c354a8e7bd840be7736573ffe4e0, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: fce7ca321c3e3a24a839276b11ffde9e, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 4dcdf27a27dae914fa2715a746181e3b, type: 2}
+    - carImage: {fileID: 21300000, guid: 256bc1561d8089d458c3951b842794e1, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 4fb91816a7e58ea44bcb39eeecb59971, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: e69f663deda1bda4e8337bdfce0aa2c7, type: 2}
+    - carImage: {fileID: 21300000, guid: 486a19406c4a8314d85325f892b3af2d, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: dc078dea83f56eb438e98d328ebcea0d, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 7bc9bebd31c26814e970fbb66c1b8739, type: 2}
+    - carImage: {fileID: 21300000, guid: f4ba624180e3cde4f81f2a555ec0a8aa, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 55961732bcd2b124d9945dc296bdcc92, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 16a71e86f4cbb6448905ceb54ee09ebd, type: 2}
+  - garageBg: {fileID: 21300000, guid: 799c1888892a00b40a4a8f481ddf854e, type: 2}
+    carsData:
+    - carImage: {fileID: 21300000, guid: 0d7f2da438325de40b61793b84545a9e, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: ad5ce1023084e3640a6907a3236b37ab, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: f054063f45e2d244faad20e939fabb17, type: 2}
+    - carImage: {fileID: 21300000, guid: 2ee9d5fa1930b5f459163deaf7d52cef, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: eded690649ffe9c4d952c14a1dec19d1, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 0afc31acd2559a74ab6692ac7b39b366, type: 2}
+    - carImage: {fileID: 21300000, guid: 03e2e16827009fb428a08229e817913d, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: f00043de3ffd5884a918509960473b3b, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 2e76205a8ea37e94a936879e624ff0c5, type: 2}
+    - carImage: {fileID: 21300000, guid: 0f0db7588944bb640a80f4271a737617, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 969e077cd889a404eb3589f6a2b20a4c, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 1a8d9be59d1c8564f8eb15aefc3904b1, type: 2}
+    - carImage: {fileID: 21300000, guid: f8b47a1035147344a9fa53591d940003, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: b2362cef06ec72b49aca7f81945b84c6, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 35a2e9f80a4a99c4ca35d564a0544c9a, type: 2}
+    - carImage: {fileID: 21300000, guid: aaa3df8636c188e45b181ddce9734a0f, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 2bf1013a7eb02aa45b242effe58bed69, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 5c4bf612d965526449ca90881a35ef70, type: 2}
+    - carImage: {fileID: 21300000, guid: d5c1b2033506b7043847adaaa0481aaa, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: acc9dfd29f1f44b43b6c9139d1f4276b, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: 1c49bf46631db7540a98ad1ccf925544, type: 2}
+    - carImage: {fileID: 21300000, guid: d5027e5677fdac04e8a926b7e245d105, type: 2}
+      progressSpDisabled: {fileID: 21300000, guid: 9d9f1a2ff9c086846bf9bc10b1099d36, type: 2}
+      progressSpEnabled: {fileID: 21300000, guid: c2cc7462a8661684fb64f4d8f666c0b4, type: 2}
+  environmentData: {fileID: 11400000, guid: 199d32fc3c3a6e248be7a10009abaacc, type: 2}

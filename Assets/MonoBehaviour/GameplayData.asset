@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a91ff00efd7cf1feb1bd24ccffbcb2, type: 3}
+  m_Name: GameplayData
+  m_EditorClassIdentifier:
+  vehiclesPrefabs:
+  - {fileID: 114677272624283395, guid: 08c3ac77c08fa384a891da975854f78a, type: 2}
+  - {fileID: 114757654236839639, guid: d3fd5d60050af4547b85a0417dd398a1, type: 2}
+  - {fileID: 114911960708975886, guid: 75aa8b2843284b54dbe2095085615d55, type: 2}
+  cpiVehiclesPrefabs:
+  - {fileID: 114138193843039033, guid: 8bfa412d9545a8d4697a052dae0477d0, type: 2}
+  - {fileID: 114024813564309576, guid: 18771a15194656842a77b4bef2b35b11, type: 2}
+  - {fileID: 114142281362613820, guid: 7806d3c5f651af64c9c48db5331b1a5d, type: 2}
+  garageObstacle: {fileID: 114569847611247842, guid: f655e31b83e6bef4e86c86ae5d874f62, type: 2}
+  outerEnvironments:
+  - {fileID: 1312320777094797, guid: ac267db6947c44c4ab81c6080d801494, type: 2}
+  - {fileID: 1385944681134954, guid: d17cfc1081ea09745b9f41327968a196, type: 2}
+  - {fileID: 1738273844750405, guid: 0ec596a309919b34c9e46594354fe086, type: 2}
+  - {fileID: 1914962791241256, guid: 127385e7b85b4da42821851b523e2a96, type: 2}
+  vehicleCovers:
+  - {fileID: 114814864326987937, guid: ea5671c6a778c9143b4562aca29a4612, type: 2}
+  - {fileID: 114723783576485258, guid: f8f98ce5c09d0b94ea338c104bbe303b, type: 2}
+  - {fileID: 114805774147562501, guid: 458afe327fd53234eb97cb39298469aa, type: 2}
+  customLevel: {fileID: 114109262215225477, guid: b1f5c72a810640a4bab1cce8acd4d965, type: 2}
+  distance: 20
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  vehicleTypeValues:
+  - boxSize: {x: 0.5, y: 0.6, z: 0.9}
+    sizeOnRoad: {x: 1.1, y: 1.1, z: 1.1}
+    sizeOnPickPoint: {x: 1.1, y: 1.1, z: 1.1}
+    zHitOffset: 1.2
+  - boxSize: {x: 0.5, y: 0.9, z: 0.9}
+    sizeOnRoad: {x: 1.1, y: 1.1, z: 1.1}
+    sizeOnPickPoint: {x: 1.1, y: 1.1, z: 1.1}
+    zHitOffset: 1.4
+  - boxSize: {x: 0.5, y: 0.9, z: 0.9}
+    sizeOnRoad: {x: 1.1, y: 1.1, z: 1.1}
+    sizeOnPickPoint: {x: 1.1, y: 1.1, z: 1.1}
+    zHitOffset: 1.85
+  customLevelVehiclesSize: {x: 0.912, y: 0.912, z: 0.912}
+  colors:
+  - {r: 0.22352941, g: 0.7294118, b: 0.23137255, a: 1}
+  - {r: 0, g: 0.5328021, b: 1, a: 1}
+  - {r: 0.9843137, g: 0.24313726, b: 0.21960784, a: 1}
+  - {r: 0.9529412, g: 0.6627451, b: 0.12156863, a: 1}
+  - {r: 0.49803922, g: 0.30980393, b: 0.8980392, a: 1}
+  - {r: 0.4056604, g: 0.22876862, b: 0.14032274, a: 1}
+  - {r: 0, g: 0.7294118, b: 0.69803923, a: 1}
+  - {r: 0.8055414, g: 0.7987421, b: 1, a: 1}
+  - {r: 0.28235295, g: 0.32156864, b: 0.25882354, a: 1}
+  - {r: 0.8980392, g: 0.44313726, b: 0.8352941, a: 1}
+  remappedColors:
+  - {r: 0.4056604, g: 0.22876862, b: 0.14032274, a: 1}
+  - {r: 0.49803922, g: 0.30980393, b: 0.8980392, a: 1}
+  - {r: 0.8055414, g: 0.7987421, b: 1, a: 1}
+  - {r: 0.22352941, g: 0.7294118, b: 0.23137255, a: 1}
+  - {r: 0.9843137, g: 0.24313726, b: 0.21960784, a: 1}
+  - {r: 0.9529412, g: 0.6627451, b: 0.12156863, a: 1}
+  - {r: 0, g: 0.5328021, b: 1, a: 1}
+  - {r: 0.28235295, g: 0.32156864, b: 0.25882354, a: 1}
+  - {r: 0, g: 0.7294118, b: 0.69803923, a: 1}
+  - {r: 0.8980392, g: 0.44313726, b: 0.8352941, a: 1}
+  busMoveSpeed: 35
+  passengersMoveSpeed: 15

@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe09ea001f2e55034313d15aaa8929e0, type: 3}
+  m_Name: ProfileData
+  m_EditorClassIdentifier:
+  serializationData:
+    SerializedFormat: 0
+    SerializedBytes:
+    ReferencedUnityObjects: []
+    SerializedBytesString:
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  avatars:
+  - Avatar: {fileID: 21300000, guid: 1a65bcc480f5db84a8c5314f34bff592, type: 2}
+    Frame: {fileID: 21300000, guid: 629ff3b8aa8d0d742aea41cd88d5a4e7, type: 2}
+  - Avatar: {fileID: 21300000, guid: 13387cb52ac305548a54bc694c01afef, type: 2}
+    Frame: {fileID: 21300000, guid: 629ff3b8aa8d0d742aea41cd88d5a4e7, type: 2}
+  - Avatar: {fileID: 21300000, guid: f5a2ada4a2939fb47808ccf9908813ce, type: 2}
+    Frame: {fileID: 21300000, guid: 629ff3b8aa8d0d742aea41cd88d5a4e7, type: 2}
+  - Avatar: {fileID: 21300000, guid: 48bc29be7b67fc84da6d796d080cfaf3, type: 2}
+    Frame: {fileID: 21300000, guid: 629ff3b8aa8d0d742aea41cd88d5a4e7, type: 2}
+  - Avatar: {fileID: 21300000, guid: 2ecb9e198ef947c49b5f51f0c81b5462, type: 2}
+    Frame: {fileID: 21300000, guid: 629ff3b8aa8d0d742aea41cd88d5a4e7, type: 2}
+  - Avatar: {fileID: 21300000, guid: 4f44953bfc3493346829e6e4d0deb278, type: 2}
+    Frame: {fileID: 21300000, guid: 629ff3b8aa8d0d742aea41cd88d5a4e7, type: 2}
+  - Avatar: {fileID: 21300000, guid: 9ed94ffa56cee2d4d95c51ba9781ba7b, type: 2}
+    Frame: {fileID: 21300000, guid: 629ff3b8aa8d0d742aea41cd88d5a4e7, type: 2}
+  - Avatar: {fileID: 21300000, guid: bc9b723c380fea84ab555e8254e0041e, type: 2}
+    Frame: {fileID: 21300000, guid: 629ff3b8aa8d0d742aea41cd88d5a4e7, type: 2}
+  - Avatar: {fileID: 21300000, guid: ca16f9fc670081a48940dcac2175d174, type: 2}
+    Frame: {fileID: 21300000, guid: 629ff3b8aa8d0d742aea41cd88d5a4e7, type: 2}
+  - Avatar: {fileID: 21300000, guid: fe83f640eed5fb34eace483a314dafb4, type: 2}
+    Frame: {fileID: 21300000, guid: 629ff3b8aa8d0d742aea41cd88d5a4e7, type: 2}
+  - Avatar: {fileID: 21300000, guid: 49ceaeacee5bd754491971f3bcf47a49, type: 2}
+    Frame: {fileID: 21300000, guid: 629ff3b8aa8d0d742aea41cd88d5a4e7, type: 2}
+  - Avatar: {fileID: 21300000, guid: e41e52557f8a689448e2d5df3ce787dd, type: 2}
+    Frame: {fileID: 21300000, guid: 629ff3b8aa8d0d742aea41cd88d5a4e7, type: 2}

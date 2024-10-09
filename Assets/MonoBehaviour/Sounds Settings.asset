@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd295a7c166df9f37c8eda865111643f, type: 3}
+  m_Name: Sounds Settings
+  m_EditorClassIdentifier:
+  audioMixer: {fileID: 24100000, guid: a0cd31b69e9d4bb45b72d2ecf48f3911, type: 2}
+  masterVolume: 1
+  sfxVolume: 1
+  uiVolume: 1
+  musicVolume: 1
+  mute: 0
+  Sounds:
+  - name: 0
+    type: 0
+    audioClip: {fileID: 8300000, guid: 710f801939b10344e82c700f64aa12e9, type: 3}
+    loop: 0
+    playRandomClip: 0
+    playOnAwake: 0
+    m_volume: 1
+    m_pitch: 1
+    isVibration: 1
+    vibrationType: 0
+    source: {fileID: 0}
+  - name: 1
+    type: 1
+    audioClip: {fileID: 8300000, guid: aa496c7e24f959e4ab62a244f53a216b, type: 3}
+    loop: 0
+    playRandomClip: 0
+    playOnAwake: 0
+    m_volume: 1
+    m_pitch: 1
+    isVibration: 1
+    vibrationType: 2
+    source: {fileID: 0}
+  - name: 2
+    type: 0
+    audioClip: {fileID: 8300000, guid: 2e28fb5f47b33e849aac1e6b4bd3c59c, type: 3}
+    loop: 0
+    playRandomClip: 0
+    playOnAwake: 0
+    m_volume: 1
+    m_pitch: 1
+    isVibration: 1
+    vibrationType: 0
+    source: {fileID: 0}
+  - name: 3
+    type: 0
+    audioClip: {fileID: 8300000, guid: 67f6a3bd1ef779a43ae69847506d3158, type: 3}
+    loop: 0
+    playRandomClip: 0
+    playOnAwake: 0
+    m_volume: 1
+    m_pitch: 1
+    isVibration: 0
+    vibrationType: 0
+    source: {fileID: 0}
+  - name: 4
+    type: 0
+    audioClip: {fileID: 8300000, guid: 8183690bf4d67b54b8e6ed8997976619, type: 3}
+    loop: 0
+    playRandomClip: 0
+    playOnAwake: 0
+    m_volume: 1
+    m_pitch: 1
+    isVibration: 1
+    vibrationType: 0
+    source: {fileID: 0}
+  - name: 5
+    type: 0
+    audioClip: {fileID: 8300000, guid: b24862121ce8c774e80248f3c65d6952, type: 3}
+    loop: 0
+    playRandomClip: 0
+    playOnAwake: 0
+    m_volume: 1
+    m_pitch: 1
+    isVibration: 1
+    vibrationType: 0
+    source: {fileID: 0}
+  - name: 6
+    type: 0
+    audioClip: {fileID: 8300000, guid: 18e83657955b84a4fbb1f6d4330fe0a7, type: 3}
+    loop: 1
+    playRandomClip: 0
+    playOnAwake: 0
+    m_volume: 1
+    m_pitch: 1
+    isVibration: 0
+    vibrationType: 0
+    source: {fileID: 0}
+  - name: 7
+    type: 0
+    audioClip: {fileID: 8300000, guid: 3a0d274def85e9f4dbb5ee04641729df, type: 3}
+    loop: 0
+    playRandomClip: 0
+    playOnAwake: 0
+    m_volume: 1
+    m_pitch: 1
+    isVibration: 1
+    vibrationType: 2
+    source: {fileID: 0}

@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a1cf95476b8cd51539e68a20975ed63, type: 3}
+  m_Name: PurchaseData
+  m_EditorClassIdentifier:
+  IAPDatas:
+  - PurchaseType: 2
+    IAPItems:
+    - productID: coins_001
+      name: Coins
+      price: 1.99
+      value: 600
+      id: 0
+      productType: 0
+      packData:
+        shuffleB: 0
+        sortB: 0
+        vipB: 0
+    - productID: coins_002
+      name: Coins
+      price: 7.99
+      value: 2600
+      id: 1
+      productType: 0
+      packData:
+        shuffleB: 0
+        sortB: 0
+        vipB: 0
+    - productID: coins_003
+      name: Coins
+      price: 14.99
+      value: 7200
+      id: 2
+      productType: 0
+      packData:
+        shuffleB: 0
+        sortB: 0
+        vipB: 0
+    - productID: coins_004
+      name: Coins
+      price: 29.99
+      value: 16000
+      id: 3
+      productType: 0
+      packData:
+        shuffleB: 0
+        sortB: 0
+        vipB: 0
+    - productID: coins_005
+      name: Coins
+      price: 54.99
+      value: 32000
+      id: 4
+      productType: 0
+      packData:
+        shuffleB: 0
+        sortB: 0
+        vipB: 0
+    - productID: coins_006
+      name: Coins
+      price: 99.99
+      value: 64000
+      id: 5
+      productType: 0
+      packData:
+        shuffleB: 0
+        sortB: 0
+        vipB: 0
+  - PurchaseType: 3
+    IAPItems:
+    - productID: starter_001
+      name: Starter Pack
+      price: 1.99
+      value: 2600
+      id: 0
+      productType: 0
+      packData:
+        shuffleB: 1
+        sortB: 1
+        vipB: 1
+  - PurchaseType: 4
+    IAPItems:
+    - productID: enjoy_001
+      name: Enjoy Pack
+      price: 9.99
+      value: 10000
+      id: 0
+      productType: 0
+      packData:
+        shuffleB: 2
+        sortB: 2
+        vipB: 2

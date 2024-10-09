@@ -1,0 +1,153 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eba933290dd2b1e52cd1cf45afc0168e, type: 3}
+  m_Name: New Bus Event Database
+  m_EditorClassIdentifier:
+  dragonEvents:
+  - eventName: Car Challenge
+    unlockLevelNumber: 4
+    busCollectionType:
+    - 0
+    - 1
+    - 2
+    - 0
+    - 1
+    - 2
+    - 0
+    - 1
+    - 2
+    - 0
+    startTimeHour: 9
+    durationSeconds: 50400
+    dragonStageRequirements:
+    - busCollectionCount: 1
+      stageRewards:
+        rewardType: 0
+        duration_quantity: 100
+        rewardIcon: {fileID: 21300000, guid: 5945bfa8cc697544b8bbf24d82b98a33, type: 2}
+    - busCollectionCount: 5
+      stageRewards:
+        rewardType: 1
+        duration_quantity: 1
+        rewardIcon: {fileID: 21300000, guid: 9dbc5afb917cf1447a3bc771421ad308, type: 2}
+    - busCollectionCount: 10
+      stageRewards:
+        rewardType: 2
+        duration_quantity: 1
+        rewardIcon: {fileID: 21300000, guid: b5b8cb4f8b21fb542aab54bab66ac631, type: 2}
+    - busCollectionCount: 30
+      stageRewards:
+        rewardType: 4
+        duration_quantity: 600
+        rewardIcon: {fileID: 21300000, guid: df207c0a2615c514b80b5c970199b2a3, type: 2}
+    - busCollectionCount: 50
+      stageRewards:
+        rewardType: 0
+        duration_quantity: 300
+        rewardIcon: {fileID: 21300000, guid: 5945bfa8cc697544b8bbf24d82b98a33, type: 2}
+    - busCollectionCount: 75
+      stageRewards:
+        rewardType: 3
+        duration_quantity: 1
+        rewardIcon: {fileID: 21300000, guid: 4ed5d5b95f6f41644a34a4df5d8e8411, type: 2}
+    - busCollectionCount: 100
+      stageRewards:
+        rewardType: 2
+        duration_quantity: 1
+        rewardIcon: {fileID: 21300000, guid: b5b8cb4f8b21fb542aab54bab66ac631, type: 2}
+    - busCollectionCount: 125
+      stageRewards:
+        rewardType: 4
+        duration_quantity: 900
+        rewardIcon: {fileID: 21300000, guid: df207c0a2615c514b80b5c970199b2a3, type: 2}
+    - busCollectionCount: 150
+      stageRewards:
+        rewardType: 0
+        duration_quantity: 500
+        rewardIcon: {fileID: 21300000, guid: 5945bfa8cc697544b8bbf24d82b98a33, type: 2}
+    - busCollectionCount: 175
+      stageRewards:
+        rewardType: 1
+        duration_quantity: 1
+        rewardIcon: {fileID: 21300000, guid: 9dbc5afb917cf1447a3bc771421ad308, type: 2}
+    - busCollectionCount: 200
+      stageRewards:
+        rewardType: 2
+        duration_quantity: 1
+        rewardIcon: {fileID: 21300000, guid: b5b8cb4f8b21fb542aab54bab66ac631, type: 2}
+    - busCollectionCount: 225
+      stageRewards:
+        rewardType: 4
+        duration_quantity: 1200
+        rewardIcon: {fileID: 21300000, guid: df207c0a2615c514b80b5c970199b2a3, type: 2}
+    - busCollectionCount: 250
+      stageRewards:
+        rewardType: 0
+        duration_quantity: 1000
+        rewardIcon: {fileID: 21300000, guid: 5945bfa8cc697544b8bbf24d82b98a33, type: 2}
+    - busCollectionCount: 275
+      stageRewards:
+        rewardType: 1
+        duration_quantity: 1
+        rewardIcon: {fileID: 21300000, guid: 9dbc5afb917cf1447a3bc771421ad308, type: 2}
+    - busCollectionCount: 300
+      stageRewards:
+        rewardType: 3
+        duration_quantity: 1
+        rewardIcon: {fileID: 21300000, guid: 4ed5d5b95f6f41644a34a4df5d8e8411, type: 2}
+    - busCollectionCount: 325
+      stageRewards:
+        rewardType: 4
+        duration_quantity: 1200
+        rewardIcon: {fileID: 21300000, guid: df207c0a2615c514b80b5c970199b2a3, type: 2}
+    - busCollectionCount: 350
+      stageRewards:
+        rewardType: 0
+        duration_quantity: 2000
+        rewardIcon: {fileID: 21300000, guid: 5945bfa8cc697544b8bbf24d82b98a33, type: 2}
+    - busCollectionCount: 375
+      stageRewards:
+        rewardType: 2
+        duration_quantity: 1
+        rewardIcon: {fileID: 21300000, guid: b5b8cb4f8b21fb542aab54bab66ac631, type: 2}
+    - busCollectionCount: 400
+      stageRewards:
+        rewardType: 1
+        duration_quantity: 1
+        rewardIcon: {fileID: 21300000, guid: 9dbc5afb917cf1447a3bc771421ad308, type: 2}
+    - busCollectionCount: 500
+      stageRewards:
+        rewardType: 0
+        duration_quantity: 3000
+        rewardIcon: {fileID: 21300000, guid: 5945bfa8cc697544b8bbf24d82b98a33, type: 2}
+    BusSprites:
+    - {fileID: 21300000, guid: 4b07c5f0e77e8f04f8b4e1b5885bcf10, type: 2}
+    - {fileID: 21300000, guid: 28da8bb81cc6fcc4691b553488b04262, type: 2}
+    - {fileID: 21300000, guid: 9709f2030b25bce48a232cdb0ba0f611, type: 2}
+    - {fileID: 21300000, guid: 4b07c5f0e77e8f04f8b4e1b5885bcf10, type: 2}
+    - {fileID: 21300000, guid: 28da8bb81cc6fcc4691b553488b04262, type: 2}
+    - {fileID: 21300000, guid: 9709f2030b25bce48a232cdb0ba0f611, type: 2}
+    - {fileID: 21300000, guid: 4b07c5f0e77e8f04f8b4e1b5885bcf10, type: 2}
+    - {fileID: 21300000, guid: 28da8bb81cc6fcc4691b553488b04262, type: 2}
+    - {fileID: 21300000, guid: 9709f2030b25bce48a232cdb0ba0f611, type: 2}
+    - {fileID: 21300000, guid: 4b07c5f0e77e8f04f8b4e1b5885bcf10, type: 2}
+    doubleBusSprites:
+    - {fileID: 21300000, guid: 857e8075f0909324e9834788e1496e1c, type: 2}
+    - {fileID: 21300000, guid: e610a3ed875f59a4eab4c5ac6e6f4f55, type: 2}
+    - {fileID: 21300000, guid: df207c0a2615c514b80b5c970199b2a3, type: 2}
+    - {fileID: 21300000, guid: 857e8075f0909324e9834788e1496e1c, type: 2}
+    - {fileID: 21300000, guid: e610a3ed875f59a4eab4c5ac6e6f4f55, type: 2}
+    - {fileID: 21300000, guid: df207c0a2615c514b80b5c970199b2a3, type: 2}
+    - {fileID: 21300000, guid: 857e8075f0909324e9834788e1496e1c, type: 2}
+    - {fileID: 21300000, guid: e610a3ed875f59a4eab4c5ac6e6f4f55, type: 2}
+    - {fileID: 21300000, guid: df207c0a2615c514b80b5c970199b2a3, type: 2}
+    - {fileID: 21300000, guid: 857e8075f0909324e9834788e1496e1c, type: 2}

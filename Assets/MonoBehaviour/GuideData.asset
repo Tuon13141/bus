@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e32c36b8c00efbc768eab8c0497ebb3, type: 3}
+  m_Name: GuideData
+  m_EditorClassIdentifier:
+  listOfGuides:
+  - guideType: 0
+    levelNo: 1
+    guideInfo: Vehicles only drive in the direction of the arrow
+    yPositionOffset: 200
+  - guideType: 0
+    levelNo: 1
+    guideInfo: CAR can carry 4 people of the same color
+    yPositionOffset: 200
+  - guideType: 0
+    levelNo: 1
+    guideInfo: BUS can carry 10 people of the same color
+    yPositionOffset: 200
+  - guideType: 0
+    levelNo: 1
+    guideInfo: VAN can carry 6 people of the same color
+    yPositionOffset: 200
+  maxLevelsForHandShow: 0

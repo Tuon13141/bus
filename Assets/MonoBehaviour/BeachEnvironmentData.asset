@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae2b6ad1d6e9a72df12bd063ab141d0d, type: 3}
+  m_Name: BeachEnvironmentData
+  m_EditorClassIdentifier:
+  levelEnvironments:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  wallMaterials:
+  - {fileID: 2100000, guid: 9a3c0f50c7a8a6647bc54749cd0875f4, type: 2}
+  - {fileID: 2100000, guid: 5729b3b9f441e734bb436195aa648894, type: 2}
+  crackedWallHorizontalMaterial: {fileID: 2100000, guid: 7ca61ad77a14fe64da6c9dc3c14660b1, type: 2}
+  crackedWallVerticalMaterial: {fileID: 2100000, guid: b46d6c04f65297242bf2b7b122c09d72, type: 2}
+  gridTileMaterial: {fileID: 2100000, guid: 04760e3b860e0fa47a5e008b47e9d589, type: 2}
+  fillProps:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 1632436733781738, guid: ea9020ffb99c5af43a936b5f73d9c563, type: 2}
+  sizeMinRange: 10
+  sizeMaxRange: 15
+  rotationRange: 360
+  minimumBlocksForOneProp: 15
+  maxBlocksForOneProp: 20
+  maxProps: 5
