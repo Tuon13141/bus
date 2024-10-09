@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7259099797043692659}
   - component: {fileID: 9070122794854908128}
   - component: {fileID: 5779034002330702695}
+  - component: {fileID: 4012650228340211429}
   m_Layer: 0
   m_Name: MainRoad
   m_TagString: Untagged
@@ -101,7 +102,22 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4012650228340211429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1218441594280779866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4f47928eb680084cad3b321337aee3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  location: {x: 0, y: 0, z: 0}
+  levelController: {fileID: 0}
+  car: {fileID: 0}

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class LevelRenderer : MonoBehaviour
@@ -14,13 +15,15 @@ public class LevelRenderer : MonoBehaviour
     [SerializeField] int mainRoadsZ;
 
     [SerializeField] GameObject roadParent;
-    List<GameObject> roads = new List<GameObject>();
+    List<GridRoad> roads = new List<GridRoad>();
 
     [SerializeField] GameObject mainRoadParent;
-    List<GameObject> mainRoads = new List<GameObject>();
+    List<GridMainRoad> mainRoads = new List<GridMainRoad>();
 
     [SerializeField] GameObject borderRoadParent;
-    List<GameObject> borderRoads = new List<GameObject>();
+    List<GridBorderRoad> borderRoads = new List<GridBorderRoad>();
+
+    [SerializeField] LevelController levelController;
 
     private void Start()
     {
@@ -30,41 +33,57 @@ public class LevelRenderer : MonoBehaviour
 
     void GenerateRoadGrid()
     {
-        for(int i = 0; i < levelArea.x; i++)
-        {
-            for(int j = 0; j < levelArea.y; j++)
-            {
-                GameObject road;
+        int halfX = levelArea.x / 2;
+        int halfY = levelArea.y / 2;
 
-                if (j == mainRoadsZ)
+        for(int i = -halfX; i < halfX; i++)
+        {
+            for(int j = -halfY; j < halfY; j++)
+            {
+                GameObject roadObj;
+                Vector2Int spawnPoint = new Vector2Int(i, j);
+                Vector3 location = new Vector3(i, -0.1f, j);
+
+                if (j == (int) mainRoadsZ / 2)
                 {
-                    road = Instantiate(mainRoadPref, new Vector3(i, 0, j), Quaternion.identity);
-                    road.transform.parent = mainRoadParent.transform;
+                    roadObj = Instantiate(mainRoadPref, location, Quaternion.identity);
+                    roadObj.transform.parent = mainRoadParent.transform;
+                    GridMainRoad road = roadObj.GetComponent<GridMainRoad>();
+                    road.SetUp(spawnPoint, levelController);
                     mainRoads.Add(road);
                 }
-                else if (i == 0 || i == levelArea.x - 1 || j == 0 || j == levelArea.y - 1)
+                else if (i == -halfX || i == halfX - 1 || j == -halfY || j == halfY - 1)
                 {
-                    road = Instantiate(borderRoadPref, new Vector3(i, 0, j), Quaternion.identity);
-                    road.transform.parent = borderRoadParent.transform;
+                    roadObj = Instantiate(borderRoadPref, location, Quaternion.identity);
+                    roadObj.transform.parent = borderRoadParent.transform;
+                    GridBorderRoad road = roadObj.GetComponent<GridBorderRoad>();
+                    road.SetUp(spawnPoint, levelController);
                     borderRoads.Add(road);
                 }
                 else
                 {
-                    road = Instantiate(roadPref, new Vector3(i, 0, j), Quaternion.identity);
-                    road.transform.parent = roadParent.transform;
+                    roadObj = Instantiate(roadPref, location, Quaternion.identity);
+                    roadObj.transform.parent = roadParent.transform;
+                    GridRoad road = roadObj.GetComponent<GridRoad>();
+                    road.SetUp(spawnPoint, levelController);
                     roads.Add(road);
                 }
             }
         }
+
+        //Debug.Log(levelController.RoadDict.Count);
     }
     void AdjustCameraToFitGrid()
     {
         Camera mainCamera = Camera.main;
 
-        int x = levelArea.x - 1;
+        float x = -0.5f;
+        if (levelArea.x % 2 != 0) {
+            x = -0.5f;
+        }
       
 
-        Vector3 gridCenter = new Vector3(x / 2f, 0, levelArea.y / 2f);
+        Vector3 gridCenter = new Vector3(x, 0, 0);
 
         if (mainCamera.orthographic)
         {
