@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class GridMainRoad : GridRoad
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GridMainRoad UpMainRoad { get; set; }
+    public GridMainRoad BotMainRoad { get; set; }
+    public GridMainRoad LeftMainRoad { get; set; }
+    public GridMainRoad RightMainRoad { get; set; }
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] bool isExitRoad = false;
+
+    public GridExitEnterRoad ExitEnterRoad { get; set; }
+
+    public void SetIsExitRoad(bool isExitRoad)
     {
-        
+        this.isExitRoad = isExitRoad;
     }
 }

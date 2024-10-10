@@ -1,19 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class Car : MonoBehaviour
 {
-    public int scaleX; 
-    public int scaleZ; 
-    public DirectionType directionType;
+    [SerializeField] Vector2Int scale;
+    [SerializeField] DirectionType directionType;
     private float rotationDegrees; 
-    public Vector3Int spawnPoint;
-
-    void Start()
+    [SerializeField] Vector3Int spawnPoint;
+    [SerializeField] List<Vector3> movePoints = new List<Vector3>();
+    [SerializeField] float moveSpeed = 10f;
+    public List<Vector3> MovePoints => movePoints;
+    [SerializeField] Animation carShakingAnimation;
+    List<Vector2Int> gridHolders = new List<Vector2Int>();
+    bool isMoving = false;
+    public void OnStart()
     {
         transform.position = spawnPoint;
+        movePoints.Clear();
+        //movePoints.Add(spawnPoint);
+  
         GetRotation();
         CalculateOverlappingGrids();  
     }
@@ -56,8 +64,8 @@ public class Car : MonoBehaviour
 
         Matrix4x4 rotationMatrix = Matrix4x4.Rotate(Quaternion.Euler(0, rotationDegrees, 0));
 
-        int x = scaleX;
-        int z = scaleZ;
+        int x = scale.x;
+        int z = scale.y;
 
         Vector3 P1 = new Vector3(-(int)x / 2, 0, -(int)z / 2);
         Vector3 P2 = new Vector3((int)x / 2, 0, (int)z / 2);
@@ -81,14 +89,14 @@ public class Car : MonoBehaviour
         int sx = (x1 < x2) ? 1 : -1;
         int sz = (z1 < z2) ? 1 : -1;
 
-        List<Vector2Int> grids = new List<Vector2Int>();
+       
 
         if (dx > dz)
         {
             int err = dx / 2;
             while (x1 != x2)
             {
-                grids.Add(new Vector2Int(x1, z1));
+                gridHolders.Add(new Vector2Int(x1, z1));
 
                 err -= dz;
                 if (err < 0)
@@ -104,7 +112,7 @@ public class Car : MonoBehaviour
             int err = dz / 2;
             while (z1 != z2)
             {
-                grids.Add(new Vector2Int(x1, z1));
+                gridHolders.Add(new Vector2Int(x1, z1));
 
                 err -= dx;
                 if (err < 0)
@@ -116,9 +124,9 @@ public class Car : MonoBehaviour
             }
         }
 
-        grids.Add(new Vector2Int(x2, z2));
+        gridHolders.Add(new Vector2Int(x2, z2));
 
-        foreach (var grid in grids)
+        foreach (var grid in gridHolders)
         {
             for(int i = -1; i <=1; i++)
             {
@@ -128,7 +136,7 @@ public class Car : MonoBehaviour
                 if (LevelController.Instance.RoadDict.ContainsKey(vector2Int))
                 {
                     //Debug.Log(1);
-                    LevelController.Instance.RoadDict[vector2Int].SetCar(this);
+                    LevelController.Instance.RoadDict[vector2Int].SetCanSpawnCar(false);
                 }
 
                 vector2Int = new Vector2Int(grid.x, grid.y + i);
@@ -136,12 +144,13 @@ public class Car : MonoBehaviour
                 if (LevelController.Instance.RoadDict.ContainsKey(vector2Int))
                 {
                     //Debug.Log(1);
-                    LevelController.Instance.RoadDict[vector2Int].SetCar(this);
+                    LevelController.Instance.RoadDict[vector2Int].SetCanSpawnCar(false);
                 }
             }
             if (LevelController.Instance.RoadDict.ContainsKey(grid))
             {
                 LevelController.Instance.RoadDict[grid].SetCar(this);
+                LevelController.Instance.RoadDict[grid].SetCanSpawnCar(false);
             }
             //Debug.Log(grid);
         }
@@ -150,6 +159,7 @@ public class Car : MonoBehaviour
     public void Clicked()
     {
         Debug.Log("Clicked");
+        if (isMoving) return;
         Vector2Int moveDirection = new Vector2Int();
         switch (directionType)
         {
@@ -179,8 +189,140 @@ public class Car : MonoBehaviour
                 break;
         }
 
+        movePoints.Clear();
+        isMoving = true;
+        Vector2Int spawnPoint2Int = new Vector2Int(spawnPoint.x, spawnPoint.z);
 
-        LevelController.Instance.CheckRoad(new Vector2Int(spawnPoint.x, spawnPoint.z), moveDirection, this);
+        if (LevelController.Instance.CheckRoad(spawnPoint2Int, moveDirection, this))
+        {
+            moveCoroutine = StartCoroutine(Move());
+            foreach (Vector2Int grid in gridHolders)
+            {
+                LevelController.Instance.RoadDict[grid].RemoveCar(this);
+            }
+            
+        }
+        else
+        {
+            moveCoroutine = StartCoroutine(MoveBack());
+        }
+    }
+
+    
+
+    public void AddToMovePoints(Vector2Int vector2Int)
+    {
+        movePoints.Add(new Vector3(vector2Int.x, transform.position.y, vector2Int.y));
+    }
+
+    public void AddRangeToMovePoints(List<Vector3> vector3s)
+    {
+        movePoints.AddRange(vector3s);
+    }
+
+    Coroutine moveCoroutine = null;
+
+    IEnumerator Move()
+    {
+        for (int i = 1; i < movePoints.Count; i++)
+        {
+            Vector3 currentPoint = movePoints[i - 1];
+            Vector3 nextPoint = movePoints[i];
+
+            Vector3 direction = nextPoint - currentPoint;
+
+            StartCoroutine(SmoothRotateTowardsDirection(direction));
+
+
+            Vector3 targetPosition = new Vector3(nextPoint.x, nextPoint.y, nextPoint.z);
+
+            while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+                yield return null;
+            }
+
+            transform.position = targetPosition;
+        }
+
+        isMoving = false;
+    }
+
+    IEnumerator MoveBack()
+    {
+        movePoints.Reverse();
+        movePoints.RemoveAt(0);
+
+        yield return null;
+
+        foreach (Vector3 point in movePoints)
+        {
+            Vector3 targetPosition = new Vector3(point.x, point.y, point.z);
+
+            while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * 2 * Time.deltaTime);
+                yield return null;
+            }
+
+            transform.position = targetPosition;
+        }
+
+        while (Vector3.Distance(transform.position, spawnPoint) > 0.01f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, spawnPoint, moveSpeed * 2 * Time.deltaTime);
+            yield return null;
+        }
+
+        isMoving = false;
+    }
+
+    public IEnumerator PlayShakingAnimation()
+    {
+        carShakingAnimation.Play();
+
+        yield return new WaitForSeconds(3);
+
+        carShakingAnimation.Stop();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Car carScript = other.GetComponent<Car>();
+
+        if (carScript != null && isMoving)
+        {
+            //Debug.Log("Touched Car!");
+            StartCoroutine(carScript.PlayShakingAnimation());
+            StopCoroutine(moveCoroutine);
+            StartCoroutine(MoveBack());
+
+        }
+
+    }
+
+    IEnumerator SmoothRotateTowardsDirection(Vector3 direction)
+    {
+        direction.Normalize();
+
+        float targetRotationY = 0f;
+
+        targetRotationY = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+
+        Quaternion currentRotation = transform.rotation;
+        Quaternion targetRotation = Quaternion.Euler(0f, targetRotationY, 0f);
+
+        float rotationSpeed = 10f; 
+
+        float t = 0f;
+        while (t < 1f)
+        {
+            t += Time.deltaTime * rotationSpeed;
+            transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, t);
+            yield return null;
+        }
+
+        transform.rotation = targetRotation;
     }
 }
 
