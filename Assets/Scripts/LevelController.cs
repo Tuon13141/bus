@@ -63,7 +63,7 @@ public class LevelController : MonoBehaviour
                 //Debug.Log("Find Road");
                 if (RoadDict[nextGridRoad].IsHadCar(car))
                 {
-                    Debug.Log("Find Car " + nextGridRoad);
+                    //Debug.Log("Find Car " + nextGridRoad);
                     return false;
                 }
 
@@ -71,7 +71,7 @@ public class LevelController : MonoBehaviour
                 {
                     if (RoadDict[nextGridRoad].IsHadCrossCar())
                     {
-                        Debug.Log("Find Car Cross " + nextGridRoad);
+                        //Debug.Log("Find Car Cross " + nextGridRoad);
                         return false;
                     }
                 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -21,6 +22,7 @@ public class Car : MonoBehaviour
     Coroutine moveCoroutine = null;
 
     [SerializeField] LevelController levelController;
+    Action clickedAction;
     public void OnStart(LevelController levelController)
     {
         this.levelController = levelController;
@@ -202,11 +204,12 @@ public class Car : MonoBehaviour
         }
     }
 
-    public void Clicked()
+    public void Clicked(Action action)
     {
         if (isMoving) return;
-        Debug.Log("Clicked");
-        
+        //Debug.Log("Clicked");
+        clickedAction = action;
+
         Vector2Int moveDirection = new Vector2Int();
         switch (directionType)
         {
@@ -242,7 +245,7 @@ public class Car : MonoBehaviour
 
         if (levelController.CheckRoad(spawnPoint2Int, moveDirection, this))
         {
-            moveCoroutine = StartCoroutine(Move());
+            moveCoroutine = StartCoroutine(Move(true));
             foreach (Vector2Int grid in gridHolders)
             {
                 levelController.RoadDict[grid].RemoveCar(this);
@@ -272,7 +275,7 @@ public class Car : MonoBehaviour
 
    
 
-    IEnumerator Move()
+    IEnumerator Move(bool activateAction = false)
     {
 
         for (int i = 1; i < movePoints.Count; i++)
@@ -296,6 +299,11 @@ public class Car : MonoBehaviour
             transform.position = targetPosition;
         }
 
+        if (activateAction)
+        {
+            clickedAction.Invoke();
+        }
+       
         isMoving = false;
     }
 
@@ -330,6 +338,7 @@ public class Car : MonoBehaviour
         }
 
         movePoints.Clear();
+        clickedAction.Invoke();
         isMoving = false;
     }
 
@@ -348,7 +357,7 @@ public class Car : MonoBehaviour
 
         if (carScript != null && isMoving)
         {
-            Debug.Log("Touched Car!");
+            //Debug.Log("Touched Car!");
             StartCoroutine(carScript.PlayShakingAnimation());
             
             StopCoroutine(moveCoroutine);
@@ -427,6 +436,7 @@ public class Car : MonoBehaviour
                 movePoints.Clear();
                 movePoints.Add(gridExitEnterRoad.GetTransformPosition());
                 movePoints.Add(gridExitEnterRoad.ExitStopRoad.GetTransformPosition());
+                gridExitEnterRoad.ExitStopRoad.SetCar(this);
                 //Debug.Log(1);
                 StartCoroutine(Move());
             }
@@ -441,4 +451,9 @@ public class Car : MonoBehaviour
 public enum DirectionType
 {
     Up, Down, Left, Right, UpLeft, UpRight, DownLeft, DownRight
+}
+
+public enum CarStat
+{
+    OnRoad, MovingToMainRoad, MovingToExitRoad, OnExitRoad, MovingOutOfMap, OnOutOfMap 
 }
