@@ -10,10 +10,11 @@ public class LevelRenderer : MonoBehaviour
     [SerializeField] GameObject borderRoadPref;
     [SerializeField] GameObject exitAreaObject;
     [SerializeField] GameObject exitAreaRoadPref;
+    [SerializeField] GameObject passengerPref;
 
     [SerializeField] List<GridExitEnterRoad> gridExitEnterRoads = new List<GridExitEnterRoad>();
     [SerializeField] List<GridExitStopRoad> gridExitStopRoads = new List<GridExitStopRoad>();
-
+    [SerializeField] List<GridPassenger> gridPassengers = new List<GridPassenger>();
 
     [SerializeField] Vector2Int levelArea;
   
@@ -35,11 +36,14 @@ public class LevelRenderer : MonoBehaviour
 
     [SerializeField] LevelController levelController;
 
+    [SerializeField] List<PassengerWave> passengerWaves = new List<PassengerWave>();
+
     private void Start()
     {
         GenerateRoadGrid();
         SetUpRoadConnections();
         AdjustCameraToFitGrid();
+        StartCoroutine(InstantiatePassengers());
         StartCar();
     }
 
@@ -94,10 +98,10 @@ public class LevelRenderer : MonoBehaviour
                 Vector2Int grid = new Vector2Int(i, j);
                 Instantiate(exitAreaRoadPref, location, Quaternion.identity).transform.parent = exitRoadParent.transform;
 
-                if (levelController.RoadDict.ContainsKey(grid))
+                if (levelController.GridDict.ContainsKey(grid))
                 {
-                    Destroy(levelController.RoadDict[grid].gameObject);
-                    levelController.RoadDict.Remove(grid);
+                    Destroy(levelController.GridDict[grid].gameObject);
+                    levelController.GridDict.Remove(grid);
                 }
             }
         }
@@ -258,20 +262,36 @@ public class LevelRenderer : MonoBehaviour
 
         foreach(GridExitEnterRoad gridExitEnterRoad in gridExitEnterRoads)
         {
-            gridExitEnterRoad.OnStart();
             gridExitEnterRoad.SetLevelController(levelController);
+            gridExitEnterRoad.OnStart();
+          
         }
 
         foreach(GridExitStopRoad gridExitStopRoad in gridExitStopRoads)
         {
-            gridExitStopRoad.OnStart();
             gridExitStopRoad.SetLevelController(levelController);
+            gridExitStopRoad.OnStart();
+           
+        }
+        
+        foreach(GridPassenger gridPassenger in gridPassengers)
+        {
+            gridPassenger.OnStart();
         }
     }
 
-    GridRoad GetNerbyGrid(Vector2Int direction, Vector2Int startPoint)
+    Grid GetNerbyGrid(Vector2Int direction, Vector2Int startPoint)
     {
-        if (levelController.RoadDict.ContainsKey(direction + startPoint)) return levelController.RoadDict[direction + startPoint];
+        if (levelController.GridDict.ContainsKey(direction + startPoint))
+        {
+            if(levelController.GridDict[direction + startPoint] is GridRoad)
+            {
+                Grid gridRoad = (Grid)levelController.GridDict[direction + startPoint];
+                return gridRoad;
+            }
+            
+        }
+       
         return null;
     }
 
@@ -287,4 +307,61 @@ public class LevelRenderer : MonoBehaviour
             car.OnStart(levelController);
         }
     }
+
+    int currentIndexInPassengerWaves = 0;
+    int currentIndexOfPassengerWave = 0;
+    IEnumerator InstantiatePassengers()
+    {
+        for (int i = currentIndexInPassengerWaves; i < passengerWaves.Count; i++)
+        {
+            currentIndexInPassengerWaves = i;
+            for (int j = currentIndexOfPassengerWave; j < passengerWaves[i].numberOfPassenger; j++)
+            {
+              
+                foreach (GridPassenger gridPassenger in gridPassengers)
+                {
+                    if (gridPassenger.IsStartPoint)
+                    {
+                        if (gridPassenger.IsHadPassenger()) yield break;
+                        GameObject passengerObj = Instantiate(passengerPref);
+                        Passenger passenger = passengerObj.GetComponent<Passenger>();
+
+                        passenger.ColorType = passengerWaves[i].colorType;
+                        gridPassenger.Passenger = passenger;
+                        passenger.GridPassenger = gridPassenger;
+                        passenger.transform.position = gridPassenger.GetTransformPosition();
+                        passenger.transform.parent = gridPassenger.transform;
+
+                        GridPassenger nextGridPassenger = gridPassenger.nextGridPassenger;
+                        GridPassenger currentGridPassenger = gridPassenger;
+
+                        while (nextGridPassenger != null && !nextGridPassenger.IsHadPassenger())
+                        {
+                            //Debug.Log(nextGridPassenger.gameObject.name);
+                           
+                            nextGridPassenger.Passenger = passenger;
+                            passenger.GridPassenger = nextGridPassenger;
+                            passenger.transform.parent = nextGridPassenger.transform;
+                            passenger.MovePoints.Add(nextGridPassenger.GetTransformPosition());
+
+                            currentGridPassenger.Passenger = null;
+
+                            currentGridPassenger = nextGridPassenger;
+
+                            nextGridPassenger = nextGridPassenger.nextGridPassenger;
+                        }
+                        currentIndexOfPassengerWave = j;
+                        passenger.Move();
+                        break;
+                    }
+                }
+
+               
+                yield return new WaitForSeconds(0.5f);
+            }
+
+            currentIndexOfPassengerWave = 0;
+        }
+    }
+
 }

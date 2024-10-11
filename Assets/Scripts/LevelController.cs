@@ -7,8 +7,8 @@ public class LevelController : MonoBehaviour
     public static LevelController Instance;
 
     [SerializeField] LevelRenderer levelRenderer;
-    [SerializeField] Dictionary<Vector2Int, GridRoad> roadDict = new Dictionary<Vector2Int, GridRoad>();
-    public Dictionary<Vector2Int, GridRoad> RoadDict => roadDict;
+    [SerializeField] Dictionary<Vector2Int, Grid> gridDict = new Dictionary<Vector2Int, Grid>();
+    public Dictionary<Vector2Int, Grid> GridDict => gridDict;
 
     private void Awake()
     {
@@ -26,13 +26,13 @@ public class LevelController : MonoBehaviour
             isMoveCross = true;
         }
 
-        if (roadDict.ContainsKey(nextGridRoad))
+        if (gridDict.ContainsKey(nextGridRoad))
         {
             car.AddToMovePoints(nextGridRoad);
-            if (roadDict[nextGridRoad] is GridMainRoad)
+            if (gridDict[nextGridRoad] is GridMainRoad)
             {
                 //Debug.Log("Find Main Road");
-                var result = FindShortestPathToExitEnterRoad((GridMainRoad)roadDict[nextGridRoad]);
+                var result = FindShortestPathToExitEnterRoad((GridMainRoad)gridDict[nextGridRoad]);
 
                 if(result.Item1 == null)
                 {
@@ -44,10 +44,10 @@ public class LevelController : MonoBehaviour
                 car.RoadOptional(result.Item2);
                 return true;
             }
-            else if (roadDict[nextGridRoad] is GridBorderRoad)
+            else if (gridDict[nextGridRoad] is GridBorderRoad)
             {
                 //Debug.Log("Find Border Road");
-                var result = FindShortestPathToMainRoad((GridBorderRoad)roadDict[nextGridRoad]);
+                var result = FindShortestPathToMainRoad((GridBorderRoad)gridDict[nextGridRoad]);
 
                 if (result.Item1 == null)
                 {
@@ -58,20 +58,21 @@ public class LevelController : MonoBehaviour
                 car.RoadOptional(result.Item2);
                 return true;
             }
-            else if (roadDict[nextGridRoad] is GridRoad)
+            else if (gridDict[nextGridRoad] is GridRoad)
             {
                 //Debug.Log("Find Road");
-                if (RoadDict[nextGridRoad].IsHadCar(car))
+                GridRoad gridRoad = gridDict[nextGridRoad] as GridRoad;
+                if (gridRoad.IsHadCar(car))
                 {
-                    //Debug.Log("Find Car " + nextGridRoad);
+                    Debug.Log("Find Car " + nextGridRoad);
                     return false;
                 }
 
                 if (isMoveCross)
                 {
-                    if (RoadDict[nextGridRoad].IsHadCrossCar())
+                    if (gridRoad.IsHadCrossCar())
                     {
-                        //Debug.Log("Find Car Cross " + nextGridRoad);
+                        Debug.Log("Find Car Cross " + nextGridRoad);
                         return false;
                     }
                 }
@@ -198,7 +199,7 @@ public class LevelController : MonoBehaviour
         GridMainRoad nearestRoad = null;
         float nearestDistance = float.MaxValue;
 
-        foreach (var road in RoadDict)
+        foreach (var road in GridDict)
         {
             if (road.Value is GridMainRoad mainRoad)
             {

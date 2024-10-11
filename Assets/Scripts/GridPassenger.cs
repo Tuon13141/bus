@@ -2,16 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridExitStopRoad : GridRoad
+public class GridPassenger : Grid
 {
-    public GridExitEnterRoad GridExitEnterRoad { get; set; }
+    public Passenger Passenger { get; set; } 
 
-    [SerializeField] bool isOpen = false;
-    public bool IsOpen => isOpen;
+    public GridPassenger previousGridPassenger;
+    public GridPassenger nextGridPassenger;
+
+    public bool IsStartPoint;
+
+    [SerializeField] List<GridExitStopRoad> connectedGridExitStayGrids;
+    
+    public bool IsHadPassenger()
+    {
+        if(this.Passenger == null) return false;
+        return true;
+    }
+
     public override void OnStart()
     {
         base.OnStart();
-        transform.localPosition = new Vector3(spawnPoint.x, 0, spawnPoint.y);
+       
     }
 
     public override void SetLevelController(LevelController levelController)

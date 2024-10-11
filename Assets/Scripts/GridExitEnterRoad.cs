@@ -20,13 +20,13 @@ public class GridExitEnterRoad : GridRoad
     {
         base.SetLevelController(levelController);
         Vector2Int location = new Vector2Int((int)transform.position.x, (int)transform.position.y);
-        if (levelController.RoadDict.ContainsKey(location))
+        if (levelController.GridDict.ContainsKey(location))
         {
-            levelController.RoadDict[location] = this;
+            levelController.GridDict[location] = this;
         }
         else
         {
-            levelController.RoadDict.Add(location, this);
+            levelController.GridDict.Add(location, this);
         }
     }
 }

@@ -2913,6 +2913,7 @@ GameObject:
   - component: {fileID: 711922171289984590}
   - component: {fileID: 6148514176684992167}
   - component: {fileID: 5055868545528180610}
+  - component: {fileID: 5631020769671496757}
   m_Layer: 6
   m_Name: 2 Bus_TenSeater
   m_TagString: Untagged
@@ -2969,9 +2970,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 090902968526fd441b3e92e165315a3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleX: 5
-  scaleZ: 1
-  rotationDegrees: 0
+  scale: {x: 1, y: 5}
+  seatCount: 0
+  stat: 0
+  colorType: 0
+  directionType: 2
+  spawnPoint: {x: 0, y: 0, z: -3}
+  movePoints: []
+  moveSpeed: 10
+  carShakingAnimation: {fileID: 3239110104815674603}
+  carRenderers:
+  - {fileID: 7896606442432697978}
+  - {fileID: 6024374583728544660}
+  levelController: {fileID: 0}
+--- !u!54 &5631020769671496757
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887575189297466713}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1893564866626446983
 GameObject:
   m_ObjectHideFlags: 0

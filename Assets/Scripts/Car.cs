@@ -9,18 +9,29 @@ using UnityEngine.UI;
 public class Car : MonoBehaviour
 {
     [SerializeField] Vector2Int scale;
+    [SerializeField] int seatCount;
+    [SerializeField] CarStat stat = CarStat.OnRoad;
+    [SerializeField] ColorType colorType = ColorType.Red;
     [SerializeField] DirectionType directionType;
     private float rotationDegrees; 
     [SerializeField] Vector3Int spawnPoint;
+
+
     [SerializeField] List<Vector3> movePoints = new List<Vector3>();
     [SerializeField] float moveSpeed = 10f;
     public List<Vector3> MovePoints => movePoints;
+
+
     [SerializeField] Animation carShakingAnimation;
+    [SerializeField] List<MeshRenderer> carRenderers = new List<MeshRenderer>();    
+
+
     List<Vector2Int> gridHolders = new List<Vector2Int>();
     List<Vector2Int> gridCrossHolders = new List<Vector2Int>();
+
+
     bool isMoving = false;
     Coroutine moveCoroutine = null;
-
     [SerializeField] LevelController levelController;
     Action clickedAction;
     public void OnStart(LevelController levelController)
@@ -31,6 +42,7 @@ public class Car : MonoBehaviour
         //movePoints.Add(spawnPoint);
   
         GetRotation();
+        GetColor();
         CalculateOverlappingGrids();  
     }
 
@@ -65,6 +77,33 @@ public class Car : MonoBehaviour
         }
 
         transform.rotation = Quaternion.Euler(0, rotationDegrees, 0);
+    }
+    void GetColor()
+    {
+        switch (colorType)
+        {
+            case ColorType.Red:
+                SetColor(Color.red);
+                break;
+            case ColorType.Green:
+                SetColor(Color.green);
+                break;
+            case ColorType.Blue:
+                SetColor(Color.blue);
+                break;
+        }
+    }
+
+    void SetColor(Color newColor)
+    {
+        foreach(MeshRenderer mesh in carRenderers)
+        {
+            foreach (Material mat in mesh.materials)
+            {
+                mat.SetColor("_BaseColor", newColor);
+                mat.SetColor("_Color", newColor);
+            }
+        }
     }
     void CalculateOverlappingGrids()
     {
@@ -141,35 +180,36 @@ public class Car : MonoBehaviour
                 if (i == 0) continue;
                 Vector2Int vector2Int = new Vector2Int(gridHolders[0].x + i, gridHolders[0].y);
 
-                if (levelController.RoadDict.ContainsKey(vector2Int))
+                if (levelController.GridDict.ContainsKey(vector2Int))
                 {
                     //Debug.Log(1);
-                    levelController.RoadDict[vector2Int].AddCrossCar(this);
+                    GridRoad gridRoad = (GridRoad)levelController.GridDict[vector2Int];
+                    gridRoad.AddCrossCar(this);
                     gridCrossHolders.Add(vector2Int);
                 }
 
                 vector2Int = new Vector2Int(gridHolders[0].x, gridHolders[0].y + i);
-                if (levelController.RoadDict.ContainsKey(vector2Int))
+                if (levelController.GridDict.ContainsKey(vector2Int))
                 {
-                    //Debug.Log(1);
-                    levelController.RoadDict[vector2Int].AddCrossCar(this);
+                    GridRoad gridRoad = (GridRoad)levelController.GridDict[vector2Int];
+                    gridRoad.AddCrossCar(this);
                     gridCrossHolders.Add(vector2Int);
                 }
 
                 vector2Int = new Vector2Int(gridHolders[gridHolders.Count - 1].x + i, gridHolders[gridHolders.Count - 1].y);
 
-                if (levelController.RoadDict.ContainsKey(vector2Int))
+                if (levelController.GridDict.ContainsKey(vector2Int))
                 {
-                    //Debug.Log(1);
-                    levelController.RoadDict[vector2Int].AddCrossCar(this);
+                    GridRoad gridRoad = (GridRoad)levelController.GridDict[vector2Int];
+                    gridRoad.AddCrossCar(this);
                     gridCrossHolders.Add(vector2Int);
                 }
 
                 vector2Int = new Vector2Int(gridHolders[gridHolders.Count - 1].x, gridHolders[gridHolders.Count - 1].y + i);
-                if (levelController.RoadDict.ContainsKey(vector2Int))
+                if (levelController.GridDict.ContainsKey(vector2Int))
                 {
-                    //Debug.Log(1);
-                    levelController.RoadDict[vector2Int].AddCrossCar(this);
+                    GridRoad gridRoad = (GridRoad)levelController.GridDict[vector2Int];
+                    gridRoad.AddCrossCar(this);
                     gridCrossHolders.Add(vector2Int);
                 }
             }
@@ -182,22 +222,23 @@ public class Car : MonoBehaviour
                 if (i == 0) continue;
                 Vector2Int vector2Int = new Vector2Int(grid.x + i, grid.y);
                 //Debug.Log(vector2Int);
-                if (levelController.RoadDict.ContainsKey(vector2Int))
+                if (levelController.GridDict.ContainsKey(vector2Int))
                 {
                    
                 }
 
                 vector2Int = new Vector2Int(grid.x, grid.y + i);
                 //Debug.Log(vector2Int);
-                if (levelController.RoadDict.ContainsKey(vector2Int))
+                if (levelController.GridDict.ContainsKey(vector2Int))
                 {
                
                 }
 
             }
-            if (levelController.RoadDict.ContainsKey(grid))
+            if (levelController.GridDict.ContainsKey(grid))
             {
-                levelController.RoadDict[grid].SetCar(this);
+                GridRoad gridRoad = (GridRoad)levelController.GridDict[grid];
+                gridRoad.SetCar(this);
                 //levelController.RoadDict[grid].AddCrossCar(this);
             }
             //Debug.Log(grid);
@@ -207,6 +248,8 @@ public class Car : MonoBehaviour
     public void Clicked(Action action)
     {
         if (isMoving) return;
+
+        if(stat != CarStat.OnRoad) return;
         //Debug.Log("Clicked");
         clickedAction = action;
 
@@ -245,14 +288,20 @@ public class Car : MonoBehaviour
 
         if (levelController.CheckRoad(spawnPoint2Int, moveDirection, this))
         {
+            ChangeCarStat(CarStat.MovingToExitRoad);
+
             moveCoroutine = StartCoroutine(Move(true));
             foreach (Vector2Int grid in gridHolders)
             {
-                levelController.RoadDict[grid].RemoveCar(this);
+                GridRoad gridRoad = (GridRoad)levelController.GridDict[grid];
+                    
+                gridRoad.RemoveCar(this);
             }
             foreach (Vector2Int grid in gridCrossHolders)
             {
-                levelController.RoadDict[grid].RemoveCrossCar(this);
+                GridRoad gridRoad = (GridRoad)levelController.GridDict[grid];
+
+                gridRoad.RemoveCrossCar(this);
             }
         }
         else
@@ -260,8 +309,6 @@ public class Car : MonoBehaviour
             moveCoroutine = StartCoroutine(Move());
         }
     }
-
-    
 
     public void AddToMovePoints(Vector2Int vector2Int)
     {
@@ -273,9 +320,7 @@ public class Car : MonoBehaviour
         movePoints.AddRange(vector3s);
     }
 
-   
-
-    IEnumerator Move(bool activateAction = false)
+    IEnumerator Move(bool activateAction = false, bool isMovingToExitRoad = false)
     {
 
         for (int i = 1; i < movePoints.Count; i++)
@@ -303,6 +348,11 @@ public class Car : MonoBehaviour
         {
             clickedAction.Invoke();
         }
+
+        if (isMovingToExitRoad)
+        {
+            ChangeCarStat(CarStat.OnExitRoad);
+        } 
        
         isMoving = false;
     }
@@ -438,12 +488,36 @@ public class Car : MonoBehaviour
                 movePoints.Add(gridExitEnterRoad.ExitStopRoad.GetTransformPosition());
                 gridExitEnterRoad.ExitStopRoad.SetCar(this);
                 //Debug.Log(1);
-                StartCoroutine(Move());
+                StartCoroutine(Move(false, true));
             }
             else
             {
                 //Hien thi bang chon duong di
             }
+        }
+    }
+
+    void ChangeCarStat(CarStat stat)
+    {
+        this.stat = stat;
+
+        switch (stat)
+        {
+            case CarStat.OnRoad:
+
+                break;
+            case CarStat.MovingToExitRoad:
+
+                break;
+            case CarStat.OnExitRoad:
+
+                break;
+            case CarStat.MovingOutOfMap:
+
+                break;
+            case CarStat.OnOutOfMap:
+
+                break;
         }
     }
 }
@@ -455,5 +529,10 @@ public enum DirectionType
 
 public enum CarStat
 {
-    OnRoad, MovingToMainRoad, MovingToExitRoad, OnExitRoad, MovingOutOfMap, OnOutOfMap 
+    OnRoad, MovingToExitRoad, OnExitRoad, MovingOutOfMap, OnOutOfMap 
+}
+
+public enum ColorType
+{
+    Red, Green, Blue
 }

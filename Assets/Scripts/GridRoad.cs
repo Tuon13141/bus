@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class GridRoad : MonoBehaviour
+public class GridRoad : Grid
 {
-    [SerializeField] protected Vector2Int spawnPoint;
-    [SerializeField] protected LevelController levelController;
+    
     [SerializeField] protected Car car;
     [SerializeField] protected List<Car> crossCars = new List<Car>();
     public void SetUp(Vector2Int location, LevelController levelController)
@@ -14,15 +13,15 @@ public class GridRoad : MonoBehaviour
         this.spawnPoint = location;
         this.levelController = levelController;
 
-        if (levelController.RoadDict.ContainsKey(location)) 
+        if (levelController.GridDict.ContainsKey(location)) 
         {
             //Debug.Log(1);
-            levelController.RoadDict[location] = this;
+            levelController.GridDict[location] = this;
         }
         else
         {
             //Debug.Log(2);
-            levelController.RoadDict.Add(location, this);
+            levelController.GridDict.Add(location, this);
         }
 
     }
@@ -75,20 +74,4 @@ public class GridRoad : MonoBehaviour
 
     }
 
-    public Vector2Int GetSpawnPoint()
-    {
-        return spawnPoint;
-    }
-
-    public virtual void OnStart()
-    {
-
-    }
-
-    public virtual void SetLevelController(LevelController levelController)
-    {
-        this.levelController = levelController;
-    }
-
-    public Vector3 GetTransformPosition() {  return transform.position; }
 }

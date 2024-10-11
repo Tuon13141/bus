@@ -242,6 +242,7 @@ GameObject:
   - component: {fileID: 1918424403193669406}
   - component: {fileID: 8786743977898349679}
   - component: {fileID: 1760993606605860381}
+  - component: {fileID: 2034353194302415382}
   m_Layer: 6
   m_Name: 1 Van_SixSeater
   m_TagString: Untagged
@@ -298,9 +299,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 090902968526fd441b3e92e165315a3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleX: 4
-  scaleZ: 1
-  rotationDegrees: 0
+  scale: {x: 1, y: 4}
+  seatCount: 0
+  stat: 0
+  colorType: 2
+  directionType: 5
+  spawnPoint: {x: -6, y: 0, z: -6}
+  movePoints: []
+  moveSpeed: 10
+  carShakingAnimation: {fileID: 3005560997402746695}
+  carRenderers:
+  - {fileID: 5587810755489905690}
+  - {fileID: 8585446779421004502}
+  levelController: {fileID: 0}
+--- !u!54 &2034353194302415382
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2366677547804535308}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2500464145989786411
 GameObject:
   m_ObjectHideFlags: 0
