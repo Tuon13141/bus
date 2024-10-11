@@ -160,7 +160,7 @@ public class LevelRenderer : MonoBehaviour
             {
                 if (gridRoad is GridBorderRoad)
                 {
-                    borderRoad.UpBorderRoad = (GridBorderRoad)gridRoad;
+                    borderRoad.Up = (GridBorderRoad)gridRoad;
                 }
                 else if (gridRoad is GridMainRoad)
                 {
@@ -173,7 +173,7 @@ public class LevelRenderer : MonoBehaviour
             {
                 if (gridRoad is GridBorderRoad)
                 {
-                    borderRoad.BotBorderRoad = (GridBorderRoad)gridRoad;
+                    borderRoad.Bot = (GridBorderRoad)gridRoad;
                 }
                 else if (gridRoad is GridMainRoad)
                 {
@@ -186,7 +186,7 @@ public class LevelRenderer : MonoBehaviour
             {
                 if (gridRoad is GridBorderRoad)
                 {
-                    borderRoad.LeftBorderRoad = (GridBorderRoad)gridRoad;
+                    borderRoad.Left = (GridBorderRoad)gridRoad;
                 }
                 else if (gridRoad is GridMainRoad)
                 {
@@ -199,7 +199,7 @@ public class LevelRenderer : MonoBehaviour
             {
                 if (gridRoad is GridBorderRoad)
                 {
-                    borderRoad.RightBorderRoad = (GridBorderRoad)gridRoad;
+                    borderRoad.Right = (GridBorderRoad)gridRoad;
                 }
                 else if (gridRoad is GridMainRoad)
                 {
@@ -220,7 +220,7 @@ public class LevelRenderer : MonoBehaviour
             {
                 if (gridRoad is GridMainRoad)
                 {
-                    mainRoad.UpMainRoad = (GridMainRoad)gridRoad;
+                    mainRoad.Up = (GridMainRoad)gridRoad;
                 }
          
             }
@@ -230,7 +230,7 @@ public class LevelRenderer : MonoBehaviour
             {
                 if (gridRoad is GridMainRoad)
                 {
-                    mainRoad.BotMainRoad = (GridMainRoad)gridRoad;
+                    mainRoad.Bot = (GridMainRoad)gridRoad;
                 }
            
             }
@@ -240,7 +240,7 @@ public class LevelRenderer : MonoBehaviour
             {
                 if (gridRoad is GridMainRoad)
                 {
-                    mainRoad.LeftMainRoad = (GridMainRoad)gridRoad;
+                    mainRoad.Left = (GridMainRoad)gridRoad;
                 }
        
             }
@@ -250,7 +250,7 @@ public class LevelRenderer : MonoBehaviour
             {
                 if (gridRoad is GridMainRoad)
                 {
-                    mainRoad.RightMainRoad = (GridMainRoad)gridRoad;
+                    mainRoad.Right = (GridMainRoad)gridRoad;
                 }
   
             }
@@ -259,11 +259,13 @@ public class LevelRenderer : MonoBehaviour
         foreach(GridExitEnterRoad gridExitEnterRoad in gridExitEnterRoads)
         {
             gridExitEnterRoad.OnStart();
+            gridExitEnterRoad.SetLevelController(levelController);
         }
 
         foreach(GridExitStopRoad gridExitStopRoad in gridExitStopRoads)
         {
             gridExitStopRoad.OnStart();
+            gridExitStopRoad.SetLevelController(levelController);
         }
     }
 
@@ -282,7 +284,7 @@ public class LevelRenderer : MonoBehaviour
 
         foreach (Car car in carList)
         {
-            car.OnStart();
+            car.OnStart(levelController);
         }
     }
 }

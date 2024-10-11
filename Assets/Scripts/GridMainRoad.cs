@@ -2,19 +2,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridMainRoad : GridRoad
+public class GridMainRoad : GridRoad, INeighborable<GridMainRoad>
 {
-    public GridMainRoad UpMainRoad { get; set; }
-    public GridMainRoad BotMainRoad { get; set; }
-    public GridMainRoad LeftMainRoad { get; set; }
-    public GridMainRoad RightMainRoad { get; set; }
+    private GridMainRoad upMainRoad;
+    private GridMainRoad botMainRoad;
+    private GridMainRoad leftMainRoad;
+    private GridMainRoad rightMainRoad;
 
-    [SerializeField] bool isExitRoad = false;
+    [SerializeField] bool isExitMap = false;
 
-    public GridExitEnterRoad ExitEnterRoad { get; set; }
+    public List<GridExitEnterRoad> ExitEnterRoads { get; set; } = new List<GridExitEnterRoad>();
+
+    public GridMainRoad Up
+    {
+        get => upMainRoad;
+        set => upMainRoad = value;
+    }
+
+    public GridMainRoad Bot
+    {
+        get => botMainRoad;
+        set => botMainRoad = value;
+    }
+
+    public GridMainRoad Left
+    {
+        get => leftMainRoad;
+        set => leftMainRoad = value;
+    }
+
+    public GridMainRoad Right
+    {
+        get => rightMainRoad;
+        set => rightMainRoad = value;
+    }
 
     public void SetIsExitRoad(bool isExitRoad)
     {
-        this.isExitRoad = isExitRoad;
+        this.isExitMap = isExitRoad;
     }
+}
+
+public interface INeighborable<T>
+{
+    T Up { get; set; }
+    T Bot { get; set; }
+    T Left { get; set; }
+    T Right { get; set; }
 }

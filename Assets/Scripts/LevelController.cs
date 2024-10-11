@@ -20,18 +20,42 @@ public class LevelController : MonoBehaviour
     {
         Vector2Int nextGridRoad = startPosition + moveDirection;
 
+        bool isMoveCross = false;
+        if((moveDirection.x + moveDirection.y) % 2 == 0)
+        {
+            isMoveCross = true;
+        }
+
         if (roadDict.ContainsKey(nextGridRoad))
         {
             car.AddToMovePoints(nextGridRoad);
             if (roadDict[nextGridRoad] is GridMainRoad)
             {
                 //Debug.Log("Find Main Road");
+                var result = FindShortestPathToExitEnterRoad((GridMainRoad)roadDict[nextGridRoad]);
+
+                if(result.Item1 == null)
+                {
+                    Debug.Log("Lose !");
+                    return false;
+                }
+
+                car.AddRangeToMovePoints(result.Item1);
+                car.RoadOptional(result.Item2);
                 return true;
             }
             else if (roadDict[nextGridRoad] is GridBorderRoad)
             {
                 //Debug.Log("Find Border Road");
-                car.AddRangeToMovePoints(FindShortestPathToMainRoad((GridBorderRoad) roadDict[nextGridRoad]));
+                var result = FindShortestPathToMainRoad((GridBorderRoad)roadDict[nextGridRoad]);
+
+                if (result.Item1 == null)
+                {
+                    Debug.Log("Lose !");
+                    return false;
+                }
+                car.AddRangeToMovePoints(result.Item1);
+                car.RoadOptional(result.Item2);
                 return true;
             }
             else if (roadDict[nextGridRoad] is GridRoad)
@@ -42,11 +66,20 @@ public class LevelController : MonoBehaviour
                     Debug.Log("Find Car " + nextGridRoad);
                     return false;
                 }
+
+                if (isMoveCross)
+                {
+                    if (RoadDict[nextGridRoad].IsHadCrossCar())
+                    {
+                        Debug.Log("Find Car Cross " + nextGridRoad);
+                        return false;
+                    }
+                }
                 return CheckRoad(nextGridRoad, moveDirection, car);
             }
             else
             {
-        
+                
             }
         }
         else
@@ -57,7 +90,7 @@ public class LevelController : MonoBehaviour
         return false;
     }
 
-    public List<Vector3> FindShortestPathToMainRoad(GridBorderRoad startBorderRoad)
+    public (List<Vector3> path, List<GridMainRoad> foundMainRoads) FindShortestPathToMainRoad(GridBorderRoad startBorderRoad)
     {
         Queue<(GridBorderRoad currentRoad, List<GridBorderRoad> path)> queue = new Queue<(GridBorderRoad, List<GridBorderRoad>)>();
 
@@ -72,7 +105,7 @@ public class LevelController : MonoBehaviour
 
             if (currentRoad.MainRoads.Count > 0)
             {
-                return ConvertPathToPositions(path);
+                return (ConvertPathToPositions(path), currentRoad.MainRoads);
             }
 
             foreach (GridBorderRoad neighbor in GetNeighbors(currentRoad))
@@ -89,26 +122,67 @@ public class LevelController : MonoBehaviour
             }
         }
 
-        return null;
+        return (null, null);
     }
 
-    List<GridBorderRoad> GetNeighbors(GridBorderRoad currentRoad)
+    public (List<Vector3> path, List<GridExitEnterRoad> foundExitEnterRoads) FindShortestPathToExitEnterRoad(GridMainRoad startRoad)
     {
-        List<GridBorderRoad> neighbors = new List<GridBorderRoad>();
+        Queue<(GridMainRoad currentRoad, List<GridMainRoad> path)> queue = new Queue<(GridMainRoad, List<GridMainRoad>)>();
+        HashSet<GridMainRoad> visited = new HashSet<GridMainRoad>();
 
-        if (currentRoad.UpBorderRoad != null) neighbors.Add(currentRoad.UpBorderRoad);
-        if (currentRoad.BotBorderRoad != null) neighbors.Add(currentRoad.BotBorderRoad);
-        if (currentRoad.LeftBorderRoad != null) neighbors.Add(currentRoad.LeftBorderRoad);
-        if (currentRoad.RightBorderRoad != null) neighbors.Add(currentRoad.RightBorderRoad);
+        queue.Enqueue((startRoad, new List<GridMainRoad> { startRoad }));
+        visited.Add(startRoad);
+
+        while (queue.Count > 0)
+        {
+            var (currentRoad, path) = queue.Dequeue();
+
+            if (currentRoad.ExitEnterRoads.Count > 0)
+            {
+                foreach(GridExitEnterRoad exit in currentRoad.ExitEnterRoads)
+                {
+                    if (!exit.ExitStopRoad.IsHadCar() && exit.ExitStopRoad.IsOpen)
+                    {
+                        return (ConvertPathToPositions(path), currentRoad.ExitEnterRoads);
+                    }
+                }
+                
+            }
+
+            foreach (GridMainRoad neighbor in GetNeighbors(currentRoad))
+            {
+                if (!visited.Contains(neighbor))
+                {
+                    visited.Add(neighbor);
+
+                    List<GridMainRoad> newPath = new List<GridMainRoad>(path);
+                    newPath.Add(neighbor);
+
+                    queue.Enqueue((neighbor, newPath));
+                }
+            }
+        }
+
+        return (null, null);
+    }
+
+    private List<T> GetNeighbors<T>(T currentRoad) where T : INeighborable<T>
+    {
+        List<T> neighbors = new List<T>();
+
+        if (currentRoad.Up != null) neighbors.Add(currentRoad.Up);
+        if (currentRoad.Bot != null) neighbors.Add(currentRoad.Bot);
+        if (currentRoad.Left != null) neighbors.Add(currentRoad.Left);
+        if (currentRoad.Right != null) neighbors.Add(currentRoad.Right);
 
         return neighbors;
     }
 
-    List<Vector3> ConvertPathToPositions(List<GridBorderRoad> path)
+    private List<Vector3> ConvertPathToPositions<T>(List<T> path) where T : GridRoad
     {
         List<Vector3> positions = new List<Vector3>();
 
-        foreach (GridBorderRoad road in path)
+        foreach (T road in path)
         {
             Vector2Int spawnPoint = road.GetSpawnPoint(); 
             Vector3 position = new Vector3(spawnPoint.x, 0, spawnPoint.y); 
@@ -117,6 +191,7 @@ public class LevelController : MonoBehaviour
 
         return positions;
     }
+
 
     public GridMainRoad FindNearestMainRoad(Vector2Int currentPosition)
     {
@@ -136,7 +211,7 @@ public class LevelController : MonoBehaviour
             }
         }
 
-        Debug.Log(nearestRoad);
+        //Debug.Log(nearestRoad);
         return nearestRoad; 
     }
 }

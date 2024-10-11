@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Car : MonoBehaviour
 {
@@ -15,9 +16,14 @@ public class Car : MonoBehaviour
     public List<Vector3> MovePoints => movePoints;
     [SerializeField] Animation carShakingAnimation;
     List<Vector2Int> gridHolders = new List<Vector2Int>();
+    List<Vector2Int> gridCrossHolders = new List<Vector2Int>();
     bool isMoving = false;
-    public void OnStart()
+    Coroutine moveCoroutine = null;
+
+    [SerializeField] LevelController levelController;
+    public void OnStart(LevelController levelController)
     {
+        this.levelController = levelController;
         transform.position = spawnPoint;
         movePoints.Clear();
         //movePoints.Add(spawnPoint);
@@ -126,31 +132,71 @@ public class Car : MonoBehaviour
 
         gridHolders.Add(new Vector2Int(x2, z2));
 
+        if (directionType == DirectionType.Up || directionType == DirectionType.Down || directionType == DirectionType.Left || directionType == DirectionType.Right)
+        {
+            for (int i = -1; i <= 1; i++)
+            {
+                if (i == 0) continue;
+                Vector2Int vector2Int = new Vector2Int(gridHolders[0].x + i, gridHolders[0].y);
+
+                if (levelController.RoadDict.ContainsKey(vector2Int))
+                {
+                    //Debug.Log(1);
+                    levelController.RoadDict[vector2Int].AddCrossCar(this);
+                    gridCrossHolders.Add(vector2Int);
+                }
+
+                vector2Int = new Vector2Int(gridHolders[0].x, gridHolders[0].y + i);
+                if (levelController.RoadDict.ContainsKey(vector2Int))
+                {
+                    //Debug.Log(1);
+                    levelController.RoadDict[vector2Int].AddCrossCar(this);
+                    gridCrossHolders.Add(vector2Int);
+                }
+
+                vector2Int = new Vector2Int(gridHolders[gridHolders.Count - 1].x + i, gridHolders[gridHolders.Count - 1].y);
+
+                if (levelController.RoadDict.ContainsKey(vector2Int))
+                {
+                    //Debug.Log(1);
+                    levelController.RoadDict[vector2Int].AddCrossCar(this);
+                    gridCrossHolders.Add(vector2Int);
+                }
+
+                vector2Int = new Vector2Int(gridHolders[gridHolders.Count - 1].x, gridHolders[gridHolders.Count - 1].y + i);
+                if (levelController.RoadDict.ContainsKey(vector2Int))
+                {
+                    //Debug.Log(1);
+                    levelController.RoadDict[vector2Int].AddCrossCar(this);
+                    gridCrossHolders.Add(vector2Int);
+                }
+            }
+        }
+
         foreach (var grid in gridHolders)
         {
-            for(int i = -1; i <=1; i++)
+            for (int i = -1; i <= 1; i++)
             {
                 if (i == 0) continue;
                 Vector2Int vector2Int = new Vector2Int(grid.x + i, grid.y);
                 //Debug.Log(vector2Int);
-                if (LevelController.Instance.RoadDict.ContainsKey(vector2Int))
+                if (levelController.RoadDict.ContainsKey(vector2Int))
                 {
-                    //Debug.Log(1);
-                    LevelController.Instance.RoadDict[vector2Int].SetCanSpawnCar(false);
+                   
                 }
 
                 vector2Int = new Vector2Int(grid.x, grid.y + i);
                 //Debug.Log(vector2Int);
-                if (LevelController.Instance.RoadDict.ContainsKey(vector2Int))
+                if (levelController.RoadDict.ContainsKey(vector2Int))
                 {
-                    //Debug.Log(1);
-                    LevelController.Instance.RoadDict[vector2Int].SetCanSpawnCar(false);
+               
                 }
+
             }
-            if (LevelController.Instance.RoadDict.ContainsKey(grid))
+            if (levelController.RoadDict.ContainsKey(grid))
             {
-                LevelController.Instance.RoadDict[grid].SetCar(this);
-                LevelController.Instance.RoadDict[grid].SetCanSpawnCar(false);
+                levelController.RoadDict[grid].SetCar(this);
+                //levelController.RoadDict[grid].AddCrossCar(this);
             }
             //Debug.Log(grid);
         }
@@ -158,8 +204,9 @@ public class Car : MonoBehaviour
 
     public void Clicked()
     {
-        Debug.Log("Clicked");
         if (isMoving) return;
+        Debug.Log("Clicked");
+        
         Vector2Int moveDirection = new Vector2Int();
         switch (directionType)
         {
@@ -193,18 +240,21 @@ public class Car : MonoBehaviour
         isMoving = true;
         Vector2Int spawnPoint2Int = new Vector2Int(spawnPoint.x, spawnPoint.z);
 
-        if (LevelController.Instance.CheckRoad(spawnPoint2Int, moveDirection, this))
+        if (levelController.CheckRoad(spawnPoint2Int, moveDirection, this))
         {
             moveCoroutine = StartCoroutine(Move());
             foreach (Vector2Int grid in gridHolders)
             {
-                LevelController.Instance.RoadDict[grid].RemoveCar(this);
+                levelController.RoadDict[grid].RemoveCar(this);
             }
-            
+            foreach (Vector2Int grid in gridCrossHolders)
+            {
+                levelController.RoadDict[grid].RemoveCrossCar(this);
+            }
         }
         else
         {
-            moveCoroutine = StartCoroutine(MoveBack());
+            moveCoroutine = StartCoroutine(Move());
         }
     }
 
@@ -220,10 +270,11 @@ public class Car : MonoBehaviour
         movePoints.AddRange(vector3s);
     }
 
-    Coroutine moveCoroutine = null;
+   
 
     IEnumerator Move()
     {
+
         for (int i = 1; i < movePoints.Count; i++)
         {
             Vector3 currentPoint = movePoints[i - 1];
@@ -250,13 +301,17 @@ public class Car : MonoBehaviour
 
     IEnumerator MoveBack()
     {
+  
         movePoints.Reverse();
-        movePoints.RemoveAt(0);
+        //movePoints.RemoveAt(0);
 
         yield return null;
 
-        foreach (Vector3 point in movePoints)
+
+        for (int i = 1; i < movePoints.Count; i++)
         {
+            //Debug.Log(movePoints[i]);
+            Vector3 point = movePoints[i];
             Vector3 targetPosition = new Vector3(point.x, point.y, point.z);
 
             while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
@@ -274,6 +329,7 @@ public class Car : MonoBehaviour
             yield return null;
         }
 
+        movePoints.Clear();
         isMoving = false;
     }
 
@@ -292,11 +348,12 @@ public class Car : MonoBehaviour
 
         if (carScript != null && isMoving)
         {
-            //Debug.Log("Touched Car!");
+            Debug.Log("Touched Car!");
             StartCoroutine(carScript.PlayShakingAnimation());
+            
             StopCoroutine(moveCoroutine);
             StartCoroutine(MoveBack());
-
+            moveCoroutine = null;
         }
 
     }
@@ -323,6 +380,61 @@ public class Car : MonoBehaviour
         }
 
         transform.rotation = targetRotation;
+    }
+
+    public void RoadOptional<T>(List<T> roads) where T : GridRoad
+    {
+        //Debug.Log(1);
+        StartCoroutine(WaitUntilReachLastMovePointToShowOption(roads));
+    }
+
+    IEnumerator WaitUntilReachLastMovePointToShowOption<T>(List<T> roads) where T : GridRoad
+    {
+        yield return new WaitUntil(() => !isMoving);
+
+        isMoving = true;
+        if (roads[0] is GridMainRoad)
+        {
+            if (roads.Count == 1)
+            {
+                GridMainRoad gridMainRoad = roads[0] as GridMainRoad;
+                var result = levelController.FindShortestPathToExitEnterRoad(gridMainRoad);
+                //Debug.Log(result.Item2.Count);
+                movePoints.Clear();
+                AddRangeToMovePoints(result.Item1);
+                StartCoroutine(Move());
+                RoadOptional(result.Item2);
+            }
+            else
+            {
+                //Hien thi bang chon duong di
+            }
+        }
+        else if (roads[0] is GridExitEnterRoad)
+        {
+            List<GridExitEnterRoad> tmp = new List<GridExitEnterRoad>();
+            foreach (var road in roads)
+            {
+                GridExitEnterRoad r = road as GridExitEnterRoad;
+                if (!r.ExitStopRoad.IsHadCar() && r.ExitStopRoad.IsOpen)
+                {
+                    tmp.Add(r);    
+                }
+            }
+            if (tmp.Count == 1)
+            {
+                GridExitEnterRoad gridExitEnterRoad = tmp[0];
+                movePoints.Clear();
+                movePoints.Add(gridExitEnterRoad.GetTransformPosition());
+                movePoints.Add(gridExitEnterRoad.ExitStopRoad.GetTransformPosition());
+                //Debug.Log(1);
+                StartCoroutine(Move());
+            }
+            else
+            {
+                //Hien thi bang chon duong di
+            }
+        }
     }
 }
 
