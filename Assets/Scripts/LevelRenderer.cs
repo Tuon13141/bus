@@ -40,12 +40,19 @@ public class LevelRenderer : MonoBehaviour
     [SerializeField] List<Car> carList = new List<Car>();
     public List<Car> CarList => carList;
 
-    [SerializeField] LevelController levelController;
+    LevelController levelController;
+    InputManager inputManager;
 
     [SerializeField] List<PassengerWave> passengerWaves = new List<PassengerWave>();
 
     private void Start()
     {
+        levelController = LevelController.Instance;
+        inputManager = InputManager.Instance;
+
+        levelController.OnStart();
+        inputManager.OnStart();
+
         GenerateRoadGrid();
         SetUpRoadConnections();
         AdjustCameraToFitGrid();
@@ -318,7 +325,7 @@ public class LevelRenderer : MonoBehaviour
 
         foreach (Car car in carList)
         {
-            car.OnStart(levelController);
+            car.OnStart();
         }
     }
 
@@ -327,10 +334,19 @@ public class LevelRenderer : MonoBehaviour
     bool canInstantiatePassengers = true;
     public IEnumerator InstantiatePassengers()
     {
-        if(!canInstantiatePassengers) { yield break; }
+        if(!canInstantiatePassengers) 
+        {
+            //levelController.CarInGridExitStayRoadGetPassenger();
+            yield break; 
+        }
         canInstantiatePassengers = false;
 
-        if(currentIndexInPassengerWaves == passengerWaves.Count - 1) { yield break; }
+        if(currentIndexInPassengerWaves == passengerWaves.Count - 1) 
+        {
+            levelController.CarInGridExitStayRoadGetPassenger();
+            //canInstantiatePassengers = true;
+            yield break; 
+        }
 
         for (int i = currentIndexInPassengerWaves; i < passengerWaves.Count; i++)
         {
@@ -349,6 +365,7 @@ public class LevelRenderer : MonoBehaviour
                     {
                         if (gridPassenger.IsHadPassenger())
                         {
+                            //levelController.CarInGridExitStayRoadGetPassenger();
                             canInstantiatePassengers = true;
                             yield break;
                         }
@@ -382,19 +399,21 @@ public class LevelRenderer : MonoBehaviour
                         currentIndexOfPassengerWave = j + 1;
                         passenger.Move();
                         passengerList.Add(passenger);
+                        levelController.CarInGridExitStayRoadGetPassenger();
                         break;
                     }
                 }
 
                 //Debug.Log(3);
-                yield return new WaitForSeconds(0.2f);
+               
+                yield return new WaitForSeconds(0.1f);
             }
             //Debug.Log(2);
             currentIndexOfPassengerWave = 0;
         }
         //Debug.Log(1);
         canInstantiatePassengers = true;
-        levelController.CarInGridExitStayRoadGetPassenger();
+
     }
 
 }

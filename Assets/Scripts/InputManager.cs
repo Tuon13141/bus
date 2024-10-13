@@ -2,9 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputManager : MonoBehaviour
+public class InputManager : MonoBehaviour, IOnStart
 {
-    [SerializeField] bool canClick = true;
+    public static InputManager Instance { get; private set; }
+
+    [SerializeField] bool canClick = false;
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+    }
+
+    public void OnStart()
+    {
+        StartCoroutine(EnableClick());
+    }
     void Update()
     {
         if(!canClick) return;
@@ -28,6 +41,13 @@ public class InputManager : MonoBehaviour
     public void AvailableCanClick()
     {
         //Debug.Log(1);
+        canClick = true;
+    }
+
+    IEnumerator EnableClick()
+    {
+        yield return new WaitForSeconds(3f);
+
         canClick = true;
     }
 }

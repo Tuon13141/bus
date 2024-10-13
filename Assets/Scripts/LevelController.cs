@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelController : MonoBehaviour
+public class LevelController : MonoBehaviour, IOnStart
 {
     public static LevelController Instance;
 
@@ -14,6 +14,11 @@ public class LevelController : MonoBehaviour
     {
         if(Instance == null)
             Instance = this;
+    }
+
+    public void OnStart()
+    {
+        gridDict = new Dictionary<Vector2Int, Grid>();
     }
 
     public bool CheckRoad(Vector2Int startPosition, Vector2Int moveDirection, Car car)
@@ -253,6 +258,7 @@ public class LevelController : MonoBehaviour
 
     public void RemovePassengerAndShift(GridPassenger gridPassenger)
     {
+        //Debug.Log(1);
         if (!gridPassenger.IsHadPassenger()) return;
 
         gridPassenger.Passenger = null;
@@ -278,12 +284,17 @@ public class LevelController : MonoBehaviour
 
              
             }
+            else
+            {
+                CarInGridExitStayRoadGetPassenger();
+                return;
+            }
 
             currentGridPassenger = currentGridPassenger.previousGridPassenger;
         }
 
         StartCoroutine(levelRenderer.InstantiatePassengers());
-        CarInGridExitStayRoadGetPassenger();
+        //CarInGridExitStayRoadGetPassenger();
     }
 
     public void CarInGridExitStayRoadGetPassenger()

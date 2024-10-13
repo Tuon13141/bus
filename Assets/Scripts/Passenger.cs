@@ -31,7 +31,7 @@ public class Passenger : MonoBehaviour, IChangeStat
     IEnumerator MoveToPoints()
     {
         
-        for (int i = currentMovePointIndex; i < MovePoints.Count; i++)
+        for (int i = currentMovePointIndex; i < MovePoints.Count; ++i)
         {
        
             Vector3 startPoint = transform.position;

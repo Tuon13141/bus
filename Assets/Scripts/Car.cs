@@ -35,6 +35,7 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
 
     List<Vector2Int> gridHolders = new List<Vector2Int>();
     List<Vector2Int> gridCrossHolders = new List<Vector2Int>();
+    List<Passenger> passengers = new List<Passenger>();
 
 
     bool isMoving = false;
@@ -42,10 +43,10 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
     [SerializeField] LevelController levelController;
     Action clickedAction;
     [SerializeField] GridExitStopRoad gridExitStopRoad;
-    public void OnStart(LevelController levelController)
+    public void OnStart()
     {
         //Debug.Log(gameObject.name);
-        this.levelController = levelController;
+        levelController = LevelController.Instance;
         transform.position = spawnPoint;
         originalScale = transform.localScale;
         movePoints.Clear();
@@ -405,9 +406,19 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
         isMoving = false;
     }
 
-    IEnumerator MoveOutOfMap(bool activateAction = false, bool isMovingToExitRoad = false)
+    IEnumerator MoveOutOfMap()
     {
         yield return new WaitForSeconds(1.5f);
+
+        transform.localScale = originalScale;
+        SetActiveNeedToHideGameObjectd(true);
+        movePoints.Clear();
+        isMoving = true;
+        movePoints.Add(gridExitStopRoad.GridExitEnterRoad.GetTransformPosition());
+        GridMainRoad gridMainRoad = gridExitStopRoad.GridExitEnterRoad.MainRoad;
+        movePoints.Add(gridMainRoad.GetTransformPosition());
+        movePoints.AddRange(levelController.FindShortestPathToExitMainRoad(gridMainRoad));
+        GetComponent<Collider>().enabled = false;
 
         Vector3 targetPosition = new Vector3(movePoints[0].x, movePoints[0].y, movePoints[0].z);
 
@@ -441,16 +452,7 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
             transform.position = targetPosition;
         }
 
-        if (activateAction && isMovingToExitRoad)
-        {
-            clickedAction.Invoke();
-        }
-
-        if (isMovingToExitRoad)
-        {
-            ChangeStat(CarStat.OnOutOfMap);
-        }
-
+        ChangeStat(CarStat.OnOutOfMap);
 
         gridExitStopRoad.RemoveCar(this);
         isMoving = false;
@@ -588,30 +590,28 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
 
     void OnEnterOnExitRoad()
     {
-        UnableNeedToHideGameObjectd();
+        SetActiveNeedToHideGameObjectd(false);
         transform.localScale = Vector3.one;
 
-        bool canGetMorePassenger = GetPassenger();
-        while (canGetMorePassenger)
-        {
-            canGetMorePassenger = GetPassenger();
-        }
+        GetPassenger();
       
     }
 
-    void UnableNeedToHideGameObjectd()
+    void SetActiveNeedToHideGameObjectd(bool b)
     {
         foreach (GameObject gameObject in needToHideObjects)
         {
-            gameObject.SetActive(false);
+            gameObject.SetActive(b);
         }
     }
 
-    bool GetPassenger()
+    void GetPassenger()
     {
-        Debug.Log("Get Passenger");
+        //Debug.Log("Get Passenger");
+        if(IsFullOfSeat() || stat != CarStat.OnExitRoad ) return;
         List<Passenger> passengers = gridExitStopRoad.GetPassenger(this);
 
+        bool check = false;
         foreach (Passenger passenger in passengers)
         {
 
@@ -620,6 +620,7 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
                 Seat seat = seats[i];
                 if (!seat.hadTakenSeat)
                 {
+                    this.passengers.Add(passenger);
                     passenger.MovePoints.Add(seat.transform.position);
                     passenger.transform.parent = seat.transform;
                     passenger.Move();
@@ -629,31 +630,20 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
                     if(i == seats.Count - 1)
                     {
                         ChangeStat(CarStat.MovingOutOfMap);
-                    }    
+                        check = true;
+                        //return true;
+                    }
 
-                    return true;
+                    break;
                 }
             }
-
-            //full of seats
-            //ChangeStat(CarStat.MovingOutOfMap);
-            return false;
+            if (check) break;
         }
-
-        return false;
     }
 
     void OnMovingOutOfMap()
     {
-        movePoints.Clear();
-        isMoving = true;
-        movePoints.Add(gridExitStopRoad.GridExitEnterRoad.GetTransformPosition());
-        GridMainRoad gridMainRoad = gridExitStopRoad.GridExitEnterRoad.MainRoad;
-        movePoints.Add(gridMainRoad.GetTransformPosition());
-        movePoints.AddRange(levelController.FindShortestPathToExitMainRoad(gridMainRoad));
-        GetComponent<Collider>().enabled = false;
         StartCoroutine(MoveOutOfMap()); 
-
     }
 
     public bool IsFullOfSeat()

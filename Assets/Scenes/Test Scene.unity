@@ -227,6 +227,75 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6475424}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &65731822
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1956746793}
+    m_Modifications:
+    - target: {fileID: 1110186416711126406, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
+      propertyPath: m_Name
+      value: 0 Car_FourSeater
+      objectReference: {fileID: 0}
+    - target: {fileID: 2766902999962320118, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
+      propertyPath: moveSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2766902999962320118, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
+      propertyPath: spawnPoint.x
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2766902999962320118, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
+      propertyPath: directionType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7047446173241435200, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7047446173241435200, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7047446173241435200, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7047446173241435200, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7047446173241435200, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7047446173241435200, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7047446173241435200, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7047446173241435200, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7047446173241435200, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7047446173241435200, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
 --- !u!1 &84351860
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,7 +579,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 938590759}
   nextGridPassenger: {fileID: 1218239597}
   IsStartPoint: 0
@@ -577,7 +646,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 0}
   nextGridPassenger: {fileID: 727113167}
   IsStartPoint: 0
@@ -733,7 +802,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 1043373403}
   nextGridPassenger: {fileID: 1655595656}
   IsStartPoint: 0
@@ -843,6 +912,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 285186231}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &299029478 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7047446173241435200, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
+  m_PrefabInstance: {fileID: 65731822}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &406986611
 GameObject:
   m_ObjectHideFlags: 0
@@ -889,7 +963,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 1363640837}
   nextGridPassenger: {fileID: 1043373403}
   IsStartPoint: 0
@@ -1029,7 +1103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 1562060089}
   nextGridPassenger: {fileID: 861459339}
   IsStartPoint: 0
@@ -1080,7 +1154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 1848249344}
   nextGridPassenger: {fileID: 1562060089}
   IsStartPoint: 0
@@ -1131,7 +1205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 861459339}
   nextGridPassenger: {fileID: 0}
   IsStartPoint: 0
@@ -1484,7 +1558,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 1937860321}
   nextGridPassenger: {fileID: 0}
   IsStartPoint: 0
@@ -1861,7 +1935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 176801836}
   nextGridPassenger: {fileID: 938590759}
   IsStartPoint: 0
@@ -1971,7 +2045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 860bf09b78a2b2749b1abec2ccdf3e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canClick: 1
+  canClick: 0
 --- !u!1 &764330104
 GameObject:
   m_ObjectHideFlags: 0
@@ -2107,7 +2181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 429352633}
   nextGridPassenger: {fileID: 490438586}
   IsStartPoint: 0
@@ -2193,7 +2267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 727113167}
   nextGridPassenger: {fileID: 154813710}
   IsStartPoint: 0
@@ -2542,11 +2616,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1760993606605860381, guid: feac02ab3c97b374aada0ff351685a8b, type: 3}
       propertyPath: spawnPoint.x
-      value: -6
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 1760993606605860381, guid: feac02ab3c97b374aada0ff351685a8b, type: 3}
       propertyPath: spawnPoint.z
-      value: -8
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1760993606605860381, guid: feac02ab3c97b374aada0ff351685a8b, type: 3}
       propertyPath: directionType
@@ -2558,7 +2632,7 @@ PrefabInstance:
       objectReference: {fileID: 966460703}
     - target: {fileID: 1918424403193669406, guid: feac02ab3c97b374aada0ff351685a8b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 1918424403193669406, guid: feac02ab3c97b374aada0ff351685a8b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2566,7 +2640,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1918424403193669406, guid: feac02ab3c97b374aada0ff351685a8b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1918424403193669406, guid: feac02ab3c97b374aada0ff351685a8b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2700,7 +2774,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 406986616}
   nextGridPassenger: {fileID: 261404408}
   IsStartPoint: 0
@@ -2945,7 +3019,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 154813710}
   nextGridPassenger: {fileID: 1286214181}
   IsStartPoint: 0
@@ -2966,6 +3040,51 @@ Transform:
   - {fileID: 559503258}
   m_Father: {fileID: 84351861}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1237380740
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1237380741}
+  - component: {fileID: 1237380742}
+  m_Layer: 0
+  m_Name: LevelController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1237380741
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237380740}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1599132910}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1237380742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237380740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a5b58c3886d0d24bb654bfc5d1ad563, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelRenderer: {fileID: 1622553970}
 --- !u!1 &1286214180
 GameObject:
   m_ObjectHideFlags: 0
@@ -2996,7 +3115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 1218239597}
   nextGridPassenger: {fileID: 1848249344}
   IsStartPoint: 0
@@ -3378,7 +3497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 1788825639}
   nextGridPassenger: {fileID: 2054602189}
   IsStartPoint: 0
@@ -3429,7 +3548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 1792764383}
   nextGridPassenger: {fileID: 406986616}
   IsStartPoint: 0
@@ -3644,11 +3763,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1393233684}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &1403339974 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7047446173241435200, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
-  m_PrefabInstance: {fileID: 1591685656}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1448213500
 GameObject:
   m_ObjectHideFlags: 0
@@ -3695,7 +3809,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 2077434219}
   nextGridPassenger: {fileID: 1937860321}
   IsStartPoint: 0
@@ -3940,7 +4054,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 454774678}
   nextGridPassenger: {fileID: 429352633}
   IsStartPoint: 0
@@ -3961,83 +4075,6 @@ Transform:
   - {fileID: 2071064751}
   m_Father: {fileID: 84351861}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1591685656
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1956746793}
-    m_Modifications:
-    - target: {fileID: 1110186416711126406, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
-      propertyPath: m_Name
-      value: 0 Car_FourSeater
-      objectReference: {fileID: 0}
-    - target: {fileID: 1110186416711126406, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2766902999962320118, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
-      propertyPath: scale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2766902999962320118, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
-      propertyPath: scale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2766902999962320118, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
-      propertyPath: spawnPoint.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2766902999962320118, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
-      propertyPath: directionType
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7047446173241435200, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7047446173241435200, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7047446173241435200, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7047446173241435200, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 7047446173241435200, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7047446173241435200, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 7047446173241435200, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7047446173241435200, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7047446173241435200, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 7047446173241435200, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 9b535aaf355701f4b92bf6f5d44ed480, type: 3}
 --- !u!1 &1599132909
 GameObject:
   m_ObjectHideFlags: 0
@@ -4068,6 +4105,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 752538973}
+  - {fileID: 1237380741}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1622553969
@@ -4080,7 +4118,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1622553971}
   - component: {fileID: 1622553970}
-  - component: {fileID: 1622553972}
   m_Layer: 0
   m_Name: Level_1
   m_TagString: Untagged
@@ -4148,7 +4185,6 @@ MonoBehaviour:
   borderRoadParent: {fileID: 496900952}
   passengerList: []
   carList: []
-  levelController: {fileID: 1622553972}
   passengerWaves:
   - numberOfPassenger: 6
     colorType: 0
@@ -4179,19 +4215,6 @@ Transform:
   - {fileID: 1907778568}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1622553972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1622553969}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a5b58c3886d0d24bb654bfc5d1ad563, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelRenderer: {fileID: 1622553970}
 --- !u!1 &1648453690
 GameObject:
   m_ObjectHideFlags: 0
@@ -4343,7 +4366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 261404408}
   nextGridPassenger: {fileID: 1788825639}
   IsStartPoint: 0
@@ -4709,7 +4732,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 1655595656}
   nextGridPassenger: {fileID: 1358936591}
   IsStartPoint: 0
@@ -4760,7 +4783,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 0}
   nextGridPassenger: {fileID: 1363640837}
   IsStartPoint: 1
@@ -4916,7 +4939,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 2054602189}
   nextGridPassenger: {fileID: 2077434219}
   IsStartPoint: 0
@@ -4951,7 +4974,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 1286214181}
   nextGridPassenger: {fileID: 454774678}
   IsStartPoint: 0
@@ -5365,7 +5388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 1448213505}
   nextGridPassenger: {fileID: 597672887}
   IsStartPoint: 0
@@ -5402,7 +5425,7 @@ Transform:
   - {fileID: 8401247640116510558}
   - {fileID: 5521981746655684978}
   - {fileID: 966460702}
-  - {fileID: 1403339974}
+  - {fileID: 299029478}
   m_Father: {fileID: 1622553971}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1961319650
@@ -5692,7 +5715,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 1358936591}
   nextGridPassenger: {fileID: 1809670788}
   IsStartPoint: 0
@@ -5848,7 +5871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   previousGridPassenger: {fileID: 1809670788}
   nextGridPassenger: {fileID: 1448213505}
   IsStartPoint: 0
@@ -8723,7 +8746,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: -8, y: 1}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   car: {fileID: 0}
   crossCars: []
   ExitStopRoad: {fileID: 5887211961988949601}
@@ -9451,7 +9474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 10, y: 1}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   car: {fileID: 0}
   crossCars: []
   ExitStopRoad: {fileID: 7950284049310941443}
@@ -9984,7 +10007,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 7, y: 4}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   car: {fileID: 0}
   crossCars: []
   isOpen: 0
@@ -10342,7 +10365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 7, y: 1}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   car: {fileID: 0}
   crossCars: []
   ExitStopRoad: {fileID: 5459429683367684003}
@@ -10377,7 +10400,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: -8, y: 4}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   car: {fileID: 0}
   crossCars: []
   isOpen: 1
@@ -10720,7 +10743,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: -2, y: 1}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   car: {fileID: 0}
   crossCars: []
   ExitStopRoad: {fileID: 7591721186878750635}
@@ -11399,7 +11422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: -5, y: 1}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   car: {fileID: 0}
   crossCars: []
   ExitStopRoad: {fileID: 9003062526788900328}
@@ -11773,7 +11796,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: -2, y: 4}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   car: {fileID: 0}
   crossCars: []
   isOpen: 1
@@ -11927,7 +11950,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 4, y: 4}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   car: {fileID: 0}
   crossCars: []
   isOpen: 0
@@ -12031,7 +12054,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 10, y: 4}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   car: {fileID: 0}
   crossCars: []
   isOpen: 0
@@ -12079,7 +12102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 1, y: 1}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   car: {fileID: 0}
   crossCars: []
   ExitStopRoad: {fileID: 8906585178152442506}
@@ -12414,7 +12437,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 4, y: 1}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   car: {fileID: 0}
   crossCars: []
   ExitStopRoad: {fileID: 7736213940154287803}
@@ -12677,7 +12700,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: 1, y: 4}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   car: {fileID: 0}
   crossCars: []
   isOpen: 1
@@ -12712,7 +12735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {x: -5, y: 4}
-  levelController: {fileID: 1622553972}
+  levelController: {fileID: 0}
   car: {fileID: 0}
   crossCars: []
   isOpen: 1
