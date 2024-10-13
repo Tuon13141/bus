@@ -19,7 +19,7 @@ public class GridExitEnterRoad : GridRoad
     public override void SetLevelController(LevelController levelController)
     {
         base.SetLevelController(levelController);
-        Vector2Int location = new Vector2Int((int)transform.position.x, (int)transform.position.y);
+        Vector2Int location = new Vector2Int((int)transform.position.x, (int)transform.position.z);
         if (levelController.GridDict.ContainsKey(location))
         {
             levelController.GridDict[location] = this;

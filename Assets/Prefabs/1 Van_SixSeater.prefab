@@ -300,7 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: {x: 1, y: 4}
-  seatCount: 0
+  seatCount: 6
   stat: 0
   colorType: 2
   directionType: 5

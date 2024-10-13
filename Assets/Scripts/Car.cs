@@ -13,6 +13,7 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
     [SerializeField] int seatCount;
     [SerializeField] CarStat stat = CarStat.OnRoad;
     [SerializeField] ColorType colorType = ColorType.Red;
+    public ColorType ColorType => colorType;
     [SerializeField] DirectionType directionType;
     private float rotationDegrees; 
     [SerializeField] Vector3Int spawnPoint;
@@ -43,10 +44,12 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
     [SerializeField] GridExitStopRoad gridExitStopRoad;
     public void OnStart(LevelController levelController)
     {
+        //Debug.Log(gameObject.name);
         this.levelController = levelController;
         transform.position = spawnPoint;
         originalScale = transform.localScale;
         movePoints.Clear();
+        seatCount = seats.Count;
         //movePoints.Add(spawnPoint);
         
         GetRotation();
@@ -247,6 +250,8 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
             {
                 GridRoad gridRoad = (GridRoad)levelController.GridDict[grid];
                 gridRoad.SetCar(this);
+
+                //Debug.Log(gridRoad.gameObject.name);
                 //levelController.RoadDict[grid].AddCrossCar(this);
             }
             //Debug.Log(grid);
@@ -402,9 +407,9 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
 
     IEnumerator MoveOutOfMap(bool activateAction = false, bool isMovingToExitRoad = false)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.5f);
 
-        Vector3 targetPosition = new Vector3(movePoints[1].x, movePoints[1].y, movePoints[1].z);
+        Vector3 targetPosition = new Vector3(movePoints[0].x, movePoints[0].y, movePoints[0].z);
 
         while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
         {
@@ -414,8 +419,9 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
 
         transform.position = targetPosition;
 
-        for (int i = 2; i < movePoints.Count; i++)
+        for (int i = 1; i < movePoints.Count; i++)
         {
+            //Debug.Log(i);
             Vector3 currentPoint = movePoints[i - 1];
             Vector3 nextPoint = movePoints[i];
 
@@ -424,7 +430,7 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
             StartCoroutine(SmoothRotateTowardsDirection(direction, 3));
 
 
-            targetPosition = new Vector3(nextPoint.x, nextPoint.y, nextPoint.z);
+            targetPosition = new Vector3(nextPoint.x, 0, nextPoint.z);
 
             while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
             {
@@ -445,7 +451,8 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
             ChangeStat(CarStat.OnOutOfMap);
         }
 
-       
+
+        gridExitStopRoad.RemoveCar(this);
         isMoving = false;
         gameObject.SetActive(false);
     }
@@ -602,8 +609,8 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
 
     bool GetPassenger()
     {
-       
-        List<Passenger> passengers = gridExitStopRoad.GetPassenger(colorType);
+        Debug.Log("Get Passenger");
+        List<Passenger> passengers = gridExitStopRoad.GetPassenger(this);
 
         foreach (Passenger passenger in passengers)
         {
@@ -629,7 +636,7 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
             }
 
             //full of seats
-            ChangeStat(CarStat.MovingOutOfMap);
+            //ChangeStat(CarStat.MovingOutOfMap);
             return false;
         }
 
@@ -638,14 +645,28 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
 
     void OnMovingOutOfMap()
     {
-        movePoints.Reverse();
+        movePoints.Clear();
         isMoving = true;
+        movePoints.Add(gridExitStopRoad.GridExitEnterRoad.GetTransformPosition());
         GridMainRoad gridMainRoad = gridExitStopRoad.GridExitEnterRoad.MainRoad;
         movePoints.Add(gridMainRoad.GetTransformPosition());
         movePoints.AddRange(levelController.FindShortestPathToExitMainRoad(gridMainRoad));
         GetComponent<Collider>().enabled = false;
         StartCoroutine(MoveOutOfMap()); 
 
+    }
+
+    public bool IsFullOfSeat()
+    {
+        foreach(Seat seat in seats)
+        {
+            if (!seat.hadTakenSeat)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
 

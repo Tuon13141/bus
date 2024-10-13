@@ -18,7 +18,7 @@ public class GridExitStopRoad : GridRoad
     public override void SetLevelController(LevelController levelController)
     {
         base.SetLevelController(levelController);
-        Vector2Int location = new Vector2Int((int)transform.position.x, (int)transform.position.y);
+        Vector2Int location = new Vector2Int((int)transform.position.x, (int)transform.position.z);
         if (levelController.GridDict.ContainsKey(location))
         {
             levelController.GridDict[location] = this;
@@ -29,13 +29,14 @@ public class GridExitStopRoad : GridRoad
         }
     }
 
-    public List<Passenger> GetPassenger(ColorType colorType)
+    public List<Passenger> GetPassenger(Car car)
     {
-        
         List<Passenger> passengers = new List<Passenger>();
+        if (car.IsFullOfSeat()) return passengers;
+       
         foreach (GridPassenger gridPassenger in ConnectedGridPassengers)
         {
-            if(gridPassenger.IsHadPassenger() && gridPassenger.Passenger.ColorType == colorType)
+            if(gridPassenger.IsHadPassenger() && gridPassenger.Passenger.ColorType == car.ColorType)
             {
                 passengers.Add(gridPassenger.Passenger);
                 levelController.RemovePassengerAndShift(gridPassenger);

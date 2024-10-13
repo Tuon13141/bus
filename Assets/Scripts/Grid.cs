@@ -22,5 +22,5 @@ public class Grid : MonoBehaviour, IOnStart
         this.levelController = levelController;
     }
 
-    public Vector3 GetTransformPosition() { return transform.position; }
+    public Vector3 GetTransformPosition() { return new Vector3(transform.position.x, 0, transform.position.z); }
 }

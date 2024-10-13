@@ -3010,7 +3010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: {x: 1, y: 5}
-  seatCount: 0
+  seatCount: 10
   stat: 0
   colorType: 0
   directionType: 2
