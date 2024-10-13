@@ -27,7 +27,7 @@ public class InputManager : MonoBehaviour
 
     public void AvailableCanClick()
     {
-        Debug.Log(1);
+        //Debug.Log(1);
         canClick = true;
     }
 }

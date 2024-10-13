@@ -22,7 +22,10 @@ public class GridPassenger : Grid
     public override void OnStart()
     {
         base.OnStart();
-       
+       foreach(GridExitStopRoad exit in connectedGridExitStayGrids)
+       {
+            exit.ConnectedGridPassengers.Add(this);
+       }
     }
 
     public override void SetLevelController(LevelController levelController)

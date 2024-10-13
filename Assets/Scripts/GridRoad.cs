@@ -7,6 +7,7 @@ public class GridRoad : Grid
 {
     
     [SerializeField] protected Car car;
+    public Car Car => car;
     [SerializeField] protected List<Car> crossCars = new List<Car>();
     public void SetUp(Vector2Int location, LevelController levelController)
     {

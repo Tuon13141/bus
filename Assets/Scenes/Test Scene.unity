@@ -4040,21 +4040,22 @@ MonoBehaviour:
   - {fileID: 7736213940154287803}
   - {fileID: 5459429683367684003}
   - {fileID: 7950284049310941443}
-  gridPassengers:
-  - {fileID: 597672887}
-  - {fileID: 1937860321}
-  - {fileID: 1448213505}
-  - {fileID: 2077434219}
-  - {fileID: 1809670788}
-  - {fileID: 2054602189}
-  - {fileID: 1358936591}
-  - {fileID: 1788825639}
-  - {fileID: 1655595656}
-  - {fileID: 261404408}
-  - {fileID: 1043373403}
-  - {fileID: 406986616}
-  - {fileID: 1363640837}
-  - {fileID: 1792764383}
+  gridPassengerListList:
+  - gridPassengers:
+    - {fileID: 597672887}
+    - {fileID: 1937860321}
+    - {fileID: 1448213505}
+    - {fileID: 2077434219}
+    - {fileID: 1809670788}
+    - {fileID: 2054602189}
+    - {fileID: 1358936591}
+    - {fileID: 1788825639}
+    - {fileID: 1655595656}
+    - {fileID: 261404408}
+    - {fileID: 1043373403}
+    - {fileID: 406986616}
+    - {fileID: 1363640837}
+    - {fileID: 1792764383}
   levelArea: {x: 24, y: 30}
   mainRoadsZ: 20
   exitAreaPosition: {x: 0, y: 22}
@@ -4063,11 +4064,16 @@ MonoBehaviour:
   roadParent: {fileID: 623633074}
   mainRoadParent: {fileID: 1961319650}
   borderRoadParent: {fileID: 496900952}
+  passengerList: []
   levelController: {fileID: 1622553972}
   passengerWaves:
-  - numberOfPassenger: 5
+  - numberOfPassenger: 6
     colorType: 0
-  - numberOfPassenger: 2
+  - numberOfPassenger: 6
+    colorType: 2
+  - numberOfPassenger: 6
+    colorType: 1
+  - numberOfPassenger: 4
     colorType: 2
 --- !u!4 &1622553971
 Transform:
@@ -6812,21 +6818,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1213932665522173465
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6746034312627987575}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7, y: 0, z: 15}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8373432081072578590}
-  m_LocalEulerAnglesHint: {x: 0, y: -0, z: 0}
 --- !u!4 &1214495943151637967
 Transform:
   m_ObjectHideFlags: 0
@@ -10998,22 +10989,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &6746034312627987575
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1213932665522173465}
-  m_Layer: 0
-  m_Name: PassengerSpawnPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &6857499186212774379
 GameObject:
   m_ObjectHideFlags: 0
@@ -12196,7 +12171,6 @@ Transform:
   - {fileID: 6598545893829365803}
   - {fileID: 1272431703749052273}
   - {fileID: 3767208247893020197}
-  - {fileID: 1213932665522173465}
   - {fileID: 5197404030766618138}
   - {fileID: 568166142}
   m_Father: {fileID: 1622553971}
@@ -12278,6 +12252,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5055868545528180610, guid: 83d2d5bd2056386429c2da47e84edc31, type: 3}
       propertyPath: directionType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8846302390735531544, guid: 83d2d5bd2056386429c2da47e84edc31, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -167,6 +167,41 @@ public class LevelController : MonoBehaviour
         return (null, null);
     }
 
+    public List<Vector3> FindShortestPathToExitMainRoad(GridMainRoad startRoad)
+    {
+        Queue<(GridMainRoad currentRoad, List<GridMainRoad> path)> queue = new Queue<(GridMainRoad, List<GridMainRoad>)>();
+
+        HashSet<GridMainRoad> visited = new HashSet<GridMainRoad>();
+
+        queue.Enqueue((startRoad, new List<GridMainRoad> { startRoad }));
+        visited.Add(startRoad);
+
+        // Bắt đầu duyệt
+        while (queue.Count > 0)
+        {
+            var (currentRoad, path) = queue.Dequeue();
+
+            if (currentRoad.GetIsExitRoad())
+            {
+                return ConvertPathToPositions(path); 
+            }
+
+            foreach (GridMainRoad neighbor in GetNeighbors(currentRoad))
+            {
+                if (!visited.Contains(neighbor))
+                {
+                    visited.Add(neighbor);
+
+                    List<GridMainRoad> newPath = new List<GridMainRoad>(path);
+                    newPath.Add(neighbor);
+
+                    queue.Enqueue((neighbor, newPath));
+                }
+            }
+        }
+
+        return null;
+    }
     private List<T> GetNeighbors<T>(T currentRoad) where T : INeighborable<T>
     {
         List<T> neighbors = new List<T>();
@@ -215,4 +250,51 @@ public class LevelController : MonoBehaviour
         //Debug.Log(nearestRoad);
         return nearestRoad; 
     }
+
+    public void RemovePassengerAndShift(GridPassenger gridPassenger)
+    {
+        if (!gridPassenger.IsHadPassenger()) return;
+
+        gridPassenger.Passenger = null;
+
+        GridPassenger currentGridPassenger = gridPassenger.previousGridPassenger;
+        GridPassenger nextGridPassenger = gridPassenger;
+
+        while (currentGridPassenger != null)
+        {
+            if (currentGridPassenger.IsHadPassenger())
+            {
+                Passenger passenger = currentGridPassenger.Passenger;
+                nextGridPassenger.Passenger = passenger;
+                passenger.MovePoints.Add(nextGridPassenger.GetTransformPosition());
+                passenger.transform.parent = nextGridPassenger.transform;
+                passenger.Move();
+
+                nextGridPassenger.Passenger.GridPassenger = nextGridPassenger;
+
+                currentGridPassenger.Passenger = null;
+
+                nextGridPassenger = currentGridPassenger;
+
+             
+            }
+
+            currentGridPassenger = currentGridPassenger.previousGridPassenger;
+        }
+
+        StartCoroutine(levelRenderer.InstantiatePassengers());
+        CarInGridExitStayRoadGetPassenger();
+    }
+
+    public void CarInGridExitStayRoadGetPassenger()
+    {
+        foreach(GridExitStopRoad gridExitStopRoad in levelRenderer.GridExitStopRoads)
+        {
+            if (gridExitStopRoad.IsHadCar())
+            {
+                gridExitStopRoad.Car.ChangeStat(CarStat.OnExitRoad);
+            }
+        }
+    }
+
 }

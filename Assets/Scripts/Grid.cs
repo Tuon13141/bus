@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grid : MonoBehaviour
+public class Grid : MonoBehaviour, IOnStart
 {
     [SerializeField] protected Vector2Int spawnPoint;
     [SerializeField] protected LevelController levelController;

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Car : MonoBehaviour
+public class Car : MonoBehaviour, IChangeStat, IOnStart
 {
     [SerializeField] Vector2Int scale;
     [SerializeField] int seatCount;
@@ -15,12 +16,17 @@ public class Car : MonoBehaviour
     [SerializeField] DirectionType directionType;
     private float rotationDegrees; 
     [SerializeField] Vector3Int spawnPoint;
-
+    [SerializeField] float moveSpeed = 10f;
+    public Vector3 originalScale;
 
     [SerializeField] List<Vector3> movePoints = new List<Vector3>();
-    [SerializeField] float moveSpeed = 10f;
+    
     public List<Vector3> MovePoints => movePoints;
 
+
+
+    [SerializeField] List<Seat> seats= new List<Seat>();
+    [SerializeField] List<GameObject> needToHideObjects = new List<GameObject>();
 
     [SerializeField] Animation carShakingAnimation;
     [SerializeField] List<MeshRenderer> carRenderers = new List<MeshRenderer>();    
@@ -34,13 +40,15 @@ public class Car : MonoBehaviour
     Coroutine moveCoroutine = null;
     [SerializeField] LevelController levelController;
     Action clickedAction;
+    [SerializeField] GridExitStopRoad gridExitStopRoad;
     public void OnStart(LevelController levelController)
     {
         this.levelController = levelController;
         transform.position = spawnPoint;
+        originalScale = transform.localScale;
         movePoints.Clear();
         //movePoints.Add(spawnPoint);
-  
+        
         GetRotation();
         GetColor();
         CalculateOverlappingGrids();  
@@ -288,9 +296,9 @@ public class Car : MonoBehaviour
 
         if (levelController.CheckRoad(spawnPoint2Int, moveDirection, this))
         {
-            ChangeCarStat(CarStat.MovingToExitRoad);
+            ChangeStat(CarStat.MovingToExitRoad);
 
-            moveCoroutine = StartCoroutine(Move(true));
+            moveCoroutine = StartCoroutine(Move());
             foreach (Vector2Int grid in gridHolders)
             {
                 GridRoad gridRoad = (GridRoad)levelController.GridDict[grid];
@@ -344,14 +352,14 @@ public class Car : MonoBehaviour
             transform.position = targetPosition;
         }
 
-        if (activateAction)
+        if (activateAction && isMovingToExitRoad)
         {
             clickedAction.Invoke();
         }
 
         if (isMovingToExitRoad)
         {
-            ChangeCarStat(CarStat.OnExitRoad);
+            ChangeStat(CarStat.OnExitRoad);
         } 
        
         isMoving = false;
@@ -392,6 +400,55 @@ public class Car : MonoBehaviour
         isMoving = false;
     }
 
+    IEnumerator MoveOutOfMap(bool activateAction = false, bool isMovingToExitRoad = false)
+    {
+        yield return new WaitForSeconds(1);
+
+        Vector3 targetPosition = new Vector3(movePoints[1].x, movePoints[1].y, movePoints[1].z);
+
+        while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * 3 * Time.deltaTime);
+            yield return null;
+        }
+
+        transform.position = targetPosition;
+
+        for (int i = 2; i < movePoints.Count; i++)
+        {
+            Vector3 currentPoint = movePoints[i - 1];
+            Vector3 nextPoint = movePoints[i];
+
+            Vector3 direction = nextPoint - currentPoint;
+
+            StartCoroutine(SmoothRotateTowardsDirection(direction, 3));
+
+
+            targetPosition = new Vector3(nextPoint.x, nextPoint.y, nextPoint.z);
+
+            while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * 3 * Time.deltaTime);
+                yield return null;
+            }
+
+            transform.position = targetPosition;
+        }
+
+        if (activateAction && isMovingToExitRoad)
+        {
+            clickedAction.Invoke();
+        }
+
+        if (isMovingToExitRoad)
+        {
+            ChangeStat(CarStat.OnOutOfMap);
+        }
+
+       
+        isMoving = false;
+        gameObject.SetActive(false);
+    }
     public IEnumerator PlayShakingAnimation()
     {
         carShakingAnimation.Play();
@@ -417,7 +474,7 @@ public class Car : MonoBehaviour
 
     }
 
-    IEnumerator SmoothRotateTowardsDirection(Vector3 direction)
+    IEnumerator SmoothRotateTowardsDirection(Vector3 direction, int time = 1)
     {
         direction.Normalize();
 
@@ -428,7 +485,7 @@ public class Car : MonoBehaviour
         Quaternion currentRotation = transform.rotation;
         Quaternion targetRotation = Quaternion.Euler(0f, targetRotationY, 0f);
 
-        float rotationSpeed = 10f; 
+        float rotationSpeed = 10f * time; 
 
         float t = 0f;
         while (t < 1f)
@@ -487,8 +544,9 @@ public class Car : MonoBehaviour
                 movePoints.Add(gridExitEnterRoad.GetTransformPosition());
                 movePoints.Add(gridExitEnterRoad.ExitStopRoad.GetTransformPosition());
                 gridExitEnterRoad.ExitStopRoad.SetCar(this);
+                gridExitStopRoad = gridExitEnterRoad.ExitStopRoad;
                 //Debug.Log(1);
-                StartCoroutine(Move(false, true));
+                StartCoroutine(Move(true, true));
             }
             else
             {
@@ -497,7 +555,7 @@ public class Car : MonoBehaviour
         }
     }
 
-    void ChangeCarStat(CarStat stat)
+    public void ChangeStat(CarStat stat)
     {
         this.stat = stat;
 
@@ -510,15 +568,84 @@ public class Car : MonoBehaviour
 
                 break;
             case CarStat.OnExitRoad:
-
+                OnEnterOnExitRoad();
                 break;
             case CarStat.MovingOutOfMap:
-
+                OnMovingOutOfMap();
                 break;
             case CarStat.OnOutOfMap:
 
                 break;
         }
+    }
+
+    void OnEnterOnExitRoad()
+    {
+        UnableNeedToHideGameObjectd();
+        transform.localScale = Vector3.one;
+
+        bool canGetMorePassenger = GetPassenger();
+        while (canGetMorePassenger)
+        {
+            canGetMorePassenger = GetPassenger();
+        }
+      
+    }
+
+    void UnableNeedToHideGameObjectd()
+    {
+        foreach (GameObject gameObject in needToHideObjects)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+    bool GetPassenger()
+    {
+       
+        List<Passenger> passengers = gridExitStopRoad.GetPassenger(colorType);
+
+        foreach (Passenger passenger in passengers)
+        {
+
+            for(int i = 0; i < seats.Count; i++)
+            {
+                Seat seat = seats[i];
+                if (!seat.hadTakenSeat)
+                {
+                    passenger.MovePoints.Add(seat.transform.position);
+                    passenger.transform.parent = seat.transform;
+                    passenger.Move();
+                    passenger.ChangeStat(PassengerStat.OnPickedUp);
+                    seat.hadTakenSeat = true;
+
+                    if(i == seats.Count - 1)
+                    {
+                        ChangeStat(CarStat.MovingOutOfMap);
+                    }    
+
+                    return true;
+                }
+            }
+
+            //full of seats
+            ChangeStat(CarStat.MovingOutOfMap);
+            return false;
+        }
+
+        return false;
+    }
+
+    void OnMovingOutOfMap()
+    {
+        movePoints.Reverse();
+        isMoving = true;
+        GridMainRoad gridMainRoad = gridExitStopRoad.GridExitEnterRoad.MainRoad;
+        movePoints.Add(gridMainRoad.GetTransformPosition());
+        movePoints.AddRange(levelController.FindShortestPathToExitMainRoad(gridMainRoad));
+        GetComponent<Collider>().enabled = false;
+        StartCoroutine(MoveOutOfMap()); 
+
     }
 }
 

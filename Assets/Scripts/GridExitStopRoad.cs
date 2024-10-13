@@ -5,6 +5,7 @@ using UnityEngine;
 public class GridExitStopRoad : GridRoad
 {
     public GridExitEnterRoad GridExitEnterRoad { get; set; }
+    public List<GridPassenger> ConnectedGridPassengers { get; set; } = new List<GridPassenger>();
 
     [SerializeField] bool isOpen = false;
     public bool IsOpen => isOpen;
@@ -26,5 +27,22 @@ public class GridExitStopRoad : GridRoad
         {
             levelController.GridDict.Add(location, this);
         }
+    }
+
+    public List<Passenger> GetPassenger(ColorType colorType)
+    {
+        
+        List<Passenger> passengers = new List<Passenger>();
+        foreach (GridPassenger gridPassenger in ConnectedGridPassengers)
+        {
+            if(gridPassenger.IsHadPassenger() && gridPassenger.Passenger.ColorType == colorType)
+            {
+                passengers.Add(gridPassenger.Passenger);
+                levelController.RemovePassengerAndShift(gridPassenger);
+            }
+         
+        }
+
+        return passengers;
     }
 }

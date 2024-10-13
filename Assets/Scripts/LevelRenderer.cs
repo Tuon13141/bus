@@ -14,7 +14,8 @@ public class LevelRenderer : MonoBehaviour
 
     [SerializeField] List<GridExitEnterRoad> gridExitEnterRoads = new List<GridExitEnterRoad>();
     [SerializeField] List<GridExitStopRoad> gridExitStopRoads = new List<GridExitStopRoad>();
-    [SerializeField] List<GridPassenger> gridPassengers = new List<GridPassenger>();
+    public List<GridExitStopRoad> GridExitStopRoads => gridExitStopRoads;
+    [SerializeField] List<GridPassengerList> gridPassengerListList = new();
 
     [SerializeField] Vector2Int levelArea;
   
@@ -33,6 +34,11 @@ public class LevelRenderer : MonoBehaviour
 
     [SerializeField] GameObject borderRoadParent;
     public List<GridBorderRoad> BorderRoads { get; set; } = new List<GridBorderRoad>();
+
+    [SerializeField] List<Passenger> passengerList = new List<Passenger>();
+
+    [SerializeField] List<Car> carList = new List<Car>();
+    public List<Car> CarList => carList;
 
     [SerializeField] LevelController levelController;
 
@@ -67,6 +73,11 @@ public class LevelRenderer : MonoBehaviour
                     GridMainRoad road = roadObj.GetComponent<GridMainRoad>();
                     road.SetUp(spawnPoint, levelController);
                     MainRoads.Add(road);
+
+                    if(i == halfX - 1)
+                    {
+                        road.SetIsExitRoad(true);
+                    }
                 }
                 else if (i == -halfX || i == halfX - 1 || j == -halfY || j == halfY - 1)
                 {
@@ -274,9 +285,12 @@ public class LevelRenderer : MonoBehaviour
            
         }
         
-        foreach(GridPassenger gridPassenger in gridPassengers)
+        foreach(GridPassengerList gridPassengerList in gridPassengerListList)
         {
-            gridPassenger.OnStart();
+            foreach(GridPassenger gridPassenger in gridPassengerList.gridPassengers)
+            {
+                gridPassenger.OnStart();
+            }
         }
     }
 
@@ -300,7 +314,7 @@ public class LevelRenderer : MonoBehaviour
         Car[] cars = GetComponentsInChildren<Car>(true);
 
 
-        List<Car> carList = new List<Car>(cars);
+        carList = new List<Car>(cars);
 
         foreach (Car car in carList)
         {
@@ -310,19 +324,34 @@ public class LevelRenderer : MonoBehaviour
 
     int currentIndexInPassengerWaves = 0;
     int currentIndexOfPassengerWave = 0;
-    IEnumerator InstantiatePassengers()
+    bool canInstantiatePassengers = true;
+    public IEnumerator InstantiatePassengers()
     {
+        if(!canInstantiatePassengers) { yield break; }
+        canInstantiatePassengers = false;
+
+        if(currentIndexInPassengerWaves == passengerWaves.Count - 1) { yield break; }
+
         for (int i = currentIndexInPassengerWaves; i < passengerWaves.Count; i++)
         {
             currentIndexInPassengerWaves = i;
+            int indexInGridPassengers = -1;
             for (int j = currentIndexOfPassengerWave; j < passengerWaves[i].numberOfPassenger; j++)
             {
-              
-                foreach (GridPassenger gridPassenger in gridPassengers)
+                indexInGridPassengers++;
+                if(indexInGridPassengers >= gridPassengerListList.Count)
+                {
+                    indexInGridPassengers = 0;
+                }
+                foreach (GridPassenger gridPassenger in gridPassengerListList[indexInGridPassengers].gridPassengers)
                 {
                     if (gridPassenger.IsStartPoint)
                     {
-                        if (gridPassenger.IsHadPassenger()) yield break;
+                        if (gridPassenger.IsHadPassenger())
+                        {
+                            canInstantiatePassengers = true;
+                            yield break;
+                        }
                         GameObject passengerObj = Instantiate(passengerPref);
                         Passenger passenger = passengerObj.GetComponent<Passenger>();
 
@@ -350,18 +379,22 @@ public class LevelRenderer : MonoBehaviour
 
                             nextGridPassenger = nextGridPassenger.nextGridPassenger;
                         }
-                        currentIndexOfPassengerWave = j;
+                        currentIndexOfPassengerWave = j + 1;
                         passenger.Move();
+                        passengerList.Add(passenger);
                         break;
                     }
                 }
 
-               
-                yield return new WaitForSeconds(0.5f);
+                //Debug.Log(3);
+                yield return new WaitForSeconds(0.2f);
             }
-
+            //Debug.Log(2);
             currentIndexOfPassengerWave = 0;
         }
+        //Debug.Log(1);
+        canInstantiatePassengers = true;
+        levelController.CarInGridExitStayRoadGetPassenger();
     }
 
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Passenger : MonoBehaviour
+public class Passenger : MonoBehaviour, IChangeStat
 {
     [SerializeField] SkinnedMeshRenderer meshRenderer;
     [SerializeField] ColorType colorType = ColorType.Red;
@@ -13,8 +13,9 @@ public class Passenger : MonoBehaviour
     public List<Vector3> MovePoints { get; set; } = new List<Vector3>();
     int currentMovePointIndex = 0;
     [SerializeField] float moveSpeed = 10f;
+    bool isMoving = false;  
 
-    void OnChangeStat(PassengerStat passengerStat)
+    public void ChangeStat(PassengerStat passengerStat)
     {
         this.passengerStat = passengerStat;
         switch (passengerStat)
@@ -23,15 +24,16 @@ public class Passenger : MonoBehaviour
 
                 break;
             case PassengerStat.OnPickedUp: 
-                
+                transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
                 break;
         }
     }
     IEnumerator MoveToPoints()
     {
+        
         for (int i = currentMovePointIndex; i < MovePoints.Count; i++)
         {
-            currentMovePointIndex = i;
+       
             Vector3 startPoint = transform.position;
             Vector3 endPoint = MovePoints[i];
             float time = 0f;
@@ -45,12 +47,21 @@ public class Passenger : MonoBehaviour
             }
 
             transform.position = endPoint;
+            currentMovePointIndex = i;
         }
+
+        isMoving = false;
     }
 
     public void Move()
     {
-        StartCoroutine(MoveToPoints());
+        if (!isMoving)
+        {
+            isMoving = true;
+            StartCoroutine(MoveToPoints());
+           
+        }
+        
     }
 
     void GetColor()

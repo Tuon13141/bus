@@ -9,7 +9,7 @@ public class GridMainRoad : GridRoad, INeighborable<GridMainRoad>
     private GridMainRoad leftMainRoad;
     private GridMainRoad rightMainRoad;
 
-    [SerializeField] bool isExitMap = false;
+    [SerializeField] bool isExitMainRoad = false;
 
     public List<GridExitEnterRoad> ExitEnterRoads { get; set; } = new List<GridExitEnterRoad>();
 
@@ -39,8 +39,10 @@ public class GridMainRoad : GridRoad, INeighborable<GridMainRoad>
 
     public void SetIsExitRoad(bool isExitRoad)
     {
-        this.isExitMap = isExitRoad;
+        this.isExitMainRoad = isExitRoad;
     }
+
+    public bool GetIsExitRoad() { return isExitMainRoad; }
 }
 
 public interface INeighborable<T>
