@@ -608,7 +608,7 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
     void GetPassenger()
     {   
         if(IsFullOfSeat() || stat != CarStat.OnExitRoad ) return;
-        Debug.Log("Get Passenger " + colorType);
+        //Debug.Log("Get Passenger " + colorType);
         List<Passenger> passengers = gridExitStopRoad.GetPassenger(this);
         
         bool check = false;

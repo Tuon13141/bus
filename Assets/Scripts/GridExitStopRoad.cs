@@ -12,7 +12,7 @@ public class GridExitStopRoad : GridRoad
     public override void OnStart()
     {
         base.OnStart();
-        transform.localPosition = new Vector3(spawnPoint.x, 0, spawnPoint.y);
+        //transform.localPosition = new Vector3(spawnPoint.x, 0, spawnPoint.y);
     }
 
     public override void SetLevelController(LevelController levelController)
@@ -38,7 +38,7 @@ public class GridExitStopRoad : GridRoad
         {
             if(gridPassenger.IsHadPassenger() && gridPassenger.Passenger.ColorType == car.ColorType)
             {
-                Debug.Log("GridStop " + car.ColorType);
+                //Debug.Log("GridStop " + car.ColorType);
                 passengers.Add(gridPassenger.Passenger);
                 levelController.RemovePassengerAndShift(gridPassenger);
             }

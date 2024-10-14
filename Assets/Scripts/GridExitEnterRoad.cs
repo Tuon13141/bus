@@ -13,7 +13,17 @@ public class GridExitEnterRoad : GridRoad
         MainRoad = levelController.FindNearestMainRoad(new Vector2Int((int)GetTransformPosition().x, (int)GetTransformPosition().z));
         MainRoad.ExitEnterRoads.Add(this);
         ExitStopRoad.GridExitEnterRoad = this;
-        transform.localPosition = new Vector3(spawnPoint.x, 0, spawnPoint.y);
+
+        spawnPoint = new Vector2Int((int)transform.position.x, (int)transform.position.z);
+        if (levelController.GridDict.ContainsKey(spawnPoint))
+        {
+            levelController.GridDict[spawnPoint] = this;
+        }
+        else
+        {
+            levelController.GridDict.Add(spawnPoint, this);
+        }
+        //transform.localPosition = new Vector3(spawnPoint.x, 0, spawnPoint.y);
     }
 
     public override void SetLevelController(LevelController levelController)

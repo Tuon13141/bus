@@ -258,7 +258,7 @@ public class LevelController : MonoBehaviour, IOnStart
 
     public void RemovePassengerAndShift(GridPassenger gridPassenger)
     {
-        Debug.Log("Controller");
+        //Debug.Log("Controller");
 
         gridPassenger.Passenger = null;
 
