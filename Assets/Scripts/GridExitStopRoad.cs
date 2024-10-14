@@ -33,11 +33,12 @@ public class GridExitStopRoad : GridRoad
     {
         List<Passenger> passengers = new List<Passenger>();
         if (car.IsFullOfSeat()) return passengers;
-       
+   
         foreach (GridPassenger gridPassenger in ConnectedGridPassengers)
         {
             if(gridPassenger.IsHadPassenger() && gridPassenger.Passenger.ColorType == car.ColorType)
             {
+                Debug.Log("GridStop " + car.ColorType);
                 passengers.Add(gridPassenger.Passenger);
                 levelController.RemovePassengerAndShift(gridPassenger);
             }

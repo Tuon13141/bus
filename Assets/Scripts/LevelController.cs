@@ -258,8 +258,7 @@ public class LevelController : MonoBehaviour, IOnStart
 
     public void RemovePassengerAndShift(GridPassenger gridPassenger)
     {
-        //Debug.Log(1);
-        if (!gridPassenger.IsHadPassenger()) return;
+        Debug.Log("Controller");
 
         gridPassenger.Passenger = null;
 
@@ -284,11 +283,7 @@ public class LevelController : MonoBehaviour, IOnStart
 
              
             }
-            else
-            {
-                CarInGridExitStayRoadGetPassenger();
-                return;
-            }
+          
 
             currentGridPassenger = currentGridPassenger.previousGridPassenger;
         }

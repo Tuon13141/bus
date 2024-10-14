@@ -606,11 +606,11 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
     }
 
     void GetPassenger()
-    {
-        //Debug.Log("Get Passenger");
+    {   
         if(IsFullOfSeat() || stat != CarStat.OnExitRoad ) return;
+        Debug.Log("Get Passenger " + colorType);
         List<Passenger> passengers = gridExitStopRoad.GetPassenger(this);
-
+        
         bool check = false;
         foreach (Passenger passenger in passengers)
         {
@@ -631,6 +631,8 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
                     {
                         ChangeStat(CarStat.MovingOutOfMap);
                         check = true;
+
+                        return;
                         //return true;
                     }
 
@@ -646,16 +648,19 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
         StartCoroutine(MoveOutOfMap()); 
     }
 
+    bool isFull = false;
     public bool IsFullOfSeat()
     {
         foreach(Seat seat in seats)
         {
             if (!seat.hadTakenSeat)
             {
+                isFull = false ;
                 return false;
             }
         }
 
+        isFull = true;
         return true;
     }
 }

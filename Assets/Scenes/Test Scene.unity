@@ -490,6 +490,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3754046996594001645, guid: ba4ad07130f0a2a4f965bf460986671e, type: 3}
+      propertyPath: passengerWaves.Array.data[0].numberOfPassenger
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3754046996594001645, guid: ba4ad07130f0a2a4f965bf460986671e, type: 3}
+      propertyPath: passengerWaves.Array.data[3].numberOfPassenger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3754046996594001645, guid: ba4ad07130f0a2a4f965bf460986671e, type: 3}
+      propertyPath: passengerWaves.Array.data[6].numberOfPassenger
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6924990061504918921, guid: ba4ad07130f0a2a4f965bf460986671e, type: 3}
       propertyPath: m_Name
       value: Level_1
