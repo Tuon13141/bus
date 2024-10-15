@@ -9,7 +9,7 @@ public class GridBorderRoad : GridRoad, INeighborable<GridBorderRoad>
     private GridBorderRoad leftBorderRoad;
     private GridBorderRoad rightBorderRoad;
 
-    public List<GridMainRoad> MainRoads { get; set; } = new List<GridMainRoad>();
+    public GridMainRoad MainRoad { get; set; } 
 
     public GridBorderRoad Up
     {

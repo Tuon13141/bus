@@ -9,8 +9,8 @@ public class LevelController : MonoBehaviour, IOnStart
     [SerializeField] LevelRenderer levelRenderer;
     [SerializeField] Dictionary<Vector2Int, Grid> gridDict = new Dictionary<Vector2Int, Grid>();
     public Dictionary<Vector2Int, Grid> GridDict => gridDict;
-
-    public List<Car> CarInExitStops { get; set; } = new List<Car>();    
+    public Car CurrentCar { get; set; }
+    GridMainRoad currentMainRoad;
     private void Awake()
     {
         if(Instance == null)
@@ -37,17 +37,17 @@ public class LevelController : MonoBehaviour, IOnStart
             car.AddToMovePoints(nextGridRoad);
             if (gridDict[nextGridRoad] is GridMainRoad)
             {
-                //Debug.Log("Find Main Road");
-                var result = FindShortestPathToExitEnterRoad((GridMainRoad)gridDict[nextGridRoad]);
+                ////Debug.Log("Find Main Road");
+                //var result = FindShortestPathToExitEnterRoad((GridMainRoad)gridDict[nextGridRoad]);
 
-                if(result.Item1 == null)
-                {
-                    Debug.Log("Lose !");
-                    return false;
-                }
+                //if(result.Item1 == null)
+                //{
+                //    Debug.Log("Lose !");
+                //    return false;
+                //}
 
-                car.AddRangeToMovePoints(result.Item1);
-                car.RoadOptional(result.Item2);
+                //car.AddRangeToMovePoints(result.Item1);
+                //car.RoadOptional(result.Item2);
                 return true;
             }
             else if (gridDict[nextGridRoad] is GridBorderRoad)
@@ -110,9 +110,12 @@ public class LevelController : MonoBehaviour, IOnStart
         {
             var (currentRoad, path) = queue.Dequeue();
 
-            if (currentRoad.MainRoads.Count > 0)
+            if (currentRoad.MainRoad != null)
             {
-                return (ConvertPathToPositions(path), currentRoad.MainRoads);
+                List<GridMainRoad> list = new List<GridMainRoad>();
+                list.Add(currentRoad.MainRoad);
+                currentMainRoad = currentRoad.MainRoad;
+                return (ConvertPathToPositions(path), list);
             }
 
             foreach (GridBorderRoad neighbor in GetNeighbors(currentRoad))
@@ -132,7 +135,7 @@ public class LevelController : MonoBehaviour, IOnStart
         return (null, null);
     }
 
-    public (List<Vector3> path, List<GridExitEnterRoad> foundExitEnterRoads) FindShortestPathToExitEnterRoad(GridMainRoad startRoad)
+    public (List<Vector3> path, List<GridExitEnterRoad> foundExitEnterRoads) FindShortestPathToExitEnterRoad(GridMainRoad startRoad, ExitArea exitArea)
     {
         Queue<(GridMainRoad currentRoad, List<GridMainRoad> path)> queue = new Queue<(GridMainRoad, List<GridMainRoad>)>();
         HashSet<GridMainRoad> visited = new HashSet<GridMainRoad>();
@@ -148,7 +151,7 @@ public class LevelController : MonoBehaviour, IOnStart
             {
                 foreach(GridExitEnterRoad exit in currentRoad.ExitEnterRoads)
                 {
-                    if (!exit.ExitStopRoad.IsHadCar() && exit.ExitStopRoad.IsOpen)
+                    if (!exit.ExitStopRoad.IsHadCar() && exit.ExitStopRoad.IsOpen && exit.ExitArea == exitArea)
                     {
                         return (ConvertPathToPositions(path), currentRoad.ExitEnterRoads);
                     }
@@ -257,7 +260,7 @@ public class LevelController : MonoBehaviour, IOnStart
         return nearestRoad; 
     }
 
-    public void RemovePassengerAndShift(GridPassenger gridPassenger)
+    public void RemovePassengerAndShift(GridPassenger gridPassenger, ExitArea exitArea)
     {
         //Debug.Log("Controller");
 
@@ -289,22 +292,42 @@ public class LevelController : MonoBehaviour, IOnStart
             currentGridPassenger = currentGridPassenger.previousGridPassenger;
         }
 
-        StartCoroutine(levelRenderer.InstantiatePassengers());
+        StartCoroutine(exitArea.InstantiatePassengers());
         //CarInGridExitStayRoadGetPassenger();
     }
 
-    public void CarInGridExitStayRoadGetPassenger()
+    public void CarInGridExitStayRoadGetPassenger(ExitArea exitArea)
     {
-        List<ColorType> colorTypes = new List<ColorType>();
-        for (int i = 0; i < CarInExitStops.Count; i++)
+        foreach (GridExitStopRoad gridExitStopRoad in exitArea.GridExitStopRoads)
         {
-            Car car = CarInExitStops[i];
-            if (!colorTypes.Contains(car.ColorType))
+            if (gridExitStopRoad.IsHadCar())
             {
-                car.ChangeStat(CarStat.OnExitRoad);
-                colorTypes.Add(car.ColorType);
-            }          
+                gridExitStopRoad.Car.ChangeStat(CarStat.OnExitRoad);
+            }
         }
     }
 
+    public void ShowArrowExitArea(bool b)
+    {
+        foreach (ExitArea exitArea in levelRenderer.ExitAreas)
+        {
+            exitArea.ShowArrow(b);
+        }
+    }
+
+    public void ChoicedExitErea(ExitArea exitArea)
+    {
+        var result = FindShortestPathToExitEnterRoad(currentMainRoad, exitArea);
+
+        if (result.Item1 == null)
+        {
+            Debug.Log("Lose !");
+            return;
+        }
+
+        CurrentCar.AddRangeToMovePoints(result.Item1);
+        CurrentCar.RoadOptional(result.Item2);
+
+        ShowArrowExitArea(false);
+    }
 }

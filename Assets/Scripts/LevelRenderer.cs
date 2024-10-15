@@ -6,22 +6,19 @@ using static UnityEditor.FilePathAttribute;
 
 public class LevelRenderer : MonoBehaviour
 {
-    [SerializeField] GameObject mainRoadPref;
     [SerializeField] GameObject roadPref;
     [SerializeField] GameObject borderRoadPref;
-    [SerializeField] GameObject exitAreaObject;
+    [SerializeField] List<ExitArea> exitAreas;
+    public List<ExitArea> ExitAreas => exitAreas;
     [SerializeField] GameObject exitAreaRoadPref;
-    [SerializeField] GameObject passengerPref;
 
-    [SerializeField] List<GridExitEnterRoad> gridExitEnterRoads = new List<GridExitEnterRoad>();
-    [SerializeField] List<GridExitStopRoad> gridExitStopRoads = new List<GridExitStopRoad>();
-    public List<GridExitStopRoad> GridExitStopRoads => gridExitStopRoads;
-    [SerializeField] List<GridPassengerList> gridPassengerListList = new();
+
+
     [SerializeField] List<GridMainRoad> gridMainRoadList = new List<GridMainRoad>();
 
     [SerializeField] Vector2Int levelArea;
 
-    [SerializeField] Vector2Int exitAreaSize;
+    [SerializeField] List<Vector2Int> exitAreaSizes;
 
     [SerializeField] GameObject exitRoadParent;
 
@@ -34,7 +31,7 @@ public class LevelRenderer : MonoBehaviour
     [SerializeField] GameObject borderRoadParent;
     public List<GridBorderRoad> BorderRoads { get; set; } = new List<GridBorderRoad>();
 
-    [SerializeField] List<Passenger> passengerList = new List<Passenger>();
+
 
     [SerializeField] List<Car> carList = new List<Car>();
     public List<Car> CarList => carList;
@@ -42,7 +39,7 @@ public class LevelRenderer : MonoBehaviour
     LevelController levelController;
     InputManager inputManager;
 
-    [SerializeField] List<PassengerWave> passengerWaves = new List<PassengerWave>();
+
 
     private void Start()
     {
@@ -56,7 +53,7 @@ public class LevelRenderer : MonoBehaviour
         GenerateRoadGrid();
         SetUpRoadConnections();
         AdjustCameraToFitGrid();
-        StartCoroutine(InstantiatePassengers());
+       
         StartCar();
     }
 
@@ -96,22 +93,31 @@ public class LevelRenderer : MonoBehaviour
             }
         }
 
-        Vector2Int exitAreaPosition = new Vector2Int((int)exitAreaObject.transform.position.x * 2, (int)exitAreaObject.transform.position.z * 2);
-        for (int i = exitAreaPosition.x / 2 - exitAreaSize.x / 2 ; i < exitAreaPosition.x / 2 + exitAreaSize.x / 2; i++)
+        for(int x = 0; x < exitAreas.Count; x++)
         {
-            for (int j = exitAreaPosition.y / 2 ; j < exitAreaPosition.y / 2 + exitAreaSize.y ; j++)
+            exitAreas[x].SetLevelController(levelController);
+            exitAreas[x].OnStart();
+            GameObject exitAreaObject = exitAreas[x].gameObject;
+            Vector2Int exitAreaPosition = new Vector2Int((int)exitAreaObject.transform.position.x * 2, (int)exitAreaObject.transform.position.z * 2);
+            for (int i = exitAreaPosition.x / 2 - exitAreaSizes[x].x / 2; i < exitAreaPosition.x / 2 + exitAreaSizes[x].x / 2; i++)
             {
-                Vector3 location = new Vector3(i, -0.3f, j);
-                Vector2Int grid = new Vector2Int(i, j);
-                Instantiate(exitAreaRoadPref, location, Quaternion.identity).transform.parent = exitRoadParent.transform;
-
-                if (levelController.GridDict.ContainsKey(grid))
+                for (int j = exitAreaPosition.y / 2; j < exitAreaPosition.y / 2 + exitAreaSizes[x].y; j++)
                 {
-                    Destroy(levelController.GridDict[grid].gameObject);
-                    levelController.GridDict.Remove(grid);
+                    Vector3 location = new Vector3(i, -0.3f, j);
+                    Vector2Int grid = new Vector2Int(i, j);
+                    GameObject go = Instantiate(exitAreaRoadPref, location, Quaternion.identity);
+                    go.transform.parent = exitRoadParent.transform;
+            
+
+                    if (levelController.GridDict.ContainsKey(grid))
+                    {
+                        Destroy(levelController.GridDict[grid].gameObject);
+                        levelController.GridDict.Remove(grid);
+                    }
                 }
             }
         }
+    
 
         //exitAreaObject.transform.position = new Vector3Int(exitAreaPosition.x / 2, 0, exitAreaPosition.y / 2);
     }
@@ -175,7 +181,7 @@ public class LevelRenderer : MonoBehaviour
                 }
                 else if (gridRoad is GridMainRoad)
                 {
-                    borderRoad.MainRoads.Add((GridMainRoad)gridRoad);
+                    borderRoad.MainRoad = (GridMainRoad)gridRoad;
                 }
             }
 
@@ -188,7 +194,7 @@ public class LevelRenderer : MonoBehaviour
                 }
                 else if (gridRoad is GridMainRoad)
                 {
-                    borderRoad.MainRoads.Add((GridMainRoad)gridRoad);
+                    borderRoad.MainRoad = (GridMainRoad)gridRoad;
                 }
             }
 
@@ -201,7 +207,7 @@ public class LevelRenderer : MonoBehaviour
                 }
                 else if (gridRoad is GridMainRoad)
                 {
-                    borderRoad.MainRoads.Add((GridMainRoad)gridRoad);
+                    borderRoad.MainRoad = (GridMainRoad)gridRoad;
                 }
             }
 
@@ -214,7 +220,7 @@ public class LevelRenderer : MonoBehaviour
                 }
                 else if (gridRoad is GridMainRoad)
                 {
-                    borderRoad.MainRoads.Add((GridMainRoad)gridRoad);
+                    borderRoad.MainRoad = (GridMainRoad)gridRoad;
                 }
             }
 
@@ -267,27 +273,40 @@ public class LevelRenderer : MonoBehaviour
             }
         }
 
-        foreach(GridExitEnterRoad gridExitEnterRoad in gridExitEnterRoads)
+        foreach(ExitArea area in exitAreas)
         {
-            gridExitEnterRoad.SetLevelController(levelController);
-            gridExitEnterRoad.OnStart();
-          
-        }
-
-        foreach(GridExitStopRoad gridExitStopRoad in gridExitStopRoads)
-        {
-            gridExitStopRoad.SetLevelController(levelController);
-            gridExitStopRoad.OnStart();
-           
-        }
-        
-        foreach(GridPassengerList gridPassengerList in gridPassengerListList)
-        {
-            foreach(GridPassenger gridPassenger in gridPassengerList.gridPassengers)
+            foreach (GridExitEnterRoad gridExitEnterRoad in area.GridExitEnterRoads)
             {
-                gridPassenger.OnStart();
+                gridExitEnterRoad.SetLevelController(levelController);
+                gridExitEnterRoad.OnStart();
+
+            }
+        }    
+      
+
+        foreach (ExitArea area in exitAreas)
+        {
+            foreach (GridExitStopRoad gridExitStopRoad in area.GridExitStopRoads)
+            {
+                gridExitStopRoad.SetLevelController(levelController);
+                gridExitStopRoad.OnStart();
+
             }
         }
+       
+
+        for (int x = 0; x < exitAreas.Count; x++)
+        {
+            ExitArea exitArea = exitAreas[x];
+            foreach (GridPassengerList gridPassengerList in exitArea.GridPassengerListList)
+            {
+                foreach (GridPassenger gridPassenger in gridPassengerList.gridPassengers)
+                {
+                    gridPassenger.OnStart();
+                }
+            }
+        }
+     
     }
 
     void SetUpMainRoad()
@@ -337,114 +356,8 @@ public class LevelRenderer : MonoBehaviour
         }
     }
 
-    int currentIndexInPassengerWaves = 0;
-    int currentIndexOfPassengerWave = 0;
-    bool canInstantiatePassengers = true;
-    bool isFull = false;
-    public IEnumerator InstantiatePassengers()
+    public void InstantiatePassenger(ExitArea exitArea)
     {
-        if(!canInstantiatePassengers) 
-        {
-           
-            yield break;
-        }
-        canInstantiatePassengers = false;
-        float time = 0.1f;
-
-        if(currentIndexInPassengerWaves >= passengerWaves.Count ) 
-        {
-    
-            levelController.CarInGridExitStayRoadGetPassenger();
-
-            yield break; 
-        }
-        
-        for (int i = currentIndexInPassengerWaves; i < passengerWaves.Count; i++)
-        {
-            currentIndexInPassengerWaves = i;
-         
-            int indexInGridPassengers = -1;
-            int countStartPointFull = 0;
-            for (int j = currentIndexOfPassengerWave; j < passengerWaves[i].numberOfPassenger; j++)
-            {
-                indexInGridPassengers++;
-                if(indexInGridPassengers >= gridPassengerListList.Count)
-                {
-                    indexInGridPassengers = 0;
-                }
-                foreach (GridPassenger gridPassenger in gridPassengerListList[indexInGridPassengers].gridPassengers)
-                {
-                    if (gridPassenger.IsStartPoint)
-                    {
-                        if (gridPassenger.IsHadPassenger())
-                        {
-                            countStartPointFull++;
-                            if(countStartPointFull >= gridPassengerListList.Count)
-                            {
-                                canInstantiatePassengers = true;
-                                levelController.CarInGridExitStayRoadGetPassenger();
-                              
-                                yield break;
-                            }
-        
-                            canInstantiatePassengers = true;
-                            break;
-                        }
-                        if (currentIndexInPassengerWaves == passengerWaves.Count - 1 && isFull)
-                        {
-                            time = 0;
-                            break;
-                        }
-                        GameObject passengerObj = Instantiate(passengerPref);
-                        Passenger passenger = passengerObj.GetComponent<Passenger>();
-
-                        passenger.ColorType = passengerWaves[i].colorType;
-                        gridPassenger.Passenger = passenger;
-                        passenger.GridPassenger = gridPassenger;
-                        passenger.transform.position = gridPassenger.GetTransformPosition();
-                        passenger.transform.parent = gridPassenger.transform;
-
-                        GridPassenger nextGridPassenger = gridPassenger.nextGridPassenger;
-                        GridPassenger currentGridPassenger = gridPassenger;
-
-                        while (nextGridPassenger != null && !nextGridPassenger.IsHadPassenger())
-                        {
-                            //Debug.Log(nextGridPassenger.gameObject.name);
-                           
-                            nextGridPassenger.Passenger = passenger;
-                            passenger.GridPassenger = nextGridPassenger;
-                            passenger.transform.parent = nextGridPassenger.transform;
-                            passenger.MovePoints.Add(nextGridPassenger.GetTransformPosition());
-
-                            currentGridPassenger.Passenger = null;
-
-                            currentGridPassenger = nextGridPassenger;
-
-                            nextGridPassenger = nextGridPassenger.nextGridPassenger;
-                           
-                        }
-                        currentIndexOfPassengerWave += 1;
-                        //j++;
-                        passenger.Move();
-                        passengerList.Add(passenger);
-                    
-                        break;
-                    }
-                }
-
-                //Debug.Log(3);
-               
-                yield return new WaitForSeconds(time);
-            }
-            //Debug.Log(2);
-
-            currentIndexOfPassengerWave = 0;
-        }
-
-        isFull = true;
-
-        canInstantiatePassengers = true;
-        levelController.CarInGridExitStayRoadGetPassenger();
+        StartCoroutine(exitArea.InstantiatePassengers());
     }
-
 }

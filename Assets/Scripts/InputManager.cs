@@ -6,7 +6,7 @@ public class InputManager : MonoBehaviour, IOnStart
 {
     public static InputManager Instance { get; private set; }
 
-    [SerializeField] bool canClick = false;
+    [SerializeField] bool canClickonCar = false;
 
     private void Awake()
     {
@@ -16,11 +16,11 @@ public class InputManager : MonoBehaviour, IOnStart
 
     public void OnStart()
     {
-        StartCoroutine(EnableClick());
+        StartCoroutine(EnableClickOnCar());
     }
     void Update()
     {
-        if(!canClick) return;
+       
         if (Input.GetMouseButtonDown(0))
         {   
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -29,25 +29,35 @@ public class InputManager : MonoBehaviour, IOnStart
             if (Physics.Raycast(ray, out hit))
             {
                 Car car = hit.transform.GetComponent<Car>();
-                if (car != null)
+                if (car != null && canClickonCar)
                 {
-                    canClick = false;
-                    car.Clicked(AvailableCanClick); 
+                    canClickonCar = false;
+                    car.Clicked(AvailableCanClickOnCar); 
                 }
+                else
+                {
+                    AreaArrowButton arrowButton = hit.transform.GetComponent<AreaArrowButton>();
+
+                    if (arrowButton != null)
+                    {
+                        arrowButton.OnClick();
+                    }
+                }
+                
             }
         }
     }
 
-    public void AvailableCanClick()
+    public void AvailableCanClickOnCar()
     {
         //Debug.Log(1);
-        canClick = true;
+        canClickonCar = true;
     }
 
-    IEnumerator EnableClick()
+    IEnumerator EnableClickOnCar()
     {
         yield return new WaitForSeconds(3f);
 
-        canClick = true;
+        canClickonCar = true;
     }
 }

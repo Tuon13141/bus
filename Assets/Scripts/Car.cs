@@ -318,6 +318,8 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
 
                 gridRoad.RemoveCrossCar(this);
             }
+
+            levelController.CurrentCar = this;
         }
         else
         {
@@ -370,6 +372,7 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
         } 
        
         isMoving = false;
+        movePoints.Clear();
     }
 
     IEnumerator MoveBack()
@@ -510,7 +513,6 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
 
     public void RoadOptional<T>(List<T> roads) where T : GridRoad
     {
-        //Debug.Log(1);
         StartCoroutine(WaitUntilReachLastMovePointToShowOption(roads));
     }
 
@@ -521,20 +523,8 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
         isMoving = true;
         if (roads[0] is GridMainRoad)
         {
-            if (roads.Count == 1)
-            {
-                GridMainRoad gridMainRoad = roads[0] as GridMainRoad;
-                var result = levelController.FindShortestPathToExitEnterRoad(gridMainRoad);
-                //Debug.Log(result.Item2.Count);
-                movePoints.Clear();
-                AddRangeToMovePoints(result.Item1);
-                StartCoroutine(Move());
-                RoadOptional(result.Item2);
-            }
-            else
-            {
-                //Hien thi bang chon duong di
-            }
+            isMoving = false;
+            levelController.ShowArrowExitArea(true);
         }
         else if (roads[0] is GridExitEnterRoad)
         {
@@ -550,13 +540,12 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
             if (tmp.Count == 1)
             {
                 GridExitEnterRoad gridExitEnterRoad = tmp[0];
-                movePoints.Clear();
+                //movePoints.Clear();
                 movePoints.Add(gridExitEnterRoad.GetTransformPosition());
                 movePoints.Add(gridExitEnterRoad.ExitStopRoad.GetTransformPosition());
                 gridExitEnterRoad.ExitStopRoad.SetCar(this);
                 gridExitStopRoad = gridExitEnterRoad.ExitStopRoad;
-                index = levelController.CarInExitStops.Count;
-                levelController.CarInExitStops.Add(this);
+                gridExitEnterRoad.ExitArea.CarInExitStops.Add(this);
                 //Debug.Log(1);
                 StartCoroutine(Move(true, true));
             }
@@ -565,6 +554,16 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
                 //Hien thi bang chon duong di
             }
         }
+    }
+
+    public void ChoicedExitArea(GridMainRoad gridMainRoad, ExitArea exitArea)
+    {
+        var result = levelController.FindShortestPathToExitEnterRoad(gridMainRoad, exitArea);
+        //Debug.Log(result.Item2.Count);
+        movePoints.Clear();
+        AddRangeToMovePoints(result.Item1);
+        StartCoroutine(Move());
+        RoadOptional(result.Item2);
     }
 
     public void ChangeStat(CarStat stat)
@@ -634,7 +633,7 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
                     {
                         ChangeStat(CarStat.MovingOutOfMap);
                         check = true;
-
+                        gridExitStopRoad.GridExitEnterRoad.ExitArea.CarInExitStops.Remove(this);
                         return;
                         //return true;
                     }
@@ -648,8 +647,6 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
 
     void OnMovingOutOfMap()
     {
-        levelController.CarInExitStops.Remove(this);
-        levelController.CarInGridExitStayRoadGetPassenger();
         StartCoroutine(MoveOutOfMap()); 
     }
 

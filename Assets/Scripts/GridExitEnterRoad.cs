@@ -5,6 +5,7 @@ using UnityEngine;
 public class GridExitEnterRoad : GridRoad
 {
     public GridMainRoad MainRoad { get; set; }
+    public ExitArea ExitArea { get; set; }
     public GridExitStopRoad ExitStopRoad;
 
     public override void OnStart()

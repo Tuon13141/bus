@@ -40,7 +40,7 @@ public class GridExitStopRoad : GridRoad
             {
                 //Debug.Log("GridStop " + car.ColorType);
                 passengers.Add(gridPassenger.Passenger);
-                levelController.RemovePassengerAndShift(gridPassenger);
+                levelController.RemovePassengerAndShift(gridPassenger, GridExitEnterRoad.ExitArea);
             }
          
         }
