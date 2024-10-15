@@ -10,6 +10,7 @@ public class LevelController : MonoBehaviour, IOnStart
     [SerializeField] Dictionary<Vector2Int, Grid> gridDict = new Dictionary<Vector2Int, Grid>();
     public Dictionary<Vector2Int, Grid> GridDict => gridDict;
 
+    public List<Car> CarInExitStops { get; set; } = new List<Car>();    
     private void Awake()
     {
         if(Instance == null)
@@ -294,12 +295,15 @@ public class LevelController : MonoBehaviour, IOnStart
 
     public void CarInGridExitStayRoadGetPassenger()
     {
-        foreach(GridExitStopRoad gridExitStopRoad in levelRenderer.GridExitStopRoads)
+        List<ColorType> colorTypes = new List<ColorType>();
+        for (int i = 0; i < CarInExitStops.Count; i++)
         {
-            if (gridExitStopRoad.IsHadCar())
+            Car car = CarInExitStops[i];
+            if (!colorTypes.Contains(car.ColorType))
             {
-                gridExitStopRoad.Car.ChangeStat(CarStat.OnExitRoad);
-            }
+                car.ChangeStat(CarStat.OnExitRoad);
+                colorTypes.Add(car.ColorType);
+            }          
         }
     }
 

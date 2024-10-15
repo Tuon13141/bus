@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class Car : MonoBehaviour, IChangeStat, IOnStart
 {
+    [SerializeField] int index;
     [SerializeField] Vector2Int scale;
     [SerializeField] int seatCount;
     [SerializeField] CarStat stat = CarStat.OnRoad;
@@ -554,6 +555,8 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
                 movePoints.Add(gridExitEnterRoad.ExitStopRoad.GetTransformPosition());
                 gridExitEnterRoad.ExitStopRoad.SetCar(this);
                 gridExitStopRoad = gridExitEnterRoad.ExitStopRoad;
+                index = levelController.CarInExitStops.Count;
+                levelController.CarInExitStops.Add(this);
                 //Debug.Log(1);
                 StartCoroutine(Move(true, true));
             }
@@ -645,6 +648,8 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
 
     void OnMovingOutOfMap()
     {
+        levelController.CarInExitStops.Remove(this);
+        levelController.CarInGridExitStayRoadGetPassenger();
         StartCoroutine(MoveOutOfMap()); 
     }
 
