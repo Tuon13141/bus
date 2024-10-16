@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,6 +22,7 @@ public class ExitArea : MonoBehaviour, IOnStart
     int currentIndexOfPassengerWave = 0;
     bool canInstantiatePassengers = true;
     bool isFull = false;
+    public bool IsFull => isFull;   
 
     LevelController levelController;
 
@@ -42,7 +43,7 @@ public class ExitArea : MonoBehaviour, IOnStart
     }
     public IEnumerator InstantiatePassengers()
     {
-        Debug.Log("Called");
+        //Debug.Log("Called");
         if (!canInstantiatePassengers)
         {
 

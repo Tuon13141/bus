@@ -38,16 +38,8 @@ public class LevelController : MonoBehaviour, IOnStart
             if (gridDict[nextGridRoad] is GridMainRoad)
             {
                 ////Debug.Log("Find Main Road");
-                //var result = FindShortestPathToExitEnterRoad((GridMainRoad)gridDict[nextGridRoad]);
-
-                //if(result.Item1 == null)
-                //{
-                //    Debug.Log("Lose !");
-                //    return false;
-                //}
-
-                //car.AddRangeToMovePoints(result.Item1);
-                //car.RoadOptional(result.Item2);
+                currentMainRoad = (GridMainRoad)gridDict[nextGridRoad];
+                ShowArrowExitArea(true);
                 return true;
             }
             else if (gridDict[nextGridRoad] is GridBorderRoad)
@@ -309,9 +301,31 @@ public class LevelController : MonoBehaviour, IOnStart
 
     public void ShowArrowExitArea(bool b)
     {
+        if (levelRenderer.ExitAreas.Count == 1)
+        {
+            ChoicedExitErea(levelRenderer.ExitAreas[0]);
+            return;
+        }
+
+        List<ExitArea> exitAreas = new List<ExitArea>();
         foreach (ExitArea exitArea in levelRenderer.ExitAreas)
         {
-            exitArea.ShowArrow(b);
+            if (!exitArea.IsFull)
+            {
+                exitAreas.Add(exitArea);
+            }
+        }
+
+        if (exitAreas.Count > 1)
+        {
+            foreach (ExitArea exitArea in levelRenderer.ExitAreas)
+            {
+                exitArea.ShowArrow(b);
+            }
+        }
+        else
+        {
+            ChoicedExitErea(exitAreas[0]);
         }
     }
 

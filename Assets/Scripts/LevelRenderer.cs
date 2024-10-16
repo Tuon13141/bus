@@ -52,7 +52,7 @@ public class LevelRenderer : MonoBehaviour
         SetUpMainRoad();
         GenerateRoadGrid();
         SetUpRoadConnections();
-        AdjustCameraToFitGrid();
+        //AdjustCameraToFitGrid();
        
         StartCar();
     }
@@ -61,6 +61,11 @@ public class LevelRenderer : MonoBehaviour
     {
         int halfX = levelArea.x / 2;
         int halfY = levelArea.y / 2;
+
+        inputManager.XLimitMin = - halfX - 5;
+        inputManager.XLimitMax = halfX + 5;
+        inputManager.ZLimitMin = - halfY - 5;
+        inputManager.ZLimitMax = halfY + 5;
 
         for(int i = -halfX; i < halfX; i++)
         {
