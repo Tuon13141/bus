@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class ExitArea : MonoBehaviour, IOnStart
 {
+    [SerializeField] GameObject exitAreaRoadPref;
+    [SerializeField] GameObject exitRoadParent;
     [SerializeField] GameObject passengerPref;
+    [SerializeField] ExitAreaType exitAreaType;
     [SerializeField] AreaArrowButton arrow;
     [SerializeField] List<GridPassengerList> gridPassengerListList = new();
     public List<GridPassengerList> GridPassengerListList => gridPassengerListList;
     [SerializeField] List<PassengerWave> passengerWaves = new List<PassengerWave>();
     [SerializeField] List<Passenger> passengerList = new List<Passenger>();
+    public List<Passenger> PassengerList => passengerList;  
 
     [SerializeField] List<GridExitEnterRoad> gridExitEnterRoads = new List<GridExitEnterRoad>();
     public List<GridExitEnterRoad> GridExitEnterRoads => gridExitEnterRoads;
@@ -26,6 +30,9 @@ public class ExitArea : MonoBehaviour, IOnStart
 
     LevelController levelController;
 
+
+    [SerializeField] Vector2Int exitAreaSize;
+
     public void SetLevelController(LevelController levelController)
     {
         this.levelController = levelController;
@@ -37,7 +44,7 @@ public class ExitArea : MonoBehaviour, IOnStart
         {
             road.ExitArea = this;
         }
-
+        SpawnExitRoadGrid();
         ShowArrow(false);
         StartCoroutine(InstantiatePassengers());
     }
@@ -98,6 +105,7 @@ public class ExitArea : MonoBehaviour, IOnStart
                         }
                         GameObject passengerObj = Instantiate(passengerPref);
                         Passenger passenger = passengerObj.GetComponent<Passenger>();
+                        passenger.ExitArea = this;
 
                         passenger.ColorType = passengerWaves[i].colorType;
                         gridPassenger.Passenger = passenger;
@@ -171,4 +179,72 @@ public class ExitArea : MonoBehaviour, IOnStart
     {
         levelController.ChoicedExitErea(this);
     }
+
+    public void SpawnExitRoadGrid()
+    {
+        int halfX = exitAreaSize.x / 2;
+        int halfY = exitAreaSize.y / 2;
+
+        if (exitAreaType == ExitAreaType.Horizontal)
+        {
+            for (int i = -halfX; i < halfX; i++)
+            {
+                for (int j = 0; j < exitAreaSize.y; j++)
+                {
+                    Vector3 location = new Vector3(i, -0.3f, j);
+                    Vector2Int grid = new Vector2Int(i, j);
+                    GameObject go = Instantiate(exitAreaRoadPref);
+
+                    go.transform.parent = exitRoadParent.transform;
+                    go.transform.localPosition = location;
+
+
+                    Vector2Int vector2Int = grid + new Vector2Int((int)transform.position.x, (int)transform.position.z);
+                    if (levelController.GridDict.ContainsKey(vector2Int))
+                    {
+                        //Debug.Log(vector2Int);
+                        Destroy(levelController.GridDict[vector2Int].gameObject);
+                        levelController.GridDict.Remove(vector2Int);
+                    }
+                    else
+                    {
+                        //Debug.Log("None");
+                    }
+                }
+            }
+        }
+        else
+        {
+            for (int i = -halfX; i < halfX; i++)
+            {
+                for (int j = 0; j < exitAreaSize.y; j++)
+                {
+                    Vector3 location = new Vector3(j, -0.3f, i);
+                    Vector2Int grid = new Vector2Int(j, i);
+                    GameObject go = Instantiate(exitAreaRoadPref);
+
+                    go.transform.parent = exitRoadParent.transform;
+                    go.transform.localPosition = location;
+
+
+                    Vector2Int vector2Int = grid + new Vector2Int((int)transform.position.x, (int)transform.position.z);
+                    if (levelController.GridDict.ContainsKey(vector2Int))
+                    {
+                        //Debug.Log(vector2Int);
+                        Destroy(levelController.GridDict[vector2Int].gameObject);
+                        levelController.GridDict.Remove(vector2Int);
+                    }
+                    else
+                    {
+                        //Debug.Log("None");
+                    }
+                }
+            }
+        }
+    }
+}
+
+public enum ExitAreaType
+{
+    Horizontal, Vertical
 }

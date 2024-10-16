@@ -2,25 +2,20 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using static UnityEditor.FilePathAttribute;
 
 public class LevelRenderer : MonoBehaviour
 {
+    [SerializeField] GameObject cornerObject1;
+    [SerializeField] GameObject cornerObject2;
+
     [SerializeField] GameObject roadPref;
     [SerializeField] GameObject borderRoadPref;
     [SerializeField] List<ExitArea> exitAreas;
     public List<ExitArea> ExitAreas => exitAreas;
-    [SerializeField] GameObject exitAreaRoadPref;
-
-
 
     [SerializeField] List<GridMainRoad> gridMainRoadList = new List<GridMainRoad>();
 
-    [SerializeField] Vector2Int levelArea;
-
-    [SerializeField] List<Vector2Int> exitAreaSizes;
-
-    [SerializeField] GameObject exitRoadParent;
+    [SerializeField] Vector2Int cameraStartPosition;
 
     [SerializeField] GameObject roadParent;
     public List<GridRoad> Roads { get; set; } = new List<GridRoad>();
@@ -46,30 +41,32 @@ public class LevelRenderer : MonoBehaviour
         levelController = LevelController.Instance;
         inputManager = InputManager.Instance;
 
+        levelController.SetLevelRenderer(this);
         levelController.OnStart();
         inputManager.OnStart();
 
         SetUpMainRoad();
         GenerateRoadGrid();
         SetUpRoadConnections();
-        //AdjustCameraToFitGrid();
+        CenterizeCamera();
        
         StartCar();
     }
 
     void GenerateRoadGrid()
     {
-        int halfX = levelArea.x / 2;
-        int halfY = levelArea.y / 2;
+        Vector2Int levelArea = new Vector2Int();
+        Vector3 pos1 = cornerObject1.transform.position;
+        Vector3 pos2 = cornerObject2.transform.position;
+        Vector3 center = (pos1 + pos2) / 2f;
 
-        inputManager.XLimitMin = - halfX - 5;
-        inputManager.XLimitMax = halfX + 5;
-        inputManager.ZLimitMin = - halfY - 5;
-        inputManager.ZLimitMax = halfY + 5;
+        Vector3 bottomLeft = new Vector3(Mathf.Min(pos1.x, pos2.x), pos1.y, Mathf.Min(pos1.z, pos2.z));
+        Vector3 topRight = new Vector3(Mathf.Max(pos1.x, pos2.x), pos1.y, Mathf.Max(pos1.z, pos2.z));
 
-        for(int i = -halfX; i < halfX; i++)
+
+        for (int i = (int)bottomLeft.x; i <= (int)topRight.x; i += 1)
         {
-            for(int j = -halfY; j < halfY; j++)
+            for (int j = (int)bottomLeft.z; j <= (int)topRight.z; j += 1)
             {
                 GameObject roadObj;
                 Vector2Int spawnPoint = new Vector2Int(i, j);
@@ -79,7 +76,7 @@ public class LevelRenderer : MonoBehaviour
                 {
                     continue;   
                 }
-                if (i == -halfX || i == halfX - 1 || j == -halfY || j == halfY - 1)
+                if (i == bottomLeft.x || i == topRight.x || j == bottomLeft.z || j == topRight.z)
                 {
                     roadObj = Instantiate(borderRoadPref, location, Quaternion.identity);
                     roadObj.transform.parent = borderRoadParent.transform;
@@ -92,6 +89,19 @@ public class LevelRenderer : MonoBehaviour
                     roadObj = Instantiate(roadPref, location, Quaternion.identity);
                     roadObj.transform.parent = roadParent.transform;
                     GridRoad road = roadObj.GetComponent<GridRoad>();
+                   
+
+                    if (levelController.GridDict.ContainsKey(spawnPoint))
+                    {
+                        //Debug.Log(vector2Int);
+                        Destroy(levelController.GridDict[spawnPoint].gameObject);
+                        levelController.GridDict.Remove(spawnPoint);
+                    }
+                    else
+                    {
+                        //Debug.Log("None 2");
+                    }
+
                     road.SetUp(spawnPoint, levelController);
                     Roads.Add(road);
                 }
@@ -102,70 +112,30 @@ public class LevelRenderer : MonoBehaviour
         {
             exitAreas[x].SetLevelController(levelController);
             exitAreas[x].OnStart();
-            GameObject exitAreaObject = exitAreas[x].gameObject;
-            Vector2Int exitAreaPosition = new Vector2Int((int)exitAreaObject.transform.position.x * 2, (int)exitAreaObject.transform.position.z * 2);
-            for (int i = exitAreaPosition.x / 2 - exitAreaSizes[x].x / 2; i < exitAreaPosition.x / 2 + exitAreaSizes[x].x / 2; i++)
-            {
-                for (int j = exitAreaPosition.y / 2; j < exitAreaPosition.y / 2 + exitAreaSizes[x].y; j++)
-                {
-                    Vector3 location = new Vector3(i, -0.3f, j);
-                    Vector2Int grid = new Vector2Int(i, j);
-                    GameObject go = Instantiate(exitAreaRoadPref, location, Quaternion.identity);
-                    go.transform.parent = exitRoadParent.transform;
-            
-
-                    if (levelController.GridDict.ContainsKey(grid))
-                    {
-                        Destroy(levelController.GridDict[grid].gameObject);
-                        levelController.GridDict.Remove(grid);
-                    }
-                }
-            }
+        
         }
-    
 
-        //exitAreaObject.transform.position = new Vector3Int(exitAreaPosition.x / 2, 0, exitAreaPosition.y / 2);
+        int width = Mathf.Abs(Mathf.FloorToInt(pos2.x - pos1.x));
+        int height = Mathf.Abs(Mathf.FloorToInt(pos2.z - pos1.z));
+
+        levelArea = new Vector2Int(width, height);
+
+        int halfX = levelArea.x / 2;
+        int halfY = levelArea.y / 2;
+
+        inputManager.XLimitMin = -halfX - 5;
+        inputManager.XLimitMax = halfX + 5;
+        inputManager.ZLimitMin = -halfY - 5;
+        inputManager.ZLimitMax = halfY + 5;
+
+        cornerObject1.SetActive(false);
+        cornerObject2.SetActive(false);
     }
-    void AdjustCameraToFitGrid()
+    void CenterizeCamera()
     {
         Camera mainCamera = Camera.main;
 
-        float x = -0.5f;
-        if (levelArea.x % 2 != 0) {
-            x = -0.5f;
-        }
-      
-
-        Vector3 gridCenter = new Vector3(x, 0, 0);
-
-        if (mainCamera.orthographic)
-        {
-            mainCamera.orthographicSize = levelArea.y / 2f;
-
-            float aspectRatio = mainCamera.aspect;
-            float horizontalSize = (levelArea.x / 2f) / aspectRatio;
-            if (horizontalSize > mainCamera.orthographicSize)
-            {
-                mainCamera.orthographicSize = horizontalSize;
-            }
-
-            mainCamera.transform.position = new Vector3(gridCenter.x, 10, gridCenter.z);  
-        }
-        else
-        {
-            float halfHeight = levelArea.y / 2f;
-            float halfWidth = levelArea.x / 2f;
-
-            float fovInRadians = mainCamera.fieldOfView * Mathf.Deg2Rad;
-
-            float cameraDistanceVertical = halfHeight / Mathf.Tan(fovInRadians / 2f);
-
-            float aspectRatio = mainCamera.aspect;
-            float cameraDistanceHorizontal = halfWidth / (Mathf.Tan(fovInRadians / 2f) * aspectRatio);
-            float cameraDistance = Mathf.Max(cameraDistanceVertical, cameraDistanceHorizontal);
-
-            mainCamera.transform.position = new Vector3(gridCenter.x, cameraDistance + 5, gridCenter.z);
-        }
+        mainCamera.transform.position = new Vector3(cameraStartPosition.x, 60, cameraStartPosition.y);
 
         mainCamera.transform.rotation = Quaternion.Euler(90, 0, 0);
     }
@@ -325,6 +295,7 @@ public class LevelRenderer : MonoBehaviour
 
             if (levelController.GridDict.ContainsKey(spawnPoint))
             {
+                Destroy(levelController.GridDict[spawnPoint].gameObject);
                 levelController.GridDict[spawnPoint] = gridMainRoad;
             }
             else

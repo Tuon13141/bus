@@ -319,7 +319,7 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
                 gridRoad.RemoveCrossCar(this);
             }
 
-            levelController.CurrentCar = this;
+            //levelController.CurrentCar = this;
         }
         else
         {
@@ -412,6 +412,11 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
 
     IEnumerator MoveOutOfMap()
     {
+        foreach (Passenger passenger in passengers)
+        {
+            passenger.ExitArea.PassengerList.Remove(passenger);
+        }
+
         yield return new WaitForSeconds(1.5f);
 
         transform.localScale = originalScale;
@@ -460,6 +465,7 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
 
         gridExitStopRoad.RemoveCar(this);
         isMoving = false;
+        InputManager.Instance.SetCanClickOnCar(true);
         gameObject.SetActive(false);
     }
     public IEnumerator PlayShakingAnimation()
@@ -647,6 +653,7 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
 
     void OnMovingOutOfMap()
     {
+        InputManager.Instance.SetCanClickOnCar(false);
         StartCoroutine(MoveOutOfMap()); 
     }
 

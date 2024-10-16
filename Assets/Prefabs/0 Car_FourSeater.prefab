@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 090902968526fd441b3e92e165315a3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 0
   scale: {x: 1, y: 3}
   seatCount: 4
   stat: 0
@@ -168,6 +169,7 @@ MonoBehaviour:
   needToHideObjects:
   - {fileID: 2106072930071647396}
   - {fileID: 3822707367086153238}
+  - {fileID: 9215841519661469737}
   carShakingAnimation: {fileID: 92955723543641970}
   carRenderers:
   - {fileID: 7929131097124171272}

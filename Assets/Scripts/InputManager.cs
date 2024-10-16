@@ -108,6 +108,10 @@ public class InputManager : MonoBehaviour, IOnStart
         canClickonCar = true;
     }
 
+    public void SetCanClickOnCar(bool canClickonCar)
+    {
+        this.canClickonCar = canClickonCar;
+    }
     IEnumerator EnableClickOnCar()
     {
         yield return new WaitForSeconds(3f);

@@ -13,8 +13,10 @@ public class Passenger : MonoBehaviour, IChangeStat
     public List<Vector3> MovePoints { get; set; } = new List<Vector3>();
     int currentMovePointIndex = 0;
     [SerializeField] float moveSpeed = 10f;
-    bool isMoving = false;  
-
+    bool isMoving = false; 
+    
+    public ExitArea ExitArea { get; set; }
+    
     public void ChangeStat(PassengerStat passengerStat)
     {
         this.passengerStat = passengerStat;

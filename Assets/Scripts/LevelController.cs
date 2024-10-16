@@ -25,7 +25,7 @@ public class LevelController : MonoBehaviour, IOnStart
     public bool CheckRoad(Vector2Int startPosition, Vector2Int moveDirection, Car car)
     {
         Vector2Int nextGridRoad = startPosition + moveDirection;
-
+        CurrentCar = car;
         bool isMoveCross = false;
         if((moveDirection.x + moveDirection.y) % 2 == 0)
         {
@@ -37,7 +37,7 @@ public class LevelController : MonoBehaviour, IOnStart
             car.AddToMovePoints(nextGridRoad);
             if (gridDict[nextGridRoad] is GridMainRoad)
             {
-                ////Debug.Log("Find Main Road");
+                //Debug.Log("Find Main Road");
                 currentMainRoad = (GridMainRoad)gridDict[nextGridRoad];
                 ShowArrowExitArea(true);
                 return true;
@@ -301,18 +301,20 @@ public class LevelController : MonoBehaviour, IOnStart
 
     public void ShowArrowExitArea(bool b)
     {
-        if (levelRenderer.ExitAreas.Count == 1)
+        if (levelRenderer.ExitAreas.Count == 1 && b)
         {
+            Debug.Log(levelRenderer.ExitAreas[0].gameObject.name);
             ChoicedExitErea(levelRenderer.ExitAreas[0]);
             return;
         }
 
         List<ExitArea> exitAreas = new List<ExitArea>();
+        exitAreas.AddRange(levelRenderer.ExitAreas);
         foreach (ExitArea exitArea in levelRenderer.ExitAreas)
         {
-            if (!exitArea.IsFull)
+            if (exitArea.IsFull && exitArea.PassengerList.Count <= 0)
             {
-                exitAreas.Add(exitArea);
+                exitAreas.Remove(exitArea);
             }
         }
 
@@ -323,9 +325,13 @@ public class LevelController : MonoBehaviour, IOnStart
                 exitArea.ShowArrow(b);
             }
         }
-        else
+        else if(exitAreas.Count == 1 && b) 
         {
             ChoicedExitErea(exitAreas[0]);
+        }
+        else
+        {
+            //Debug.Log("Null");
         }
     }
 
@@ -343,5 +349,10 @@ public class LevelController : MonoBehaviour, IOnStart
         CurrentCar.RoadOptional(result.Item2);
 
         ShowArrowExitArea(false);
+    }
+
+    public void SetLevelRenderer(LevelRenderer levelRenderer)
+    {
+        this.levelRenderer = levelRenderer;
     }
 }
