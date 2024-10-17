@@ -86,6 +86,14 @@ public class Passenger : MonoBehaviour, IChangeStat
     {
         meshRenderer.material.color = newColor;
     }
+
+    public void ResetParameter(ExitArea exitArea, ColorType colorType)
+    {
+        this.ExitArea = exitArea;
+        this.colorType = colorType;
+
+        GetColor();
+    }
 }
 
 public enum PassengerStat

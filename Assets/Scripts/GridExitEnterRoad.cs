@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridExitEnterRoad : GridRoad
+public class GridExitEnterRoad : Grid
 {
     public GridMainRoad MainRoad { get; set; }
     public ExitArea ExitArea { get; set; }

@@ -517,12 +517,12 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
         transform.rotation = targetRotation;
     }
 
-    public void RoadOptional<T>(List<T> roads) where T : GridRoad
+    public void RoadOptional<T>(List<T> roads) where T : Grid
     {
         StartCoroutine(WaitUntilReachLastMovePointToShowOption(roads));
     }
 
-    IEnumerator WaitUntilReachLastMovePointToShowOption<T>(List<T> roads) where T : GridRoad
+    IEnumerator WaitUntilReachLastMovePointToShowOption<T>(List<T> roads) where T : Grid
     {
         yield return new WaitUntil(() => !isMoving);
 

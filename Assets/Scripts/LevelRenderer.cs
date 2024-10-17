@@ -17,13 +17,13 @@ public class LevelRenderer : MonoBehaviour
 
     [SerializeField] Vector2Int cameraStartPosition;
 
-    [SerializeField] GameObject roadParent;
+    Transform roadParent;
     public List<GridRoad> Roads { get; set; } = new List<GridRoad>();
 
     [SerializeField] GameObject mainRoadParent;
     public List<GridMainRoad> MainRoads =>  gridMainRoadList;
 
-    [SerializeField] GameObject borderRoadParent;
+    Transform borderRoadParent;
     public List<GridBorderRoad> BorderRoads { get; set; } = new List<GridBorderRoad>();
 
 
@@ -40,6 +40,9 @@ public class LevelRenderer : MonoBehaviour
     {
         levelController = LevelController.Instance;
         inputManager = InputManager.Instance;
+
+        borderRoadParent = levelController.BorderRoadParent;
+        roadParent = levelController.RoadParent;
 
         levelController.SetLevelRenderer(this);
         levelController.OnStart();
@@ -79,7 +82,7 @@ public class LevelRenderer : MonoBehaviour
                 if (i == bottomLeft.x || i == topRight.x || j == bottomLeft.z || j == topRight.z)
                 {
                     roadObj = Instantiate(borderRoadPref, location, Quaternion.identity);
-                    roadObj.transform.parent = borderRoadParent.transform;
+                    roadObj.transform.parent = borderRoadParent;
                     GridBorderRoad road = roadObj.GetComponent<GridBorderRoad>();
                     road.SetUp(spawnPoint, levelController);
                     BorderRoads.Add(road);
@@ -87,7 +90,7 @@ public class LevelRenderer : MonoBehaviour
                 else
                 {
                     roadObj = Instantiate(roadPref, location, Quaternion.identity);
-                    roadObj.transform.parent = roadParent.transform;
+                    roadObj.transform.parent = roadParent;
                     GridRoad road = roadObj.GetComponent<GridRoad>();
                    
 

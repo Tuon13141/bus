@@ -6,6 +6,15 @@ public class LevelController : MonoBehaviour, IOnStart
 {
     public static LevelController Instance;
 
+    [SerializeField] Transform roadParent;
+    public Transform RoadParent => roadParent;
+
+    [SerializeField] Transform passengerParent;
+    public Transform PassengerParent => passengerParent;
+
+    [SerializeField] Transform borderRoadParent;
+    public Transform BorderRoadParent => borderRoadParent;
+
     [SerializeField] LevelRenderer levelRenderer;
     [SerializeField] Dictionary<Vector2Int, Grid> gridDict = new Dictionary<Vector2Int, Grid>();
     public Dictionary<Vector2Int, Grid> GridDict => gridDict;
@@ -19,7 +28,7 @@ public class LevelController : MonoBehaviour, IOnStart
 
     public void OnStart()
     {
-        gridDict = new Dictionary<Vector2Int, Grid>();
+        ResetParameter();
     }
 
     public bool CheckRoad(Vector2Int startPosition, Vector2Int moveDirection, Car car)
@@ -215,7 +224,7 @@ public class LevelController : MonoBehaviour, IOnStart
         return neighbors;
     }
 
-    private List<Vector3> ConvertPathToPositions<T>(List<T> path) where T : GridRoad
+    private List<Vector3> ConvertPathToPositions<T>(List<T> path) where T : Grid
     {
         List<Vector3> positions = new List<Vector3>();
 
@@ -354,5 +363,20 @@ public class LevelController : MonoBehaviour, IOnStart
     public void SetLevelRenderer(LevelRenderer levelRenderer)
     {
         this.levelRenderer = levelRenderer;
+    }
+
+    public void ResetParameter()
+    {
+        foreach(Vector2Int grid in GridDict.Keys)
+        {
+            Grid g = GridDict[grid];
+            if (g.DestroyOnNewLoad)
+            {
+                g.DestroySelf();
+            }
+        }
+
+        currentMainRoad = null;
+        CurrentCar = null;
     }
 }
