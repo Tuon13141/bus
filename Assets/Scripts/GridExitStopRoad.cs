@@ -11,7 +11,7 @@ public class GridExitStopRoad : GridRoad
     public bool IsOpen => isOpen;
     public override void OnStart()
     {
-        base.OnStart();
+        //base.OnStart();
         //transform.localPosition = new Vector3(spawnPoint.x, 0, spawnPoint.y);
     }
 

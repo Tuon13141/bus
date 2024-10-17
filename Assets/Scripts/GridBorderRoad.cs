@@ -9,7 +9,11 @@ public class GridBorderRoad : GridRoad, INeighborable<GridBorderRoad>
     private GridBorderRoad leftBorderRoad;
     private GridBorderRoad rightBorderRoad;
 
-    public GridMainRoad MainRoad { get; set; } 
+    public GridMainRoad MainRoad { get; set; }
+    public override void OnStart()
+    {
+        base.OnStart();
+    }
 
     public GridBorderRoad Up
     {
@@ -33,5 +37,10 @@ public class GridBorderRoad : GridRoad, INeighborable<GridBorderRoad>
     {
         get => rightBorderRoad;
         set => rightBorderRoad = value;
+    }
+
+    public override void ResetParameter()
+    {
+        base.ResetParameter();
     }
 }

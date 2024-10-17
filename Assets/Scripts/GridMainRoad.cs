@@ -14,9 +14,9 @@ public class GridMainRoad : GridRoad, INeighborable<GridMainRoad>
     public List<GridExitEnterRoad> ExitEnterRoads { get; set; } = new List<GridExitEnterRoad>();
 
     public override void OnStart()
-    {
-        base.OnStart();
+    { 
         spawnPoint = new Vector2Int((int)transform.position.x, (int)transform.position.z);
+        base.OnStart();
         //transform.localPosition = new Vector3(spawnPoint.x, -0.3f, spawnPoint.y);
     }
     public GridMainRoad Up

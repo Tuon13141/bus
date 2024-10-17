@@ -200,16 +200,7 @@ public class ExitArea : MonoBehaviour, IOnStart
 
 
                     Vector2Int vector2Int = grid + new Vector2Int((int)transform.position.x, (int)transform.position.z);
-                    if (levelController.GridDict.ContainsKey(vector2Int))
-                    {
-                        //Debug.Log(vector2Int);
-                        Destroy(levelController.GridDict[vector2Int].gameObject);
-                        levelController.GridDict.Remove(vector2Int);
-                    }
-                    else
-                    {
-                        //Debug.Log("None");
-                    }
+                    ObjectPool.Instance.AddToInactiveGrid(vector2Int);
                 }
             }
         }
@@ -228,16 +219,7 @@ public class ExitArea : MonoBehaviour, IOnStart
 
 
                     Vector2Int vector2Int = grid + new Vector2Int((int)transform.position.x, (int)transform.position.z);
-                    if (levelController.GridDict.ContainsKey(vector2Int))
-                    {
-                        //Debug.Log(vector2Int);
-                        Destroy(levelController.GridDict[vector2Int].gameObject);
-                        levelController.GridDict.Remove(vector2Int);
-                    }
-                    else
-                    {
-                        //Debug.Log("None");
-                    }
+                    ObjectPool.Instance.AddToInactiveGrid(vector2Int);
                 }
             }
         }
@@ -247,16 +229,38 @@ public class ExitArea : MonoBehaviour, IOnStart
     {
         foreach (GridExitStopRoad gridExitStopRoad in gridExitStopRoads)
         {
-            if (!gridExitStopRoad.IsHadCar())
+            if ((!gridExitStopRoad.IsHadCar() || gridExitStopRoad.Car.CanGetPassenger) && gridExitStopRoad.IsOpen)
             {
                 return false;
             }
         }
 
-        if (passengerList.Count > 0)
+        return true;
+    }
+
+    public void AddCar(Car car)
+    {
+        CarInExitStops.Add(car);
+        foreach (GridExitStopRoad gridExitStopRoad in gridExitStopRoads)
         {
-            return true;
+            if (!gridExitStopRoad.IsOpen) continue;
+            if (!gridExitStopRoad.IsHadCar()) return;
+            if (gridExitStopRoad.Car.CanGetPassenger) return;
         }
+
+        levelController.CheckLevelFailedCondition();
+    }
+
+    public bool HadEmptyExitStay()
+    {
+        foreach (GridExitStopRoad gridExitStopRoad in gridExitStopRoads)
+        {
+            if (!gridExitStopRoad.IsHadCar() && gridExitStopRoad.IsOpen)
+            {
+                return true;
+            }
+        }
+
         return false;
     }
 }

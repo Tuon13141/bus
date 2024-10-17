@@ -29,5 +29,14 @@ public class Grid : MonoBehaviour, IOnStart
         Destroy(gameObject);
     }
 
+    public void UnActiveSelf()
+    {
+        gameObject.SetActive(false);
+    }
     public Vector3 GetTransformPosition() { return new Vector3(transform.position.x, 0, transform.position.z); }
+
+    public virtual void ResetParameter()
+    {
+        
+    }
 }

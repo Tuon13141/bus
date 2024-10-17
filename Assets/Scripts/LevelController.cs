@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using static UnityEditor.FilePathAttribute;
 
 public class LevelController : MonoBehaviour, IOnStart
 {
@@ -314,7 +317,6 @@ public class LevelController : MonoBehaviour, IOnStart
     {
         if (levelRenderer.ExitAreas.Count == 1 && b)
         {
-            Debug.Log(levelRenderer.ExitAreas[0].gameObject.name);
             ChoicedExitErea(levelRenderer.ExitAreas[0]);
             return;
         }
@@ -323,7 +325,7 @@ public class LevelController : MonoBehaviour, IOnStart
         exitAreas.AddRange(levelRenderer.ExitAreas);
         foreach (ExitArea exitArea in levelRenderer.ExitAreas)
         {
-            if (exitArea.IsFull && exitArea.PassengerList.Count <= 0)
+            if ((exitArea.IsFull && exitArea.PassengerList.Count <= 0) || !exitArea.HadEmptyExitStay())
             {
                 exitAreas.Remove(exitArea);
             }
@@ -369,35 +371,62 @@ public class LevelController : MonoBehaviour, IOnStart
 
     public void ResetParameter()
     {
-        foreach(Vector2Int grid in GridDict.Keys)
-        {
-            Grid g = GridDict[grid];
-            if (g.DestroyOnNewLoad)
-            {
-                g.DestroySelf();
-            }
-        }
-
+        //RemoveNullInGridDict();
+        //Debug.Log(GridDict.Keys.Count);
+        //foreach (Vector2Int grid in GridDict.Keys)
+        //{
+        //    Grid g = GridDict[grid];
+        //    if (g.DestroyOnNewLoad)
+        //    {
+        //        g.DestroySelf();
+        //    }
+        //}
+        GridDict.Clear();
         currentMainRoad = null;
         CurrentCar = null;
     }
 
-    public void CheckLevelCompletedCondition()
+    public void CheckLevelCompletedCondition(bool checkWin = false)
     {
         foreach (ExitArea exitArea in levelRenderer.ExitAreas) 
         { 
-            if(!exitArea.IsFull || exitArea.PassengerList.Count > 0)
+            if((exitArea.PassengerList.Count > 0 && exitArea.IsFull && exitArea.HadEmptyExitStay()) 
+                || (exitArea.HadEmptyExitStay() && !exitArea.IsFull) )
             {
                 return;
             }
 
             if (exitArea.IsStuck())
             {
+                ObjectPool.Instance.InactiveAllActiveGrid();
                 gameManager.Lose();
                 return;
             }
         }
 
-        gameManager.Win();
+        if (checkWin)
+        {
+            ObjectPool.Instance.InactiveAllActiveGrid();
+            gameManager.Win();
+        }
+    
+    }
+
+    public void CheckLevelFailedCondition()
+    {
+        ObjectPool.Instance.InactiveAllActiveGrid();
+        gameManager.Lose();
+    }
+
+    public void RemoveNullInGridDict()
+    {
+        List<Vector2Int> keysToRemove = gridDict.Where(kvp => kvp.Value == null)
+                                   .Select(kvp => kvp.Key)
+                                   .ToList();
+
+        foreach (Vector2Int key in keysToRemove)
+        {
+            gridDict.Remove(key);
+        }
     }
 }

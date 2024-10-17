@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEditor.FilePathAttribute;
 
 public class GridRoad : Grid
 {
@@ -9,6 +10,19 @@ public class GridRoad : Grid
     [SerializeField] protected Car car;
     public Car Car => car;
     [SerializeField] protected List<Car> crossCars = new List<Car>();
+
+    public override void OnStart()
+    {
+        base.OnStart();
+        if (levelController.GridDict.ContainsKey(spawnPoint))
+        {
+            levelController.GridDict[spawnPoint] = this;
+        }
+        else
+        {
+            levelController.GridDict.Add(spawnPoint, this);
+        }
+    }
     public void SetUp(Vector2Int location, LevelController levelController)
     {
         this.spawnPoint = location;
@@ -39,7 +53,9 @@ public class GridRoad : Grid
 
     public bool IsHadCar(Car car)
     {
-        if(this.car == null || this.car == car) return false;  
+       
+        if(this.car == null || this.car == car) return false;
+        Debug.Log(this.car.gameObject.name + " " + GetTransformPosition());
         return true;
     }
 
@@ -75,4 +91,10 @@ public class GridRoad : Grid
 
     }
 
+    public override void ResetParameter()
+    {
+        base.ResetParameter();
+        car = null;
+        crossCars.Clear();
+    }
 }

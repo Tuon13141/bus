@@ -81,32 +81,11 @@ public class LevelRenderer : MonoBehaviour
                 }
                 if (i == bottomLeft.x || i == topRight.x || j == bottomLeft.z || j == topRight.z)
                 {
-                    roadObj = Instantiate(borderRoadPref, location, Quaternion.identity);
-                    roadObj.transform.parent = borderRoadParent;
-                    GridBorderRoad road = roadObj.GetComponent<GridBorderRoad>();
-                    road.SetUp(spawnPoint, levelController);
-                    BorderRoads.Add(road);
+                    ObjectPool.Instance.AddToActiveGrid<GridBorderRoad>(spawnPoint, borderRoadPref, borderRoadParent, BorderRoads, location);
                 }
                 else
                 {
-                    roadObj = Instantiate(roadPref, location, Quaternion.identity);
-                    roadObj.transform.parent = roadParent;
-                    GridRoad road = roadObj.GetComponent<GridRoad>();
-                   
-
-                    if (levelController.GridDict.ContainsKey(spawnPoint))
-                    {
-                        //Debug.Log(vector2Int);
-                        Destroy(levelController.GridDict[spawnPoint].gameObject);
-                        levelController.GridDict.Remove(spawnPoint);
-                    }
-                    else
-                    {
-                        //Debug.Log("None 2");
-                    }
-
-                    road.SetUp(spawnPoint, levelController);
-                    Roads.Add(road);
+                    ObjectPool.Instance.AddToActiveGrid<GridRoad>(spawnPoint, roadPref, roadParent, Roads, location);
                 }
             }
         }
@@ -291,20 +270,21 @@ public class LevelRenderer : MonoBehaviour
     {
         foreach(GridMainRoad gridMainRoad in gridMainRoadList)
         {
-            gridMainRoad.OnStart();
             gridMainRoad.SetLevelController(levelController);
-            Vector2Int spawnPoint = new Vector2Int((int)gridMainRoad.GetSpawnPoint().x, (int)gridMainRoad.GetSpawnPoint().y);
-            //Debug.Log(spawnPoint);
+            gridMainRoad.OnStart();
+            
+            //Vector2Int spawnPoint = new Vector2Int((int)gridMainRoad.GetSpawnPoint().x, (int)gridMainRoad.GetSpawnPoint().y);
+            ////Debug.Log(spawnPoint);
 
-            if (levelController.GridDict.ContainsKey(spawnPoint))
-            {
-                Destroy(levelController.GridDict[spawnPoint].gameObject);
-                levelController.GridDict[spawnPoint] = gridMainRoad;
-            }
-            else
-            {
-                levelController.GridDict.Add(spawnPoint, gridMainRoad);
-            }
+            //if (levelController.GridDict.ContainsKey(spawnPoint))
+            //{
+            //    Destroy(levelController.GridDict[spawnPoint].gameObject);
+            //    levelController.GridDict[spawnPoint] = gridMainRoad;
+            //}
+            //else
+            //{
+            //    levelController.GridDict.Add(spawnPoint, gridMainRoad);
+            //}
         }
     }
     Grid GetNerbyGrid(Vector2Int direction, Vector2Int startPoint)

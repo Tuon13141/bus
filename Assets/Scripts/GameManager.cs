@@ -18,8 +18,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        path += level.ToString();
-        GameObject levelObj = Resources.Load<GameObject>(path);
+        GameObject levelObj = Resources.Load<GameObject>(GetLevelPath());
         currentLevelObject = Instantiate(levelObj);
         inputManager.CanClick = true;
     }
@@ -27,7 +26,7 @@ public class GameManager : MonoBehaviour
     public void Retry()
     {
         Destroy(currentLevelObject);
-        GameObject levelObj = Resources.Load<GameObject>(path);
+        GameObject levelObj = Resources.Load<GameObject>(GetLevelPath());
         currentLevelObject = Instantiate(levelObj);
         UILose.SetActive(false);
         inputManager.CanClick = true;
@@ -40,8 +39,8 @@ public class GameManager : MonoBehaviour
         {
             level = 1;
         }
-        Destroy(currentLevelObject);
-        GameObject levelObj = Resources.Load<GameObject>(path);
+       
+        GameObject levelObj = Resources.Load<GameObject>(GetLevelPath());
         currentLevelObject = Instantiate(levelObj);
         UIWin.SetActive(false);
         inputManager.CanClick = true;
@@ -50,12 +49,19 @@ public class GameManager : MonoBehaviour
     public void Win()
     {
         inputManager.CanClick = false;
+        Destroy(currentLevelObject);
         UIWin.SetActive(true);
     }
 
     public void Lose()
     {
         inputManager.CanClick = false;
+        Destroy(currentLevelObject);
         UILose.SetActive(true);
+    }
+
+    string GetLevelPath()
+    {
+        return path + level;
     }
 }
