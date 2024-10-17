@@ -6,6 +6,8 @@ public class LevelController : MonoBehaviour, IOnStart
 {
     public static LevelController Instance;
 
+    [SerializeField] GameManager gameManager;
+
     [SerializeField] Transform roadParent;
     public Transform RoadParent => roadParent;
 
@@ -378,5 +380,24 @@ public class LevelController : MonoBehaviour, IOnStart
 
         currentMainRoad = null;
         CurrentCar = null;
+    }
+
+    public void CheckLevelCompletedCondition()
+    {
+        foreach (ExitArea exitArea in levelRenderer.ExitAreas) 
+        { 
+            if(!exitArea.IsFull || exitArea.PassengerList.Count > 0)
+            {
+                return;
+            }
+
+            if (exitArea.IsStuck())
+            {
+                gameManager.Lose();
+                return;
+            }
+        }
+
+        gameManager.Win();
     }
 }

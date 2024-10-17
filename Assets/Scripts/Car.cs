@@ -412,11 +412,6 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
 
     IEnumerator MoveOutOfMap()
     {
-        foreach (Passenger passenger in passengers)
-        {
-            passenger.ExitArea.PassengerList.Remove(passenger);
-        }
-
         yield return new WaitForSeconds(1.5f);
 
         transform.localScale = originalScale;
@@ -466,6 +461,7 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
         gridExitStopRoad.RemoveCar(this);
         isMoving = false;
         InputManager.Instance.SetCanClickOnCar(true);
+        levelController.CheckLevelCompletedCondition();
         gameObject.SetActive(false);
     }
     public IEnumerator PlayShakingAnimation()
@@ -634,11 +630,11 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
                     passenger.Move();
                     passenger.ChangeStat(PassengerStat.OnPickedUp);
                     seat.hadTakenSeat = true;
-
-                    if(i == seats.Count - 1)
+                    check = true;
+                    if (i == seats.Count - 1)
                     {
                         ChangeStat(CarStat.MovingOutOfMap);
-                        check = true;
+                        
                         gridExitStopRoad.GridExitEnterRoad.ExitArea.CarInExitStops.Remove(this);
                         return;
                         //return true;
@@ -647,13 +643,22 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
                     break;
                 }
             }
-            if (check) break;
+         
+        }
+
+        if (!check)
+        {
+
         }
     }
 
     void OnMovingOutOfMap()
     {
         InputManager.Instance.SetCanClickOnCar(false);
+        foreach (Passenger passenger in passengers)
+        {
+            passenger.ExitArea.PassengerList.Remove(passenger);
+        }
         StartCoroutine(MoveOutOfMap()); 
     }
 

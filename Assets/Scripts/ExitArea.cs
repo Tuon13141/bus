@@ -146,7 +146,7 @@ public class ExitArea : MonoBehaviour, IOnStart
                 yield return new WaitForSeconds(time);
             }
             //Debug.Log(2);
-
+            
             currentIndexOfPassengerWave = 0;
         }
 
@@ -241,6 +241,23 @@ public class ExitArea : MonoBehaviour, IOnStart
                 }
             }
         }
+    }
+
+    public bool IsStuck()
+    {
+        foreach (GridExitStopRoad gridExitStopRoad in gridExitStopRoads)
+        {
+            if (!gridExitStopRoad.IsHadCar())
+            {
+                return false;
+            }
+        }
+
+        if (passengerList.Count > 0)
+        {
+            return true;
+        }
+        return false;
     }
 }
 

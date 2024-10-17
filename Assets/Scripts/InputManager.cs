@@ -7,6 +7,7 @@ public class InputManager : MonoBehaviour, IOnStart
     public static InputManager Instance { get; private set; }
 
     [SerializeField] bool canClickonCar = false;
+    public bool CanClick { get; set; }
     public float swipeSensitivity = 0.5f;
     public float minSwipeDistance = 50f;
     private Vector2 startTouchPosition, endTouchPosition;
@@ -30,6 +31,7 @@ public class InputManager : MonoBehaviour, IOnStart
 
     void Update()
     {
+        if(!CanClick) return;
         if (Input.GetMouseButtonDown(0))
         {
             startTouchPosition = Input.mousePosition;
