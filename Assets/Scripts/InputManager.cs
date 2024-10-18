@@ -7,7 +7,7 @@ public class InputManager : MonoBehaviour, IOnStart
     public static InputManager Instance { get; private set; }
 
     [SerializeField] bool canClickonCar = false;
-    public bool CanClick { get; set; }
+    public bool CanClick { get; set; } = true;
     [SerializeField] float swipeSensitivity = 0.5f;
     [SerializeField] float minSwipeDistance = 50f;
     [SerializeField] private float smoothTime = 0.1f;

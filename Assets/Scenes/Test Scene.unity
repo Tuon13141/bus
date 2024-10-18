@@ -693,7 +693,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canClickonCar: 0
   swipeSensitivity: 25
-  minSwipeDistance: 50
+  minSwipeDistance: 20
   smoothTime: 0.1
 --- !u!1 &771730954
 GameObject:
