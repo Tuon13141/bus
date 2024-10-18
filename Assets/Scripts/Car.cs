@@ -415,7 +415,7 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
         GridMainRoad gridMainRoad = gridExitStopRoad.GridExitEnterRoad.MainRoad;
         movePoints.Add(gridMainRoad.GetTransformPosition());
         movePoints.AddRange(levelController.FindShortestPathToExitMainRoad(gridMainRoad));
-        GetComponent<Collider>().enabled = false;
+       
 
         Vector3 targetPosition = new Vector3(movePoints[0].x, movePoints[0].y, movePoints[0].z);
 
@@ -636,8 +636,9 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
         foreach (Passenger passenger in passengers)
         {
             passenger.ExitArea.PassengerList.Remove(passenger);
-           
+
         }
+        GetComponent<Collider>().enabled = false;
         StartCoroutine(MoveOutOfMap()); 
     }
     public bool IsFullOfSeat()
