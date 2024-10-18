@@ -8,8 +8,9 @@ public class InputManager : MonoBehaviour, IOnStart
 
     [SerializeField] bool canClickonCar = false;
     public bool CanClick { get; set; }
-    public float swipeSensitivity = 0.5f;
-    public float minSwipeDistance = 50f;
+    [SerializeField] float swipeSensitivity = 0.5f;
+    [SerializeField] float minSwipeDistance = 50f;
+    [SerializeField] private float smoothTime = 0.1f;
     private Vector2 startTouchPosition, endTouchPosition;
     private bool isSwiping = false;
     private bool isSwipeDetected = false;
@@ -62,19 +63,18 @@ public class InputManager : MonoBehaviour, IOnStart
         }
     }
 
+
     void MoveCamera(Vector2 swipeDirection)
     {
         float moveX = -swipeDirection.x * swipeSensitivity;
         float moveZ = -swipeDirection.y * swipeSensitivity;
 
-        Vector3 movement = new Vector3(moveX, 0, moveZ) * Time.deltaTime;
+        Vector3 targetPosition = Camera.main.transform.position + new Vector3(moveX, 0, moveZ) * Time.deltaTime;
 
-        Vector3 newCameraPosition = Camera.main.transform.position + movement;
-
-        if (newCameraPosition.x >= XLimitMin && newCameraPosition.x <= XLimitMax &&
-          newCameraPosition.z >= ZLimitMin && newCameraPosition.z <= ZLimitMax)
+        if (targetPosition.x >= XLimitMin && targetPosition.x <= XLimitMax &&
+            targetPosition.z >= ZLimitMin && targetPosition.z <= ZLimitMax)
         {
-            Camera.main.transform.Translate(movement, Space.World);
+            Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, targetPosition, smoothTime);
         }
 
         startTouchPosition = Input.mousePosition;
@@ -116,7 +116,7 @@ public class InputManager : MonoBehaviour, IOnStart
     }
     IEnumerator EnableClickOnCar()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         canClickonCar = true;
     }
 }

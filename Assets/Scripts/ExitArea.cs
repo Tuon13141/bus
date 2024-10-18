@@ -103,15 +103,7 @@ public class ExitArea : MonoBehaviour, IOnStart
                             time = 0;
                             break;
                         }
-                        GameObject passengerObj = Instantiate(passengerPref);
-                        Passenger passenger = passengerObj.GetComponent<Passenger>();
-                        passenger.ExitArea = this;
-
-                        passenger.ColorType = passengerWaves[i].colorType;
-                        gridPassenger.Passenger = passenger;
-                        passenger.GridPassenger = gridPassenger;
-                        passenger.transform.position = gridPassenger.GetTransformPosition();
-                        passenger.transform.parent = gridPassenger.transform;
+                        Passenger passenger = ObjectPool.Instance.AddToActivePassenger(gridPassenger, this, passengerWaves[i].colorType, passengerPref);
 
                         GridPassenger nextGridPassenger = gridPassenger.nextGridPassenger;
                         GridPassenger currentGridPassenger = gridPassenger;

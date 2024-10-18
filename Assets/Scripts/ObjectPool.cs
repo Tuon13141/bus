@@ -11,6 +11,9 @@ public class ObjectPool : MonoBehaviour
     public Dictionary<Vector2Int, Grid> ActiveGrid { get; set; } = new Dictionary<Vector2Int, Grid>();
     public Dictionary<Vector2Int, List<Grid>> InactiveGrid { get; set; } = new Dictionary<Vector2Int, List<Grid>>();
 
+    public List<Passenger> ActivePassenger { get; set; } = new List<Passenger>();
+    public List<Passenger> InactivePassenger { get; set;} = new List<Passenger>();
+
     private void Awake()
     {
         if(Instance == null)    
@@ -170,5 +173,57 @@ public class ObjectPool : MonoBehaviour
         list.Add(grid);
         gridObj.transform.parent = parent;
         return grid;
+    }
+
+    public void AddToInactivePassenger(Passenger passenger, Transform parent)
+    {  
+        if (ActivePassenger.Contains(passenger))
+        {
+            ActivePassenger.Remove(passenger);
+            InactivePassenger.Add(passenger);
+            passenger.transform.parent = parent;
+            passenger.UnActiveSelf();
+        }
+    }
+
+    public Passenger AddToActivePassenger(GridPassenger gridPassenger, ExitArea exitArea, ColorType colorType, GameObject passengerPref)
+    {
+        if (InactivePassenger.Count > 0)
+        {
+            Passenger passenger = InactivePassenger[0];
+            ActivePassenger.Add(passenger);
+            SetActivePassenger(passenger);
+            
+            passenger.ResetParameter(exitArea, colorType);
+            gridPassenger.Passenger = passenger;
+            passenger.GridPassenger = gridPassenger;
+
+            passenger.transform.position = gridPassenger.GetTransformPosition();
+            passenger.transform.parent = gridPassenger.transform;
+            InactivePassenger.Remove(passenger);
+
+            return passenger;
+        }
+        else
+        {
+            //Debug.Log("Dont Had");
+            GameObject passengerObj = Instantiate(passengerPref);
+            Passenger passenger = passengerObj.GetComponent<Passenger>();
+            passenger.ExitArea = exitArea;
+
+            passenger.ColorType = colorType;
+            gridPassenger.Passenger = passenger;
+            passenger.GridPassenger = gridPassenger;
+            passenger.transform.position = gridPassenger.GetTransformPosition();
+            passenger.transform.parent = gridPassenger.transform;
+
+            ActivePassenger.Add(passenger);
+            return passenger;
+        }
+    }
+
+    void SetActivePassenger(Passenger passenger)
+    {
+        passenger.gameObject.SetActive(true);
     }
 }

@@ -13,10 +13,9 @@ public class Passenger : MonoBehaviour, IChangeStat
     public List<Vector3> MovePoints { get; set; } = new List<Vector3>();
     int currentMovePointIndex = 0;
     [SerializeField] float moveSpeed = 10f;
-    bool isMoving = false; 
-    
+    bool isMoving = false;
+    [SerializeField] Vector3 originalScale = Vector3.one;
     public ExitArea ExitArea { get; set; }
-    
     public void ChangeStat(PassengerStat passengerStat)
     {
         this.passengerStat = passengerStat;
@@ -27,6 +26,11 @@ public class Passenger : MonoBehaviour, IChangeStat
                 break;
             case PassengerStat.OnPickedUp: 
                 transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
+                break;
+            case PassengerStat.OnOutOfMap:
+                ObjectPool.Instance.AddToInactivePassenger(this, LevelController.Instance.PassengerParent);
+                transform.localScale = originalScale;
+                transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
                 break;
         }
     }
@@ -89,14 +93,23 @@ public class Passenger : MonoBehaviour, IChangeStat
 
     public void ResetParameter(ExitArea exitArea, ColorType colorType)
     {
+        isMoving = false ;
+        currentMovePointIndex = 0;
+        MovePoints.Clear();
+        passengerStat = PassengerStat.OnWait;
         this.ExitArea = exitArea;
         this.colorType = colorType;
 
         GetColor();
     }
+
+    public void UnActiveSelf()
+    {
+        gameObject.SetActive(false);
+    }
 }
 
 public enum PassengerStat
 {
-    OnWait, OnPickedUp,
+    OnWait, OnPickedUp, OnOutOfMap
 }

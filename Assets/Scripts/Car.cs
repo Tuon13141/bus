@@ -450,6 +450,10 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
         }
 
         ChangeStat(CarStat.OnOutOfMap);
+        foreach (Passenger passenger in passengers)
+        {
+            passenger.ChangeStat(PassengerStat.OnOutOfMap);
+        }
         isMoving = false;
         InputManager.Instance.SetCanClickOnCar(true);
         levelController.CheckLevelCompletedCondition(true);
@@ -632,6 +636,7 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
         foreach (Passenger passenger in passengers)
         {
             passenger.ExitArea.PassengerList.Remove(passenger);
+           
         }
         StartCoroutine(MoveOutOfMap()); 
     }
