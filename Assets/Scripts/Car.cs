@@ -405,7 +405,7 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
     }
     IEnumerator MoveOutOfMap()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
 
         transform.localScale = originalScale;
         SetActiveNeedToHideGameObjectd(true);
@@ -455,7 +455,7 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
             passenger.ChangeStat(PassengerStat.OnOutOfMap);
         }
         isMoving = false;
-        InputManager.Instance.SetCanClickOnCar(true);
+
         levelController.CheckLevelCompletedCondition(true);
         gameObject.SetActive(false);
     }
@@ -631,7 +631,6 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
 
     void OnMovingOutOfMap()
     {
-        InputManager.Instance.SetCanClickOnCar(false);
         gridExitStopRoad.RemoveCar(this);
         foreach (Passenger passenger in passengers)
         {

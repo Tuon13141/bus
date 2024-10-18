@@ -10,7 +10,7 @@ public class InputManager : MonoBehaviour, IOnStart
     public bool CanClick { get; set; } = true;
     [SerializeField] float swipeSensitivity = 0.5f;
     [SerializeField] float minSwipeDistance = 50f;
-    [SerializeField] private float smoothTime = 0.1f;
+    //[SerializeField] private float smoothTime = 0.1f;
     private Vector2 startTouchPosition, endTouchPosition;
     private bool isSwiping = false;
     private bool isSwipeDetected = false;
@@ -66,15 +66,17 @@ public class InputManager : MonoBehaviour, IOnStart
 
     void MoveCamera(Vector2 swipeDirection)
     {
-        float moveX = -swipeDirection.x * swipeSensitivity;
-        float moveZ = -swipeDirection.y * swipeSensitivity;
+        float moveX = Mathf.Ceil(-swipeDirection.x * swipeSensitivity / 10) * 10;
+        float moveZ = Mathf.Ceil(-swipeDirection.y * swipeSensitivity / 10) * 10;
 
-        Vector3 targetPosition = Camera.main.transform.position + new Vector3(moveX, 0, moveZ) * Time.deltaTime;
+        Vector3 movement = new Vector3(moveX, 0, moveZ) * Time.deltaTime;
 
-        if (targetPosition.x >= XLimitMin && targetPosition.x <= XLimitMax &&
-            targetPosition.z >= ZLimitMin && targetPosition.z <= ZLimitMax)
+        Vector3 newCameraPosition = Camera.main.transform.position + movement;
+
+        if (newCameraPosition.x >= XLimitMin && newCameraPosition.x <= XLimitMax &&
+        newCameraPosition.z >= ZLimitMin && newCameraPosition.z <= ZLimitMax)
         {
-            Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, targetPosition, smoothTime);
+            Camera.main.transform.Translate(movement, Space.World);
         }
 
         startTouchPosition = Input.mousePosition;
