@@ -7,7 +7,7 @@ public class Grid : MonoBehaviour, IOnStart
     [SerializeField] bool destroyOnNewLoad = true;
     public bool DestroyOnNewLoad => destroyOnNewLoad;
     [SerializeField] protected Vector2Int spawnPoint;
-    [SerializeField] protected LevelController levelController;
+    protected LevelController levelController;
 
     public Vector2Int GetSpawnPoint()
     {

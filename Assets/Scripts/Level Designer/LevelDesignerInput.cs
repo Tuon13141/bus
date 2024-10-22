@@ -2,11 +2,11 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(LevelDesigner))]
+[CustomEditor(typeof(LevelDesigner), true)]
 public class LevelDesignerInput : Editor 
 {
     private LayerMask targetLayerMask = 1 << 6 | 1 << 7;
-    private LayerMask targetLayerMaskCar = 1 << 8 | 1 << 10;
+    private LayerMask targetLayerMaskMainRoad = 1 << 8 | 1 << 10;
     private void OnSceneGUI()
     {
         LevelDesigner levelDesignManager = (LevelDesigner)target;

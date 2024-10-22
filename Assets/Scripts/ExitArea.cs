@@ -29,9 +29,10 @@ public class ExitArea : MonoBehaviour, IOnStart
     public bool IsFull => isFull;   
 
     LevelController levelController;
-
+    public GridExitArea GridExitArea { get; set; }
 
     [SerializeField] Vector2Int exitAreaSize;
+    public Vector2Int ExitAreaSize => exitAreaSize;
 
     public void SetLevelController(LevelController levelController)
     {
@@ -183,12 +184,12 @@ public class ExitArea : MonoBehaviour, IOnStart
             {
                 for (int j = 0; j < exitAreaSize.y; j++)
                 {
-                    Vector3 location = new Vector3(i, -0.3f, j);
+                    Vector3 location = new Vector3(i, -0f, j);
                     Vector2Int grid = new Vector2Int(i, j);
-                    GameObject go = Instantiate(exitAreaRoadPref);
+                    //GameObject go = Instantiate(exitAreaRoadPref);
 
-                    go.transform.parent = exitRoadParent.transform;
-                    go.transform.localPosition = location;
+                    //go.transform.parent = exitRoadParent.transform;
+                    //go.transform.localPosition = location;
 
 
                     Vector2Int vector2Int = grid + new Vector2Int((int)transform.position.x, (int)transform.position.z);
@@ -202,12 +203,12 @@ public class ExitArea : MonoBehaviour, IOnStart
             {
                 for (int j = 0; j < exitAreaSize.y; j++)
                 {
-                    Vector3 location = new Vector3(j, -0.3f, i);
+                    Vector3 location = new Vector3(j, -0f, i);
                     Vector2Int grid = new Vector2Int(j, i);
-                    GameObject go = Instantiate(exitAreaRoadPref);
+                    //GameObject go = Instantiate(exitAreaRoadPref);
 
-                    go.transform.parent = exitRoadParent.transform;
-                    go.transform.localPosition = location;
+                    //go.transform.parent = exitRoadParent.transform;
+                    //go.transform.localPosition = location;
 
 
                     Vector2Int vector2Int = grid + new Vector2Int((int)transform.position.x, (int)transform.position.z);
