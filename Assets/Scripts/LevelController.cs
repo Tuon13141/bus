@@ -370,16 +370,6 @@ public class LevelController : MonoBehaviour, IOnStart
 
     public void ResetParameter()
     {
-        //RemoveNullInGridDict();
-        //Debug.Log(GridDict.Keys.Count);
-        //foreach (Vector2Int grid in GridDict.Keys)
-        //{
-        //    Grid g = GridDict[grid];
-        //    if (g.DestroyOnNewLoad)
-        //    {
-        //        g.DestroySelf();
-        //    }
-        //}
         GridDict.Clear();
         currentMainRoad = null;
         CurrentCar = null;

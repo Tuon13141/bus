@@ -272,19 +272,6 @@ public class LevelRenderer : MonoBehaviour
         {
             gridMainRoad.SetLevelController(levelController);
             gridMainRoad.OnStart();
-            
-            //Vector2Int spawnPoint = new Vector2Int((int)gridMainRoad.GetSpawnPoint().x, (int)gridMainRoad.GetSpawnPoint().y);
-            ////Debug.Log(spawnPoint);
-
-            //if (levelController.GridDict.ContainsKey(spawnPoint))
-            //{
-            //    Destroy(levelController.GridDict[spawnPoint].gameObject);
-            //    levelController.GridDict[spawnPoint] = gridMainRoad;
-            //}
-            //else
-            //{
-            //    levelController.GridDict.Add(spawnPoint, gridMainRoad);
-            //}
         }
     }
     Grid GetNerbyGrid(Vector2Int direction, Vector2Int startPoint)

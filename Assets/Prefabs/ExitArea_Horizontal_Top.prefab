@@ -677,6 +677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 9050992684687872339}
@@ -948,6 +949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 7713661344415508423}
@@ -2134,6 +2136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a119111b6965d01418885508199247e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 4, y: 4}
   levelController: {fileID: 0}
   car: {fileID: 0}
@@ -2361,6 +2364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 8481003764610343784}
@@ -2412,10 +2416,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e36a0f3647a64f34a8d4753f38714cf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: -8, y: 1}
   levelController: {fileID: 0}
-  car: {fileID: 0}
-  crossCars: []
   ExitStopRoad: {fileID: 6275592253648678230}
 --- !u!1 &1614328524679566035
 GameObject:
@@ -2462,6 +2465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 4238995120569786389}
@@ -2513,6 +2517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 2032742154204578634}
@@ -2669,6 +2674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 395191880953701448}
@@ -2839,6 +2845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 7861775558078448090}
@@ -3271,6 +3278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 8287628715923563832}
@@ -3406,6 +3414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 6295487642028499895}
@@ -3609,7 +3618,7 @@ MonoBehaviour:
   - {fileID: 9110587274696732145}
   - {fileID: 8994333230774551147}
   - {fileID: 6102103859163468295}
-  exitAreaSize: {x: 24, y: 13}
+  exitAreaSize: {x: 26, y: 13}
 --- !u!1 &2881180170334124830
 GameObject:
   m_ObjectHideFlags: 0
@@ -3865,6 +3874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 1010175107580127264}
@@ -4160,6 +4170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a119111b6965d01418885508199247e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 7, y: 4}
   levelController: {fileID: 0}
   car: {fileID: 0}
@@ -4551,6 +4562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 4809789756805744949}
@@ -4637,10 +4649,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e36a0f3647a64f34a8d4753f38714cf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 4, y: 1}
   levelController: {fileID: 0}
-  car: {fileID: 0}
-  crossCars: []
   ExitStopRoad: {fileID: 9110587274696732145}
 --- !u!1 &3887775284556837957
 GameObject:
@@ -4687,6 +4698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 0}
@@ -5014,6 +5026,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 5104361698149439396}
@@ -5380,6 +5393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 6796218229357288293}
@@ -5536,10 +5550,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e36a0f3647a64f34a8d4753f38714cf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 1, y: 1}
   levelController: {fileID: 0}
-  car: {fileID: 0}
-  crossCars: []
   ExitStopRoad: {fileID: 6659743362594135221}
 --- !u!1 &4436636873537292409
 GameObject:
@@ -5586,6 +5599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 0}
@@ -5668,6 +5682,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 7564540167244388166}
@@ -5785,6 +5800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 3225079782732713848}
@@ -5920,10 +5936,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e36a0f3647a64f34a8d4753f38714cf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 10, y: 1}
   levelController: {fileID: 0}
-  car: {fileID: 0}
-  crossCars: []
   ExitStopRoad: {fileID: 6102103859163468295}
 --- !u!1 &4983104126791372079
 GameObject:
@@ -6348,6 +6363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 6133653569749005045}
@@ -7028,6 +7044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a119111b6965d01418885508199247e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: -8, y: 4}
   levelController: {fileID: 0}
   car: {fileID: 0}
@@ -7288,6 +7305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 7799213812877663152}
@@ -7854,6 +7872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 5239381718117826342}
@@ -8262,6 +8281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 7446484018442758365}
@@ -8313,10 +8333,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e36a0f3647a64f34a8d4753f38714cf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: -2, y: 1}
   levelController: {fileID: 0}
-  car: {fileID: 0}
-  crossCars: []
   ExitStopRoad: {fileID: 4314173618833763767}
 --- !u!1 &6545802250960631427
 GameObject:
@@ -8363,6 +8382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 2560279666707457303}
@@ -8753,10 +8773,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e36a0f3647a64f34a8d4753f38714cf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: -5, y: 1}
   levelController: {fileID: 0}
-  car: {fileID: 0}
-  crossCars: []
   ExitStopRoad: {fileID: 5579709737849358540}
 --- !u!1 &6791956361565629921
 GameObject:
@@ -9373,6 +9392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a119111b6965d01418885508199247e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 10, y: 4}
   levelController: {fileID: 0}
   car: {fileID: 0}
@@ -9423,6 +9443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 962561595559079947}
@@ -9589,6 +9610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a119111b6965d01418885508199247e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: -2, y: 4}
   levelController: {fileID: 0}
   car: {fileID: 0}
@@ -9828,10 +9850,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e36a0f3647a64f34a8d4753f38714cf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 7, y: 1}
   levelController: {fileID: 0}
-  car: {fileID: 0}
-  crossCars: []
   ExitStopRoad: {fileID: 8994333230774551147}
 --- !u!1 &7689689203933464784
 GameObject:
@@ -10704,6 +10725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 7624887176190029523}
@@ -10755,6 +10777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 468676619810898947}
@@ -11274,6 +11297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a119111b6965d01418885508199247e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 1, y: 4}
   levelController: {fileID: 0}
   car: {fileID: 0}
@@ -11348,6 +11372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a119111b6965d01418885508199247e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: -5, y: 4}
   levelController: {fileID: 0}
   car: {fileID: 0}
@@ -11653,6 +11678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5881c92dab15ef44da4f07cd027a9c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnNewLoad: 1
   spawnPoint: {x: 0, y: 0}
   levelController: {fileID: 0}
   previousGridPassenger: {fileID: 67578315357565974}

@@ -392,6 +392,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6938105644614968402}
   - {fileID: 7218372493400517353}
   - {fileID: 5916661946655584622}
   - {fileID: 5878014746306661380}
@@ -546,9 +547,7 @@ MonoBehaviour:
   - {fileID: 4061381455948288142}
   - {fileID: 7470863102226221060}
   cameraStartPosition: {x: 0, y: 0}
-  roadParent: {fileID: 1440840074384431265}
   mainRoadParent: {fileID: 5188750149301497012}
-  borderRoadParent: {fileID: 1069203578953921759}
   carList: []
 --- !u!1 &9119729354215351173
 GameObject:
@@ -1180,7 +1179,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2804902603317356004, guid: bb76f48f2e12386498e1cf962c3471aa, type: 3}
       propertyPath: passengerWaves.Array.size
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2804902603317356004, guid: bb76f48f2e12386498e1cf962c3471aa, type: 3}
       propertyPath: passengerWaves.Array.data[2].colorType
@@ -1197,6 +1196,10 @@ PrefabInstance:
     - target: {fileID: 2804902603317356004, guid: bb76f48f2e12386498e1cf962c3471aa, type: 3}
       propertyPath: passengerWaves.Array.data[6].colorType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2804902603317356004, guid: bb76f48f2e12386498e1cf962c3471aa, type: 3}
+      propertyPath: passengerWaves.Array.data[8].colorType
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2804902603317356004, guid: bb76f48f2e12386498e1cf962c3471aa, type: 3}
       propertyPath: passengerWaves.Array.data[0].numberOfPassenger
@@ -1229,6 +1232,10 @@ PrefabInstance:
     - target: {fileID: 2804902603317356004, guid: bb76f48f2e12386498e1cf962c3471aa, type: 3}
       propertyPath: passengerWaves.Array.data[7].numberOfPassenger
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2804902603317356004, guid: bb76f48f2e12386498e1cf962c3471aa, type: 3}
+      propertyPath: passengerWaves.Array.data[8].numberOfPassenger
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8373432082396650317, guid: bb76f48f2e12386498e1cf962c3471aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2887,6 +2894,76 @@ MonoBehaviour:
 Transform:
   m_CorrespondingSourceObject: {fileID: 1954045152975841538, guid: eb9d6876c53458344ae91ca19abf3938, type: 3}
   m_PrefabInstance: {fileID: 7603313127512964303}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7613435378738838044
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 389418482388486316}
+    m_Modifications:
+    - target: {fileID: 711922171289984590, guid: 83d2d5bd2056386429c2da47e84edc31, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 711922171289984590, guid: 83d2d5bd2056386429c2da47e84edc31, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 711922171289984590, guid: 83d2d5bd2056386429c2da47e84edc31, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 711922171289984590, guid: 83d2d5bd2056386429c2da47e84edc31, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 711922171289984590, guid: 83d2d5bd2056386429c2da47e84edc31, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 711922171289984590, guid: 83d2d5bd2056386429c2da47e84edc31, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 711922171289984590, guid: 83d2d5bd2056386429c2da47e84edc31, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 711922171289984590, guid: 83d2d5bd2056386429c2da47e84edc31, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 711922171289984590, guid: 83d2d5bd2056386429c2da47e84edc31, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 711922171289984590, guid: 83d2d5bd2056386429c2da47e84edc31, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1887575189297466713, guid: 83d2d5bd2056386429c2da47e84edc31, type: 3}
+      propertyPath: m_Name
+      value: 2 Bus_TenSeater (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5055868545528180610, guid: 83d2d5bd2056386429c2da47e84edc31, type: 3}
+      propertyPath: colorType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5055868545528180610, guid: 83d2d5bd2056386429c2da47e84edc31, type: 3}
+      propertyPath: directionType
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 83d2d5bd2056386429c2da47e84edc31, type: 3}
+--- !u!4 &6938105644614968402 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 711922171289984590, guid: 83d2d5bd2056386429c2da47e84edc31, type: 3}
+  m_PrefabInstance: {fileID: 7613435378738838044}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7912137318761264295
 PrefabInstance:

@@ -49,7 +49,7 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
     {
         //Debug.Log(gameObject.name);
         levelController = LevelController.Instance;
-        transform.position = spawnPoint;
+        spawnPoint = new Vector3Int((int)transform.position.x, (int)transform.position.y, (int)transform.position.z);
         originalScale = transform.localScale;
         movePoints.Clear();
         seatCount = seats.Count;
