@@ -52,6 +52,28 @@ public class LevelDesigner : MonoBehaviour
         }
     }
 
+    public void DeleteCar(Vector3 vector3)
+    {
+
+        Vector3Int grid3D = GetGrid3dPosition(vector3);
+        Vector2Int grid = new Vector2Int(grid3D.x, grid3D.z);
+        if (CarDict.ContainsKey(grid))
+        {
+            Car c = CarDict[grid];
+            var keysToRemove = CarDict
+                      .Where(kvp => kvp.Value == c)
+                      .Select(kvp => kvp.Key)
+                      .ToList();
+
+            foreach (var key in keysToRemove)
+            {
+                CarDict.Remove(key);
+            }
+
+            DestroyImmediate(c.gameObject);
+        }
+    }
+
     public void SpawnMainRoad(Vector3 vector3)
     {
         Vector3Int grid3D = GetGrid3dPosition(vector3);
@@ -173,6 +195,16 @@ public class LevelDesigner : MonoBehaviour
         SpawnCar(vector3, car4SeatPref);
     }
 
+    public void Spawn6SeatCar(Vector3 vector3)
+    {
+        SpawnCar(vector3, car6SeatPref);
+    }
+
+    public void Spawn10SeatCar(Vector3 vector3)
+    {
+        SpawnCar(vector3, car10SeatPref);
+    }
+
     public void SpawnCar(Vector3 vector3, GameObject carPref)
     {
         Vector3Int grid3D = GetGrid3dPosition(vector3);
@@ -188,7 +220,7 @@ public class LevelDesigner : MonoBehaviour
             if (GridDict[grid] is GridRoad)
             {
                 Vector3 spawnPosition = new Vector3(grid3D.x, 0.2f, grid3D.z);
-
+            
                 Car car = carPref.GetComponent<Car>();
                 Vector2Int scale = car.Scale;
                 float rota = GetRotation(DirectionType.Up);
@@ -197,30 +229,40 @@ public class LevelDesigner : MonoBehaviour
                 if (CheckCar(carHolder))
                 {
                     Debug.Log("Spawn new Car !!");
-                    SpawnCar(spawnPosition, carPref, DirectionType.Up, carHolder);
-                 
+
+                    SpawnCar(spawnPosition, carPref, DirectionType.Up, ColorType.Red, carHolder);
+                    
                 }
                 else
                 {
-                    Debug.Log("Change Car !!");
-                    Car c = CarDict[grid];
-
-                    var keysToRemove = CarDict
-                        .Where(kvp => kvp.Value == c)
-                        .Select(kvp => kvp.Key)
-                        .ToList(); 
-
-                    foreach (var key in keysToRemove)
+                    if (CarDict.ContainsKey(grid))
                     {
-                        CarDict.Remove(key);
+                        Debug.Log("Change Car !!");
+                        Car c = CarDict[grid];
+
+
+                        var keysToRemove = CarDict
+                            .Where(kvp => kvp.Value == c)
+                            .Select(kvp => kvp.Key)
+                            .ToList();
+
+                        foreach (var key in keysToRemove)
+                        {
+                            CarDict.Remove(key);
+                        }
+
+                        DirectionType directionType = GetNextDirection(c.DirectionType);
+                        Vector3 cTransform = c.transform.position;
+                        ColorType colorType = c.ColorType;
+                        DestroyImmediate(c.gameObject);
+
+                        SpawnCar(cTransform, carPref, directionType, colorType);
                     }
-
-                    DirectionType directionType = GetNextDirection(c.DirectionType);
-                    DestroyImmediate(c.gameObject);
-
-                    SpawnCar(spawnPosition, carPref, directionType);
+                    else
+                    {
+                        Debug.Log("Can't spawn new Car here !");
+                    }
                 }
-               
             }
             else
             {
@@ -231,7 +273,7 @@ public class LevelDesigner : MonoBehaviour
         }
     }
 
-    public void SpawnCar(Vector3 spawnPosition, GameObject carPref, DirectionType directionType, List<Vector2Int> carHolder = null)
+    public void SpawnCar(Vector3 spawnPosition, GameObject carPref, DirectionType directionType, ColorType colorType, List<Vector2Int> carHolder = null)
     {
         GameObject newObj = PrefabUtility.InstantiatePrefab(carPref) as GameObject;
         newObj.transform.position = spawnPosition;
@@ -239,19 +281,36 @@ public class LevelDesigner : MonoBehaviour
 
         Car c = newObj.GetComponent<Car>();
         c.DirectionType = directionType;
+        c.ColorType = colorType;
 
         if (carHolder == null)
         {
             Vector2Int scale = c.Scale;
             float rota = GetRotation(directionType);
-            carHolder = CalculateOverlappingGrids(rota, scale, new Vector3Int((int)spawnPosition.x, (int)spawnPosition.z), directionType);
-           
-        } 
+            carHolder = CalculateOverlappingGrids(rota, scale, new Vector3Int((int)spawnPosition.x, 0, (int)spawnPosition.z), directionType);
+
+        }
         foreach (Vector2Int carHolderTmp in carHolder)
         {
             CarDict.Add(carHolderTmp, c);
         }
+        SetColorInSceneGUI(GetColor(c.ColorType), c.CarRenderers);
     }
+
+    public void ChangeCarColor(Vector3 vector3)
+    {
+        Vector3Int grid3D = GetGrid3dPosition(vector3);
+        Vector2Int grid = new Vector2Int(grid3D.x, grid3D.z);
+        if (CarDict.ContainsKey(grid))
+        {
+            Car c = CarDict[grid];
+            ColorType color = GetNextColor(c.ColorType);
+
+            c.ColorType = color;
+            SetColorInSceneGUI(GetColor(c.ColorType), c.CarRenderers);
+        }
+    }
+
     public void SpawnRoad(Vector3 vector3)
     {
         Vector3Int grid3D = GetGrid3dPosition(vector3);
@@ -376,7 +435,6 @@ public class LevelDesigner : MonoBehaviour
         Vector3 P1_rotated = rotationMatrix.MultiplyPoint3x4(P1) + spawnPoint;
         Vector3 P2_rotated = rotationMatrix.MultiplyPoint3x4(P2) + spawnPoint;
 
-
         return FindGridsBetween(P1_rotated, P2_rotated, directionType);
     }
     List<Vector2Int> FindGridsBetween(Vector3 P1, Vector3 P2, DirectionType directionType)
@@ -429,61 +487,9 @@ public class LevelDesigner : MonoBehaviour
         }
 
         carHolder.Add(new Vector2Int(x2, z2));
-
-        if (directionType == DirectionType.Up || directionType == DirectionType.Down || directionType == DirectionType.Left || directionType == DirectionType.Right)
+        foreach (var car in carHolder)
         {
-            for (int i = -1; i <= 1; i++)
-            {
-                if (i == 0) continue;
-                Vector2Int vector2Int = new Vector2Int(carHolder[0].x + i, carHolder[0].y);
-
-                if (GridDict.ContainsKey(vector2Int))
-                {
-                    //Debug.Log(1);
-                    if (GridDict[vector2Int] is GridRoad)
-                    {
-                        carHolder.Add(vector2Int);
-                    }
-                }
-
-                vector2Int = new Vector2Int(carHolder[0].x, carHolder[0].y + i);
-                if (GridDict.ContainsKey(vector2Int))
-                {
-                    //Debug.Log(1);
-                    if (GridDict[vector2Int] is GridRoad)
-                    {
-                        carHolder.Add(vector2Int);
-                    }
-                }
-
-                vector2Int = new Vector2Int(carHolder[carHolder.Count - 1].x + i, carHolder[carHolder.Count - 1].y);
-
-                if (GridDict.ContainsKey(vector2Int))
-                {
-                    //Debug.Log(1);
-                    if (GridDict[vector2Int] is GridRoad)
-                    {
-                        carHolder.Add(vector2Int);
-                    }
-                }
-
-                vector2Int = new Vector2Int(carHolder[carHolder.Count - 1].x, carHolder[carHolder.Count - 1].y + i);
-                if (GridDict.ContainsKey(vector2Int))
-                {
-                    //Debug.Log(1);
-                    if (GridDict[vector2Int] is GridRoad)
-                    {
-                        carHolder.Add(vector2Int);
-                    }
-                }
-            }
         }
-
-        foreach (var grid in carHolder)
-        {
-           
-        }
-
         return carHolder;
     }
 
@@ -544,6 +550,64 @@ public class LevelDesigner : MonoBehaviour
             default:
                 return currentDirection; 
         }
+    }
+    public ColorType GetNextColor(ColorType currentColor)
+    {
+        switch (currentColor)
+        {
+            case ColorType.Red:
+                return ColorType.Green;  
+            case ColorType.Green:
+                return ColorType.Blue;   
+            case ColorType.Blue:
+                return ColorType.Yellow; 
+            case ColorType.Yellow:
+                return ColorType.Purple;
+            case ColorType.Purple:
+                return ColorType.Red;   
+            default:
+                return currentColor;     
+        }
+    }
+
+    void SetColorInSceneGUI(Color newColor, List<MeshRenderer> carRenderers)
+    {
+        foreach (MeshRenderer mesh in carRenderers)
+        {
+            Material[] sharedMaterials = mesh.sharedMaterials;
+            Material[] newMaterials = new Material[sharedMaterials.Length];
+
+            for (int i = 0; i < sharedMaterials.Length; i++)
+            {
+                newMaterials[i] = new Material(sharedMaterials[i]);
+                newMaterials[i].SetColor("_BaseColor", newColor);
+                newMaterials[i].SetColor("_Color", newColor);
+            }
+            mesh.materials = newMaterials;
+        }
+    }
+    public Color GetColor(ColorType colorType)
+    {
+        switch (colorType)
+        {
+            case ColorType.Red:
+                return Color.red;
+           
+            case ColorType.Green:
+                return Color.green;
+                
+            case ColorType.Blue:
+                return Color.blue;
+                
+            case ColorType.Yellow:
+                return Color.yellow;
+                
+            case ColorType.Purple:
+                return new Color(0.5f, 0f, 0.5f);
+                
+        }
+
+        return Color.white;
     }
     #endregion
 }

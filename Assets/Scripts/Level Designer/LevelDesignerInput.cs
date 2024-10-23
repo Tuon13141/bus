@@ -18,6 +18,13 @@ public class LevelDesignerInput : Editor
             RaycastHit hit;
             switch (e.keyCode)
             {
+                case KeyCode.Alpha0:
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, targetLayerMask))
+                    {
+                        levelDesignManager.DeleteCar(hit.point);
+                    }
+
+                    break;
                 case KeyCode.Alpha1:
                     if (Physics.Raycast(ray, out hit, Mathf.Infinity, targetLayerMask))
                     {
@@ -53,6 +60,24 @@ public class LevelDesignerInput : Editor
                     if (Physics.Raycast(ray, out hit, Mathf.Infinity, targetLayerMask))
                     {
                         levelDesignManager.Spawn4SeatCar(hit.point);
+                    }
+                    break;
+                case KeyCode.Alpha7:
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, targetLayerMask))
+                    {
+                        levelDesignManager.Spawn6SeatCar(hit.point);
+                    }
+                    break;
+                case KeyCode.Alpha8:
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, targetLayerMask))
+                    {
+                        levelDesignManager.Spawn10SeatCar(hit.point);
+                    }
+                    break;
+                case KeyCode.Alpha9:
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, targetLayerMask))
+                    {
+                        levelDesignManager.ChangeCarColor(hit.point);
                     }
                     break;
             }

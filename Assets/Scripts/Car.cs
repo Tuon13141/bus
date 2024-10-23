@@ -15,7 +15,7 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
     [SerializeField] int seatCount;
     [SerializeField] CarStat stat = CarStat.OnRoad;
     [SerializeField] ColorType colorType = ColorType.Red;
-    public ColorType ColorType => colorType;
+    public ColorType ColorType { get { return colorType; } set { colorType = value; } }
     [SerializeField] DirectionType directionType;
     public DirectionType DirectionType {  get { return directionType; } set { directionType = value; GetRotation(); } }
     private float rotationDegrees; 
@@ -34,6 +34,7 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
 
     [SerializeField] Animation carShakingAnimation;
     [SerializeField] List<MeshRenderer> carRenderers = new List<MeshRenderer>();    
+    public List<MeshRenderer> CarRenderers => carRenderers;
 
 
     List<Vector2Int> gridHolders = new List<Vector2Int>();
@@ -105,16 +106,25 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
             case ColorType.Blue:
                 SetColor(Color.blue);
                 break;
+            case ColorType.Yellow:
+                SetColor(Color.yellow);
+                break;
+            case ColorType.Purple:
+                SetColor(new Color(0.5f, 0f, 0.5f));
+                break;
         }
     }
     void SetColor(Color newColor)
     {
-        foreach(MeshRenderer mesh in carRenderers)
+        foreach (MeshRenderer mesh in carRenderers)
         {
             foreach (Material mat in mesh.materials)
             {
-                mat.SetColor("_BaseColor", newColor);
-                mat.SetColor("_Color", newColor);
+                if (mat != null) 
+                {
+                    mat.SetColor("_BaseColor", newColor);
+                    mat.SetColor("_Color", newColor);
+                }
             }
         }
     }
@@ -666,5 +676,5 @@ public enum CarStat
 
 public enum ColorType
 {
-    Red, Green, Blue
+    Red, Green, Blue, Yellow, Purple
 }
