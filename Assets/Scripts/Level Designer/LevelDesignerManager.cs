@@ -1,6 +1,7 @@
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,7 +11,8 @@ public class LevelDesignerManager : SerializedMonoBehaviour
 
     [FoldoutGroup("Data")]
     public Dictionary<Vector2Int, Grid> GridDict = new Dictionary<Vector2Int, Grid>();
-
+    [FoldoutGroup("Data")]
+    public Dictionary<Vector2Int, Car> CarDict = new Dictionary<Vector2Int, Car>();
 
     GameObject currentLevelObject;
 
@@ -36,17 +38,45 @@ public class LevelDesignerManager : SerializedMonoBehaviour
         {
             DestroyImmediate(currentLevelObject);
         } 
-        foreach (Grid grid in GridDict.Values)
+        foreach (Vector2Int grid in GridDict.Keys)
         {
-            DestroyImmediate(grid.gameObject);
+            if(GridDict[grid] != null)
+                DestroyImmediate(GridDict[grid].gameObject);
         }
-        GridDict.Clear();
-        levelDesigner.UnusableGrid.Clear();
+        foreach (Vector2Int grid in CarDict.Keys)
+        {
+            if (CarDict[grid] != null)
+                DestroyImmediate(CarDict[grid].gameObject);
+        }
 
+        RemoveNullValues();
+        GridDict.Clear();
+        CarDict.Clear();
         Debug.Log("Level Has been cleared !");
     }
 
+    void RemoveNullValues()
+    {
+        var keysToRemove = GridDict
+            .Where(entry => entry.Value == null)
+            .Select(entry => entry.Key)
+            .ToList();  
 
+        foreach (var key in keysToRemove)
+        {
+            GridDict.Remove(key);
+        }
+
+        var carsToRemove = CarDict
+           .Where(entry => entry.Value == null)
+           .Select(entry => entry.Key)
+           .ToList();
+
+        foreach (var key in carsToRemove)
+        {
+            CarDict.Remove(key);
+        }
+    }
     [PropertySpace(10)]
     [PropertyOrder(2)]
     [Button, GUIColor(0.4f, 0.8f, 1)]

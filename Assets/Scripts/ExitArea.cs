@@ -8,6 +8,7 @@ public class ExitArea : MonoBehaviour, IOnStart
     [SerializeField] GameObject exitRoadParent;
     [SerializeField] GameObject passengerPref;
     [SerializeField] ExitAreaType exitAreaType;
+    public ExitAreaType ExitAreaType => exitAreaType;
     [SerializeField] AreaArrowButton arrow;
     [SerializeField] List<GridPassengerList> gridPassengerListList = new();
     public List<GridPassengerList> GridPassengerListList => gridPassengerListList;

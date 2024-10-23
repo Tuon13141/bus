@@ -5,7 +5,7 @@ using UnityEngine;
 [CustomEditor(typeof(LevelDesigner), true)]
 public class LevelDesignerInput : Editor 
 {
-    private LayerMask targetLayerMask = 1 << 6 | 1 << 7;
+    private LayerMask targetLayerMask = 1 << 6;
     private LayerMask targetLayerMaskMainRoad = 1 << 8 | 1 << 10;
     private void OnSceneGUI()
     {
@@ -32,16 +32,28 @@ public class LevelDesignerInput : Editor
                     }
                     break;
                 case KeyCode.Alpha3:
-                    
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, targetLayerMask))
+                    {
+                        levelDesignManager.SpawnExitArea(hit.point);
+                    }
                     break;
                 case KeyCode.Alpha4:
-
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, targetLayerMask))
+                    {
+                        levelDesignManager.SpawnRoad(hit.point);
+                    }
                     break;
                 case KeyCode.Alpha5:
-                   
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, targetLayerMask))
+                    {
+                        levelDesignManager.SpawnBorderRoad(hit.point);
+                    }
                     break;
                 case KeyCode.Alpha6:
-                   
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, targetLayerMask))
+                    {
+                        levelDesignManager.Spawn4SeatCar(hit.point);
+                    }
                     break;
             }
 

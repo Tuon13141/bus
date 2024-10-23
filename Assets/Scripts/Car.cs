@@ -8,14 +8,16 @@ using UnityEngine.UI;
 
 public class Car : MonoBehaviour, IChangeStat, IOnStart
 {
-    int index;
+    public int IndexInLevelDesigner { get; set; }
     public bool CanGetPassenger { get; set; } = true;
     [SerializeField] Vector2Int scale;
+    public Vector2Int Scale => scale;
     [SerializeField] int seatCount;
     [SerializeField] CarStat stat = CarStat.OnRoad;
     [SerializeField] ColorType colorType = ColorType.Red;
     public ColorType ColorType => colorType;
     [SerializeField] DirectionType directionType;
+    public DirectionType DirectionType {  get { return directionType; } set { directionType = value; GetRotation(); } }
     private float rotationDegrees; 
     [SerializeField] Vector3Int spawnPoint;
     [SerializeField] float moveSpeed = 10f;
