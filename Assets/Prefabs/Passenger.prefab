@@ -1565,4 +1565,5 @@ MonoBehaviour:
   meshRenderer: {fileID: 4281219330257702751}
   colorType: 0
   passengerStat: 0
-  moveSpeed: 20
+  moveSpeed: 15
+  originalScale: {x: 1, y: 1, z: 1}
