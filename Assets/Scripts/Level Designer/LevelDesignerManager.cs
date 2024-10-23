@@ -13,6 +13,8 @@ public class LevelDesignerManager : SerializedMonoBehaviour
     public Dictionary<Vector2Int, Grid> GridDict = new Dictionary<Vector2Int, Grid>();
     [FoldoutGroup("Data")]
     public Dictionary<Vector2Int, Car> CarDict = new Dictionary<Vector2Int, Car>();
+    [FoldoutGroup("Data")]
+    public GameObject LevelPref;
 
     GameObject currentLevelObject;
 
@@ -52,7 +54,22 @@ public class LevelDesignerManager : SerializedMonoBehaviour
         RemoveNullValues();
         GridDict.Clear();
         CarDict.Clear();
+
+       
         Debug.Log("Level Has been cleared !");
+    }
+
+    [PropertySpace(10)]    
+    [Button, GUIColor(1, 0.5f, 0)]
+    public void NewLevel()
+    {
+        ClearLevel();
+        GameObject newGameObj = PrefabUtility.InstantiatePrefab(LevelPref) as GameObject;
+         
+        newGameObj.transform.position = Vector3.zero;
+        currentLevelObject = newGameObj;
+
+        Debug.Log("Created new Level !");
     }
 
     void RemoveNullValues()
@@ -81,12 +98,12 @@ public class LevelDesignerManager : SerializedMonoBehaviour
     [PropertyOrder(2)]
     [Button, GUIColor(0.4f, 0.8f, 1)]
     public void LoadLevel()
-    {
+    {      
         string localPath = "Assets/Resources/Levels/Level_" + LevelNum + ".prefab";
 
         if (AssetDatabase.LoadAssetAtPath(localPath, typeof(GameObject)))
         {
-            DestroyImmediate(currentLevelObject);
+            ClearLevel();
             GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(localPath);
             currentLevelObject = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
             return;
@@ -95,6 +112,15 @@ public class LevelDesignerManager : SerializedMonoBehaviour
         {
             Debug.Log("Level Doesn't exist !");
         }
+    }
+
+    [PropertySpace(10)]
+    [PropertyOrder(2)]
+    [Button, GUIColor(0.4f, 0.8f, 1)]
+    public void SaveLevel()
+    {
+        //localPath = AssetDatabase.GenerateUniqueAssetPath(localPath);
+        // PrefabUtility.SaveAsPrefabAsset(Level.gameObject, localPath, out prefabSuccess);
     }
 
     [PropertySpace(10)]
