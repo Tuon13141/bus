@@ -194,7 +194,7 @@ public class ExitArea : MonoBehaviour, IOnStart
 
 
                     Vector2Int vector2Int = grid + new Vector2Int((int)transform.position.x, (int)transform.position.z);
-                    ObjectPool.Instance.AddToInactiveGrid(vector2Int);
+                    //ObjectPool.Instance.AddToInactiveGrid(vector2Int);
                 }
             }
         }
@@ -213,7 +213,7 @@ public class ExitArea : MonoBehaviour, IOnStart
 
 
                     Vector2Int vector2Int = grid + new Vector2Int((int)transform.position.x, (int)transform.position.z);
-                    ObjectPool.Instance.AddToInactiveGrid(vector2Int);
+                    //ObjectPool.Instance.AddToInactiveGrid(vector2Int);
                 }
             }
         }

@@ -15,6 +15,7 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
     [SerializeField] int seatCount;
     [SerializeField] CarStat stat = CarStat.OnRoad;
     [SerializeField] ColorType colorType = ColorType.Red;
+    [SerializeField] Material material;
     public ColorType ColorType { get { return colorType; } set { colorType = value; } }
     [SerializeField] DirectionType directionType;
     public DirectionType DirectionType {  get { return directionType; } set { directionType = value; GetRotation(); } }
@@ -118,14 +119,21 @@ public class Car : MonoBehaviour, IChangeStat, IOnStart
     {
         foreach (MeshRenderer mesh in carRenderers)
         {
-            foreach (Material mat in mesh.materials)
+            Material[] materials = mesh.materials;
+
+            for (int i = 0; i < materials.Length; i++)
             {
-                if (mat != null) 
+                if (materials[i] != null)
                 {
-                    mat.SetColor("_BaseColor", newColor);
-                    mat.SetColor("_Color", newColor);
+                    Material newMaterial = new Material(material);
+                    materials[i] = newMaterial;
                 }
+   
+                materials[i].SetColor("_BaseColor", newColor);
+                materials[i].SetColor("_Color", newColor);
             }
+
+            mesh.materials = materials;
         }
     }
     void CalculateOverlappingGrids()

@@ -77,7 +77,10 @@ public class ObjectPool : MonoBehaviour
     {
         if (ActiveGrid.ContainsKey(vector2Int))
         {
+           
             Grid g = ActiveGrid[vector2Int];
+            
+            //if (g == null) { ActiveGrid.Remove(vector2Int); return; }
             g.ResetParameter();
 
             ActiveGrid[vector2Int] = null;

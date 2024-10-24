@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
 public class LevelRenderer : MonoBehaviour
 {
-    [SerializeField] GameObject cornerObject1;
-    [SerializeField] GameObject cornerObject2;
+    public List<Vector2Int> roadGridPositionList = new List<Vector2Int>();
+    public List<Vector2Int> borderRoadGridPositionList = new List<Vector2Int>();
+
+    [SerializeField] Vector3Int cornerObject1;
+    [SerializeField] Vector3Int cornerObject2;
 
     [SerializeField] GameObject roadPref;
     [SerializeField] GameObject borderRoadPref;
@@ -21,14 +25,14 @@ public class LevelRenderer : MonoBehaviour
     public List<GridRoad> Roads { get; set; } = new List<GridRoad>();
 
     [SerializeField] GameObject mainRoadParent;
-    public List<GridMainRoad> MainRoads =>  gridMainRoadList;
+    public List<GridMainRoad> MainRoads => gridMainRoadList;
 
     Transform borderRoadParent;
     public List<GridBorderRoad> BorderRoads { get; set; } = new List<GridBorderRoad>();
 
+    [SerializeField] Transform carParent;
 
-
-    [SerializeField] List<Car> carList = new List<Car>();
+    [SerializeField] List<Car> carList;
     public List<Car> CarList => carList;
 
     LevelController levelController;
@@ -52,49 +56,57 @@ public class LevelRenderer : MonoBehaviour
         GenerateRoadGrid();
         SetUpRoadConnections();
         CenterizeCamera();
-       
+
         StartCar();
     }
 
     void GenerateRoadGrid()
     {
+        foreach (Vector2Int vector2Int in borderRoadGridPositionList)
+        {
+            Vector3 location = new Vector3(vector2Int.x, 0.1f, vector2Int.y);
+
+            if (levelController.GridDict.ContainsKey(vector2Int))
+            {
+                continue;
+            }
+            ObjectPool.Instance.AddToActiveGrid<GridBorderRoad>(vector2Int, borderRoadPref, borderRoadParent, BorderRoads, location);
+        }
+
+        foreach (Vector2Int vector2Int in roadGridPositionList)
+        {
+            Vector3 location = new Vector3(vector2Int.x, 0.1f, vector2Int.y);
+
+            if (levelController.GridDict.ContainsKey(vector2Int))
+            {
+                continue;
+            }
+            ObjectPool.Instance.AddToActiveGrid<GridRoad>(vector2Int, roadPref, roadParent, Roads, location);
+        }
+
+       
+        List<Vector2Int> combinedList = roadGridPositionList.Concat(borderRoadGridPositionList).ToList();
+
+        Vector2Int minPoint = GetMinPoint(combinedList);
+        Vector2Int maxPoint = GetMaxPoint(combinedList);
+
+        cornerObject1 = new Vector3Int(minPoint.x, 0, minPoint.y);
+        cornerObject2 = new Vector3Int(maxPoint.x, 0, maxPoint.y);
+
         Vector2Int levelArea = new Vector2Int();
-        Vector3 pos1 = cornerObject1.transform.position;
-        Vector3 pos2 = cornerObject2.transform.position;
+        Vector3 pos1 = cornerObject1;
+        Vector3 pos2 = cornerObject2;
         Vector3 center = (pos1 + pos2) / 2f;
 
         Vector3 bottomLeft = new Vector3(Mathf.Min(pos1.x, pos2.x), pos1.y, Mathf.Min(pos1.z, pos2.z));
         Vector3 topRight = new Vector3(Mathf.Max(pos1.x, pos2.x), pos1.y, Mathf.Max(pos1.z, pos2.z));
 
 
-        for (int i = (int)bottomLeft.x; i <= (int)topRight.x; i += 1)
-        {
-            for (int j = (int)bottomLeft.z; j <= (int)topRight.z; j += 1)
-            {
-                GameObject roadObj;
-                Vector2Int spawnPoint = new Vector2Int(i, j);
-                Vector3 location = new Vector3(i, -0.3f, j);
-
-                if (levelController.GridDict.ContainsKey(spawnPoint))
-                {
-                    continue;   
-                }
-                if (i == bottomLeft.x || i == topRight.x || j == bottomLeft.z || j == topRight.z)
-                {
-                    ObjectPool.Instance.AddToActiveGrid<GridBorderRoad>(spawnPoint, borderRoadPref, borderRoadParent, BorderRoads, location);
-                }
-                else
-                {
-                    ObjectPool.Instance.AddToActiveGrid<GridRoad>(spawnPoint, roadPref, roadParent, Roads, location);
-                }
-            }
-        }
-
-        for(int x = 0; x < exitAreas.Count; x++)
+        for (int x = 0; x < exitAreas.Count; x++)
         {
             exitAreas[x].SetLevelController(levelController);
             exitAreas[x].OnStart();
-        
+
         }
 
         int width = Mathf.Abs(Mathf.FloorToInt(pos2.x - pos1.x));
@@ -109,10 +121,8 @@ public class LevelRenderer : MonoBehaviour
         inputManager.XLimitMax = halfX + 5;
         inputManager.ZLimitMin = -halfY - 5;
         inputManager.ZLimitMax = halfY + 5;
-
-        cornerObject1.SetActive(false);
-        cornerObject2.SetActive(false);
     }
+
     void CenterizeCamera()
     {
         Camera mainCamera = Camera.main;
@@ -196,7 +206,7 @@ public class LevelRenderer : MonoBehaviour
                 {
                     mainRoad.Up = (GridMainRoad)gridRoad;
                 }
-         
+
             }
 
             gridRoad = GetNerbyGrid(borderRoadPos, new Vector2Int(0, -1));
@@ -206,7 +216,7 @@ public class LevelRenderer : MonoBehaviour
                 {
                     mainRoad.Bot = (GridMainRoad)gridRoad;
                 }
-           
+
             }
 
             gridRoad = GetNerbyGrid(borderRoadPos, new Vector2Int(-1, 0));
@@ -216,7 +226,7 @@ public class LevelRenderer : MonoBehaviour
                 {
                     mainRoad.Left = (GridMainRoad)gridRoad;
                 }
-       
+
             }
 
             gridRoad = GetNerbyGrid(borderRoadPos, new Vector2Int(1, 0));
@@ -226,11 +236,11 @@ public class LevelRenderer : MonoBehaviour
                 {
                     mainRoad.Right = (GridMainRoad)gridRoad;
                 }
-  
+
             }
         }
 
-        foreach(ExitArea area in exitAreas)
+        foreach (ExitArea area in exitAreas)
         {
             foreach (GridExitEnterRoad gridExitEnterRoad in area.GridExitEnterRoads)
             {
@@ -238,8 +248,8 @@ public class LevelRenderer : MonoBehaviour
                 gridExitEnterRoad.OnStart();
 
             }
-        }    
-      
+        }
+
 
         foreach (ExitArea area in exitAreas)
         {
@@ -250,7 +260,7 @@ public class LevelRenderer : MonoBehaviour
 
             }
         }
-       
+
 
         for (int x = 0; x < exitAreas.Count; x++)
         {
@@ -263,12 +273,12 @@ public class LevelRenderer : MonoBehaviour
                 }
             }
         }
-     
+
     }
 
     void SetUpMainRoad()
     {
-        foreach(GridMainRoad gridMainRoad in gridMainRoadList)
+        foreach (GridMainRoad gridMainRoad in gridMainRoadList)
         {
             gridMainRoad.SetLevelController(levelController);
             gridMainRoad.OnStart();
@@ -278,24 +288,19 @@ public class LevelRenderer : MonoBehaviour
     {
         if (levelController.GridDict.ContainsKey(direction + startPoint))
         {
-            if(levelController.GridDict[direction + startPoint] is GridRoad)
+            if (levelController.GridDict[direction + startPoint] is GridRoad)
             {
                 Grid gridRoad = (Grid)levelController.GridDict[direction + startPoint];
                 return gridRoad;
             }
-            
+
         }
-       
+
         return null;
     }
 
     void StartCar()
     {
-        Car[] cars = GetComponentsInChildren<Car>(true);
-
-
-        carList = new List<Car>(cars);
-
         foreach (Car car in carList)
         {
             car.OnStart();
@@ -305,5 +310,50 @@ public class LevelRenderer : MonoBehaviour
     public void InstantiatePassenger(ExitArea exitArea)
     {
         StartCoroutine(exitArea.InstantiatePassengers());
+    }
+
+    public Vector2Int GetMinPoint(List<Vector2Int> positions)
+    {
+        int minX = positions.Min(pos => pos.x);
+        int minY = positions.Min(pos => pos.y);
+        return new Vector2Int(minX, minY);
+    }
+
+    public Vector2Int GetMaxPoint(List<Vector2Int> positions)
+    {
+        int maxX = positions.Max(pos => pos.x);
+        int maxY = positions.Max(pos => pos.y);
+        return new Vector2Int(maxX, maxY);
+    }
+
+    public void AddMainRoadObjects(List<GameObject> objects)
+    {
+        foreach (GameObject obj in objects)
+        {
+            obj.transform.parent = mainRoadParent.transform;
+            MainRoads.Add(obj.GetComponent<GridMainRoad>());
+        }
+    }
+
+    public void AddExitAreas(List<GameObject> exitAreas)
+    {
+        ExitAreas.Clear();
+        foreach(GameObject obj in exitAreas)
+        {
+            ExitArea exitArea = obj.GetComponent<ExitArea>();
+            obj.transform.parent = transform;
+            this.exitAreas.Add(obj.GetComponent<ExitArea>());
+
+        }
+    }
+
+    public void AddCars(List<Car> cars)
+    {
+        carList.Clear();
+        foreach(Car car in cars)
+        {
+            car.gameObject.transform.parent = carParent;
+            CarList.Add(car);
+        }
     }
 }

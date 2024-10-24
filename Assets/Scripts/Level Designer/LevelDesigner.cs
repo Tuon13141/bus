@@ -11,23 +11,28 @@ public class LevelDesigner : MonoBehaviour
     [SerializeField] LevelDesignerManager levelDesignerManager;
     public Dictionary<Vector2Int, Grid> GridDict => levelDesignerManager.GridDict;
     public Dictionary<Vector2Int, Car> CarDict => levelDesignerManager.CarDict;
+    public List<GameObject> ExitAreaObjects => levelDesignerManager.ExitAreaObjects;
 
     [SerializeField] GameObject mainRoadPref;
-    [SerializeField] Transform mainRoadParent;
+    public Transform mainRoadParent;
 
     [SerializeField] List<GameObject> exitAreaPrefs;
-    [SerializeField] Transform exitAreaParent;
+    public Transform exitAreaParent;
 
     [SerializeField] GameObject car4SeatPref;
     [SerializeField] GameObject car6SeatPref;
     [SerializeField] GameObject car10SeatPref;
-    [SerializeField] Transform carParent;
+    public Transform carParent;
 
     [SerializeField] GameObject roadPref;
-    [SerializeField] Transform roadParent;
+    public GameObject RoadPref => roadPref;
+    public Transform roadParent;
 
     [SerializeField] GameObject borderRoadPref;
-    [SerializeField] Transform borderRoadParent;
+    public GameObject BorderRoadPref => borderRoadPref;
+    public Transform borderRoadParent;
+
+    [SerializeField] Material carMaterial;
     public void DeleteGrid(Vector3 vector3)
     {
         Vector3Int grid3D = GetGrid3dPosition(vector3);
@@ -38,7 +43,9 @@ public class LevelDesigner : MonoBehaviour
             if(GridDict[grid] is GridExitArea)
             {
                 Debug.Log("Deleted Exit Area !");
+                ExitAreaObjects.Remove(GridDict[grid].gameObject);
                 RemoveSameValueGrid(GridDict[grid]);
+               
             }
             else
             {
@@ -113,8 +120,9 @@ public class LevelDesigner : MonoBehaviour
                 {
                     index = 0;
                 }
-
+                ExitAreaObjects.Remove(gridExitArea.gameObject);
                 RemoveSameValueGrid(GridDict[grid]);
+              
                 SpawnExitArea(grid3D, index);
             }
             else
@@ -183,6 +191,7 @@ public class LevelDesigner : MonoBehaviour
         newObj.transform.position = spawnPosition;
         newObj.transform.parent = exitAreaParent;
         newObj.GetComponent<GridExitArea>().IndexInLevelDesigner = index;
+        ExitAreaObjects.Add(newObj);
 
         foreach (Vector2Int v in currentGirdHolderList)
         {
@@ -254,9 +263,14 @@ public class LevelDesigner : MonoBehaviour
                         DirectionType directionType = GetNextDirection(c.DirectionType);
                         Vector3 cTransform = c.transform.position;
                         ColorType colorType = c.ColorType;
+                        float r = GetRotation(directionType);
+
+                        bool check = CheckCar(CalculateOverlappingGrids(r, c.Scale, Vector3Int.RoundToInt(cTransform), directionType));
+
                         DestroyImmediate(c.gameObject);
 
-                        SpawnCar(cTransform, carPref, directionType, colorType);
+                        if (check) SpawnCar(cTransform, carPref, directionType, colorType);
+                        else Debug.Log("Can't Change to this Direction !");
                     }
                     else
                     {
@@ -570,18 +584,37 @@ public class LevelDesigner : MonoBehaviour
         }
     }
 
-    void SetColorInSceneGUI(Color newColor, List<MeshRenderer> carRenderers)
+    public void SetColorInSceneGUI(Color newColor, List<MeshRenderer> carRenderers)
     {
         foreach (MeshRenderer mesh in carRenderers)
         {
+            //Material[] materials = mesh.materials;
+            //for(int i = 0; i < materials.Length; i++)
+            //{
+            //    if(materials[i] != null)
+            //    {
+            //        materials[i] = carMaterial;
+            //    }
+            //}
             Material[] sharedMaterials = mesh.sharedMaterials;
+
+
             Material[] newMaterials = new Material[sharedMaterials.Length];
 
             for (int i = 0; i < sharedMaterials.Length; i++)
             {
-                newMaterials[i] = new Material(sharedMaterials[i]);
-                newMaterials[i].SetColor("_BaseColor", newColor);
-                newMaterials[i].SetColor("_Color", newColor);
+                if (sharedMaterials[i] != null)
+                {
+                    newMaterials[i] = new Material(sharedMaterials[i]);
+                    newMaterials[i].SetColor("_BaseColor", newColor);
+                    newMaterials[i].SetColor("_Color", newColor);
+                }
+                else 
+                {
+                    newMaterials[i] = new Material(carMaterial);
+                    newMaterials[i].SetColor("_BaseColor", newColor);
+                    newMaterials[i].SetColor("_Color", newColor);
+                }
             }
             mesh.materials = newMaterials;
         }
